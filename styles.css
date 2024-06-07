@@ -69,8 +69,6 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 70px;
-    max-height: 70px;
 }
 
 .yearMonthToggleBtn.active {
@@ -108,25 +106,71 @@ div.button {
     padding: 0px;
 }
 
-@media (min-width: 1000px) {
-    .mobile-only {
-        display: none;
+@media (min-width: 1270px) {
+    .overview {
+        height: 70px;
     }
 
-    /* .child,
-    .overview {
-        width: 40%;
-    } */
+    .resultTable {
+        font-size: 13px;
+    }
+
+    .resultTable th,
+    .resultTable td {
+        text-align: left;
+        padding-left: 10px;
+        border: 1px solid rgb(188 188 188);
+    }
 }
 
-@media (max-width: 1000px) {
-    .desktop-only {
-        display: none;
-    }
+@media (max-width: 1270px) {
 
     .div-left,
     .div-right {
         flex: 100%;
+    }
+
+    .overview {
+        height: fit-content;
+    }
+
+    .resultTable {
+        font-size: 13px;
+    }
+
+    .resultTable th,
+    .resultTable td {
+        text-align: left;
+        padding-left: 5px;
+        border: 1px solid rgb(188 188 188);
+    }
+}
+
+@media (min-width: 750px) {
+    .mobile-only {
+        display: none;
+    }
+}
+
+@media (max-width: 750px) {
+    .desktop-only {
+        display: none;
+    }
+
+    .resultTable th:nth-child(5),
+    .resultTable td:nth-child(5) {
+        display: none;
+    }
+
+    .resultTable {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 500px) {
+
+    .resultTable {
+        font-size: 10px;
     }
 }
 
@@ -190,10 +234,10 @@ table.firstTable {
     margin-top: 10px;
 }
 
-table td:nth-child(2),
-table td:nth-child(4),
-table th:nth-child(2),
-table th:nth-child(4),
+table:not('.resultTable') td:nth-child(2),
+table:not('.resultTable') td:nth-child(4),
+table:not('.resultTable') th:nth-child(2),
+table:not('.resultTable') th:nth-child(4),
 .sub-table td:nth-child(4) {
     padding-left: 10px;
 }
@@ -227,19 +271,8 @@ td {
     border-bottom: none;
 }
 
-.resultTable {
-    font-size: 13px;
-}
-
 .resultTable tr:first-child {
     background-color: rgb(228, 228, 228);
-}
-
-.resultTable th,
-.resultTable td {
-    text-align: left;
-    padding-left: 10px;
-    border: 1px solid rgb(188 188 188);
 }
 
 .resultTable th:first-child,
