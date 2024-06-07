@@ -1,0 +1,401 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800&family=Roboto:wght@100;300;400&display=swap');
+
+:root {
+    --primary-color: #f9532d;
+    --primary-dark: #1F252E;
+    --primary-black: #000000;
+    --primary-light: #ffffff
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background: #ffffff;
+    height: 100vh;
+    color: var(--primary-black);
+}
+
+.main_container {
+    padding-bottom: 5px;
+}
+
+.main_container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.div-left,
+.div-right {
+    flex: 1;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.child {
+    margin: 10px;
+    padding: 5px 15px 5px 15px;
+    vertical-align: top;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+}
+
+.child-note {
+    padding-left: 10px;
+    padding-right: 10px;
+    vertical-align: top;
+    box-sizing: border-box;
+    font-size: 10px;
+    text-align: center;
+}
+
+.overview {
+    margin: 10px;
+    padding: 15px 15px 15px 15px;
+    border-radius: 10px 10px 0px 0px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    text-align: center;
+    display: block;
+    background-color: #339fcd;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 70px;
+    max-height: 70px;
+}
+
+.yearMonthToggleBtn.active {
+    border-bottom: 3px solid #535353;
+}
+
+.button {
+    box-shadow: none;
+}
+
+.hidden {
+    display: none;
+}
+
+div.section-heading {
+    padding: 5px;
+}
+
+
+table.section-heading {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+table.section-heading tr {
+    text-align: center;
+    font-weight: 700;
+}
+
+table.section-heading-button {
+    margin: 0px;
+}
+
+div.button {
+    padding: 0px;
+}
+
+@media (min-width: 1000px) {
+    .mobile-only {
+        display: none;
+    }
+
+    /* .child,
+    .overview {
+        width: 40%;
+    } */
+}
+
+@media (max-width: 1000px) {
+    .desktop-only {
+        display: none;
+    }
+
+    .div-left,
+    .div-right {
+        flex: 100%;
+    }
+}
+
+.centered-content {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100%;
+}
+
+table {
+    font-weight: 400;
+    width: 100%;
+    max-width: none;
+    border-collapse: collapse;
+    table-layout: fixed;
+    border: none;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+
+table.heading tr {
+    border-bottom: 1px solid grey;
+}
+
+table.heading th,
+table.heading td,
+table.total th {
+    text-align: left;
+}
+
+table.dataTable th:first-child,
+table.dataTable td:first-child {
+    width: 60%;
+}
+
+table.sub-table th:first-child,
+table.sub-table td:first-child {
+    width: auto;
+}
+
+table.hidden-table th:first-child,
+table.hidden-table td:first-child {
+    width: 60%;
+}
+
+table.dataTable th {
+    border-bottom: 2px solid rgb(179, 179, 179);
+}
+
+table.dataTable th,
+table.total th {
+    text-align: left;
+    align-content: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+table.firstTable {
+    margin-top: 10px;
+}
+
+table td:nth-child(2),
+table td:nth-child(4),
+table th:nth-child(2),
+table th:nth-child(4),
+.sub-table td:nth-child(4) {
+    padding-left: 10px;
+}
+
+
+th {
+    padding-top: 5px;
+    padding-bottom: 10px;
+    font-weight: 600;
+}
+
+td {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.sub-table {
+    margin: 0px;
+}
+
+.divWrapper {
+    border-bottom: 1px solid rgb(228, 228, 228);
+    padding: 0 2px;
+    max-width: 100%;
+    height: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.totalWrapper {
+    border-bottom: none;
+}
+
+.resultTable {
+    font-size: 13px;
+}
+
+.resultTable tr:first-child {
+    background-color: rgb(228, 228, 228);
+}
+
+.resultTable th,
+.resultTable td {
+    text-align: left;
+    padding-left: 10px;
+    border: 1px solid rgb(188 188 188);
+}
+
+.resultTable th:first-child,
+.resultTable td:first-child {
+    padding-left: 0px;
+    width: 10%;
+    text-align: center;
+}
+
+.resultNumberWrapper {
+    display: flex;
+    align-items: center;
+}
+
+.resultNumber {
+    margin-left: 3px;
+}
+
+.selectWrapper {
+    padding: 0 2px;
+    max-width: 100%;
+    height: 30px;
+    display: flex;
+    align-items: center;
+}
+
+select {
+    appearance: none;
+    outline: none;
+    cursor: pointer;
+    border: 1px solid rgb(228, 228, 228);
+    border-radius: 5px;
+    padding: 5px 10px;
+    width: 100%;
+    height: 100%;
+    font-family: "proxima-nova", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    text-align: center;
+}
+
+.totalwrapper {
+    border-bottom: none;
+}
+
+.container {
+    width: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.pWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* margin-right: 5px; */
+}
+
+input {
+    font-family: 'Outfit', sans-serif;
+    font-size: 16px;
+    height: 100%;
+    width: 100%;
+    flex: 1;
+    text-align: left;
+    box-sizing: border-box;
+    background: none;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    margin-left: 3px;
+}
+
+input.total-sal-annual,
+input.total-sal-monthly,
+input.payslip-total {
+    font-weight: 700;
+}
+
+p {
+    margin: 0;
+    text-align: center;
+    max-height: 30px;
+}
+
+a {
+    text-decoration: none;
+}
+
+.calculate-button,
+.downloadBtn,
+.yearMonthToggleBtn {
+    font-family: 'Outfit', sans-serif;
+    color: #676767;
+    font-size: 16px;
+    background-color: #339fcd;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 10px;
+    cursor: pointer;
+    width: 100%;
+    height: 50px;
+}
+
+.calculate-button:hover,
+.downloadBtn:hover,
+.yearMonthToggleBtn:hover {
+    background-color: #07709d;
+}
+
+.button {
+    margin-bottom: 10px;
+}
+
+.radio-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.radio-wrapper div {
+    margin-right: 5px;
+}
+
+.investmentOverview td:last-child,
+.investmentOverview input {
+    font-weight: 600;
+}
+
+.red {
+    color: #ed0f0f;
+}
+
+.green {
+    color: #6a3;
+}
+
+.blue {
+    color: #20aaee;
+}
+
+.grey {
+    background-color: #767676;
+}
+
+.orange {
+    color: #ff8c00;
+}
+
+.resultTable table td:last-child {
+    font-weight: 500;
+}
+
+.sub-table-wrapper {
+    padding-top: 0;
+    padding-bottom: 0;
+}
