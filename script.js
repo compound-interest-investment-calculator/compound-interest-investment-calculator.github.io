@@ -415,7 +415,7 @@ function createMonthlyResultTable(monthlyInvestmentHistory) {
     const tableContainer = document.getElementById('monthlyResultTable');
     const table = document.createElement('table');
     const headerRow = table.insertRow();
-    const headers = ['Month', 'Deposit/ Withdrawal', 'Total Till Now', 'Interest', 'Accrued Interest', 'Balance'];
+    const headers = ['Month', 'Deposit', 'Total Deposits', 'Interest', 'Accrued Interest', 'Balance'];
 
     headers.forEach(headerText => {
         const th = document.createElement('th');
@@ -425,9 +425,14 @@ function createMonthlyResultTable(monthlyInvestmentHistory) {
 
     for (const investmentDetails of monthlyInvestmentHistory) {
         const row = table.insertRow();
+
+        // Check for yearly high light
+        if (investmentDetails.month !== 0 && investmentDetails.month % 12 === 0) {
+            row.classList.add('highlight');
+        }
         row.insertCell().textContent = investmentDetails.month;
         appendCellWithHtml(row, investmentDetails.sipAmount);
-        appendCellWithHtml(row, investmentDetails.totalAmount);
+        appendCellWithHtml(row, investmentDetails.principalForTheMonth);
         appendCellWithHtml(row, investmentDetails.interestForTheMonth);
         appendCellWithHtml(row, investmentDetails.totalInterest);
         appendCellWithHtml(row, investmentDetails.totalAmount);
@@ -442,7 +447,7 @@ function createYearlyResultTable(yearlyInvestmentHistory) {
     const tableContainer = document.getElementById('yearlyResultTable');
     const table = document.createElement('table');
     const headerRow = table.insertRow();
-    const headers = ['Year', 'Deposit/ Withdrawal', 'Total Till Now', 'Interest', 'Accrued Interest', 'Balance'];
+    const headers = ['Year', 'Deposit', 'Total Deposits', 'Interest', 'Accrued Interest', 'Balance'];
 
     headers.forEach(headerText => {
         const th = document.createElement('th');
@@ -454,7 +459,7 @@ function createYearlyResultTable(yearlyInvestmentHistory) {
         const row = table.insertRow();
         row.insertCell().textContent = investmentDetails.year;
         appendCellWithHtml(row, investmentDetails.sipAmount);
-        appendCellWithHtml(row, investmentDetails.totalAmount);
+        appendCellWithHtml(row, investmentDetails.principalForTheMonth);
         appendCellWithHtml(row, investmentDetails.interestForTheMonth);
         appendCellWithHtml(row, investmentDetails.totalInterest);
         appendCellWithHtml(row, investmentDetails.totalAmount);
