@@ -302,7 +302,7 @@ function calculateCompoundInterest(initialInvestment, annualInterestRate,
             sipForThisMonth = sipAmount;
         }
 
-        if (sip && bonusSip && (i % bonusSipFreq === 0) && i <= stopSipAfterMonths) {
+        if (sip && bonusSip && (i % bonusSipFreq === 0) && (!stopSipAfterAPeriod || i <= stopSipAfterMonths)) {
             sipForThisMonth += bonusSipAmount;
         }
 
