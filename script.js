@@ -356,7 +356,7 @@ function calculateCompoundInterest(initialInvestment, annualInterestRate,
         }
 
         // Apply step-up to bonus SIP amount if conditions are met
-        if (sip && bonusSip && stepUpBonusSip && (i % stepUpBonusSipFreq === 0) && i <= stopSipAfterMonths) {
+        if (sip && bonusSip && stepUpBonusSip && (i % stepUpBonusSipFreq === 0) && (!stopSipAfterAPeriod || i <= stopSipAfterMonths)) {
             bonusSipAmount += bonusSipAmount * (stepUpBonusSipPercent / 100);
             bonusSipAmount = Math.round(bonusSipAmount);
         }
