@@ -18,6 +18,37 @@
                 SIP, SWP, Stop SIP after few Years, lumpsum Withdrawals, etc...
             </div>
             <div class="child">
+                <table class="dataTable firstTable startingYearTable">
+                    <tbody>
+                        <tr>
+                            <td>Starting Year</td>
+                            <td>
+                                <div class="selectWrapper">
+                                    <select name="investmentYear" id="investmentYear" class="investmentYear">
+                                    </select>
+                                    <script>
+                                        const currentYear = new Date().getFullYear();
+                                        const selectElement = document.getElementById('investmentYear');
+                                        for (let i = currentYear - 5; i <= currentYear + 50; i++) {
+                                            // Create an option element
+                                            const option = document.createElement('option');
+                                            option.value = i;
+                                            option.text = i;
+
+                                            // Set current year as selected by default
+                                            if (i === currentYear) {
+                                                option.selected = true;
+                                            }
+
+                                            // Append option to select element
+                                            selectElement.appendChild(option);
+                                        }
+                                    </script>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
                 <table class="dataTable firstTable">
                     <tbody>
                         <tr>
@@ -59,7 +90,7 @@
                                         <td>Years</td>
                                         <td>
                                             <div class="divWrapper">
-                                                <input type="text" value="10" placeholder="0" class="years"
+                                                <input type="text" value="12" placeholder="0" class="years"
                                                     id="numeric-input" pattern="[0-9]*"
                                                     oninput="validateNumericInput(this);">
                                             </div>
@@ -179,10 +210,10 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>Decrease StepUp Percentage After a Certain Period? <br>
+                                            <td>Change StepUp Percentage After a Certain Period? <br>
                                                 <span style="font-size: x-small;">
                                                     As the investment grows it might be difficult to maintain same % of
-                                                    increase
+                                                    increase/decrease
                                                     after few
                                                     years.
                                                 </span>
@@ -203,7 +234,7 @@
                                             </td>
                                         </tr>
                                         <tr class="decreaseStepUpRows">
-                                            <td>Decrease StepUp After Years<br>
+                                            <td>Change StepUp After Years<br>
                                                 <span style="font-size: xx-small;">
                                                     This value should be less than total number of years...
                                                 </span>
@@ -219,7 +250,7 @@
                                             </td>
                                         </tr>
                                         <tr class="decreaseStepUpRows">
-                                            <td>Decrease StepUp To</td>
+                                            <td>Update StepUp To</td>
                                             <td>
                                                 <div class="divWrapper">
                                                     <input type="text" value="" placeholder="0"
@@ -593,6 +624,21 @@
                                 <th></th>
                             </tr>
                             <tr>
+                                <td>Future Investment Value</td>
+                                <td>
+                                    <div class="divWrapper totalWrapper">
+                                        <div class="container">
+                                            <div class="pWrapper">
+                                                <p>&#8377;</p>
+                                            </div>
+                                        </div>
+                                        <input type="text" value="" placeholder="0" class="futureInvestmentValue"
+                                            id="numeric-input" pattern="[0-9]*" oninput="validateNumericInput(this);"
+                                            disabled>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td>Total Deposits</td>
                                 <td>
                                     <div class="divWrapper totalWrapper">
@@ -632,21 +678,6 @@
                                             </div>
                                         </div>
                                         <input type="text" value="" placeholder="0" class="totalInterest"
-                                            id="numeric-input" pattern="[0-9]*" oninput="validateNumericInput(this);"
-                                            disabled>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Future Investment Value</td>
-                                <td>
-                                    <div class="divWrapper totalWrapper">
-                                        <div class="container">
-                                            <div class="pWrapper">
-                                                <p>&#8377;</p>
-                                            </div>
-                                        </div>
-                                        <input type="text" value="" placeholder="0" class="futureInvestmentValue"
                                             id="numeric-input" pattern="[0-9]*" oninput="validateNumericInput(this);"
                                             disabled>
                                     </div>
@@ -700,7 +731,8 @@
                         <button class="yearMonthToggleBtn" id="monthly-data" onclick="showMonthlyData()">Monthly
                             View</button>
                     </div>
-                    <div class="mobile-only" style="padding-top: 15px; font-size: 12px; text-align: center;">This table is best viewed in
+                    <div class="mobile-only" style="padding-top: 15px; font-size: 12px; text-align: center;">This table
+                        is best viewed in
                         desktop or tablet. Large data might NOT fit the screen.</div>
                     <div class="monthly-data">
                         <div class="resultTable" id="monthlyResultTable"></div>

@@ -156,6 +156,8 @@ function showYearlyData() {
 }
 
 function calculate() {
+    const startingYear = getNumericValue('.investmentYear');
+    console.log("Investment Starting Year: " + startingYear);
     const initialInvestment = getNumericValue('.initialInvestment');
     console.log("Initial Investment: " + initialInvestment);
     const annualInterestRate = getNumericValue('.interestRate');
@@ -220,7 +222,7 @@ function calculate() {
     const stepUpBonusSipFrequency = getSelectedValue('bonusSipStepUpFrequency'); // Yearly
     console.log("Bonus SIP StepUp Frequency: " + stepUpBonusSipFrequency);
 
-    calculateCompoundInterest(initialInvestment, annualInterestRate, years, months, sip, investmentFrequency, sipAmount,
+    calculateCompoundInterest(startingYear, initialInvestment, annualInterestRate, years, months, sip, investmentFrequency, sipAmount,
         stepUpSip, stepUp, stepUpIncrease, decreaseStepUpPercent, decreaseStepUpPercentAfterYears,
         decreaseStepUpPercentTo, stopSipAfterAPeriod, stopSipAfterYears, systematicWithdrawalAfterAPeriod,
         systematicWithdrawalAfterYears, withdrawalPerMonth, stepUpWithdrawal, stepUpWithdrawalFrequency, stepUpWithdrawalIncrease,
@@ -256,7 +258,7 @@ const INVESTMENT_FREQUENCY = {
     YEARLY: 12
 };
 
-function calculateCompoundInterest(initialInvestment, annualInterestRate,
+function calculateCompoundInterest(startingYear, initialInvestment, annualInterestRate,
     years, months, sip, investmentFrequency, sipAmount,
     stepUpSip, stepUp, stepUpIncrease,
     decreaseStepUpPercent, decreaseStepUpPercentAfterYears, decreaseStepUpPercentTo,
@@ -273,7 +275,7 @@ function calculateCompoundInterest(initialInvestment, annualInterestRate,
     let totalAmount = initialInvestment;
     let totalInterest = 0;
     let totalWithdrawals = 0;
-    let currentYear = 1;
+    let currentYear = startingYear;
     let monthCounter = 0;
     let frequencyCounter = 0;
     const sipFrequency = getSipFrequency(investmentFrequency);
@@ -294,7 +296,7 @@ function calculateCompoundInterest(initialInvestment, annualInterestRate,
     const lumpSumWithdrawalMonths = lumpSumWithdrawalYears.map(year => year * 12);
 
     if (initialInvestment !== 0) {
-        monthlyInvestmentHistory.push(new InvestmentHistory(0, 0, 0, initialInvestment, 0, 0, initialInvestment));
+        monthlyInvestmentHistory.push(new InvestmentHistory(currentYear - 1, 0, 0, initialInvestment, 0, 0, initialInvestment));
     }
     for (let i = 1; i <= totalMonths; i++) {
         let sipForThisMonth = 0;
