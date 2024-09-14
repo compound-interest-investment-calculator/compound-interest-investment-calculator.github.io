@@ -388,7 +388,7 @@ a {
 }
 
 .calc-button {
-    padding-top: 10px;
+    padding-top: 15px;
     margin-bottom: 10px;
 }
 
@@ -439,4 +439,8 @@ a {
 .highlight {
     background-color: #efefef;
     font-weight: 500;
+}
+
+.startingYearTable {
+    margin-bottom: 0px;
 }
