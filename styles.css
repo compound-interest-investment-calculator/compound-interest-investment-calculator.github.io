@@ -216,8 +216,17 @@ table.hidden-table td:first-child {
     width: 60%;
 }
 
-table.dataTable th {
+table.parallelInvYear th:first-child,
+table.parallelInvYear td:first-child {
+    width: auto;
+}
+
+table.dataTable th:not(.no-border) {
     border-bottom: 2px solid rgb(179, 179, 179);
+}
+
+.parallel-inv {
+    border-top: 2px solid rgb(179, 179, 179);
 }
 
 table.dataTable th,
@@ -363,6 +372,7 @@ a {
 
 .calculate-button,
 .downloadBtn,
+.downloadCalculations,
 .yearMonthToggleBtn {
     font-family: 'Outfit', sans-serif;
     color: #676767;
@@ -377,8 +387,13 @@ a {
     height: 50px;
 }
 
+.downloadCalculations {
+    width: 10%;
+}
+
 .calculate-button:hover,
 .downloadBtn:hover,
+.downloadCalculations:hover,
 .yearMonthToggleBtn:hover {
     background-color: #07709d;
 }
@@ -388,7 +403,7 @@ a {
 }
 
 .calc-button {
-    padding-top: 15px;
+    padding-top: 10px;
     margin-bottom: 10px;
 }
 
@@ -403,8 +418,18 @@ a {
 }
 
 .investmentOverview td:last-child,
-.investmentOverview input {
+.investmentOverview input,
+.parallelInvestmentOverview input,
+.combinedInvestmentOverview input {
     font-weight: 600;
+}
+
+.combinedInvestmentOverview,
+.investmentOverview,
+.parallelInvestmentOneOverview,
+.parallelInvestmentTwoOverview {
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .red {
@@ -443,4 +468,8 @@ a {
 
 .startingYearTable {
     margin-bottom: 0px;
+}
+
+.investmentDetails {
+    margin-bottom: 15px;
 }
