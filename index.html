@@ -18,8 +18,12 @@
                 SIP, SWP, Stop SIP after few Years, lumpsum Withdrawals, etc...
             </div>
             <div class="child">
-                <table class="dataTable firstTable startingYearTable">
+                <table class="dataTable firstTable investmentDetails">
                     <tbody>
+                        <tr>
+                            <th>Investment Details</th>
+                            <th></th>
+                        </tr>
                         <tr>
                             <td>Starting Year</td>
                             <td>
@@ -46,14 +50,6 @@
                                     </script>
                                 </div>
                             </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table class="dataTable firstTable investmentDetails">
-                    <tbody>
-                        <tr>
-                            <th>Investment Details</th>
-                            <th></th>
                         </tr>
                         <tr>
                             <td>Initial Investment</td>
@@ -90,7 +86,7 @@
                                         <td>Years</td>
                                         <td>
                                             <div class="divWrapper">
-                                                <input type="text" value="15" placeholder="0" class="years"
+                                                <input type="text" value="19" placeholder="0" class="years"
                                                     id="numeric-input" pattern="[0-9]*"
                                                     oninput="validateNumericInput(this);">
                                             </div>
@@ -603,7 +599,7 @@
                             </td>
                         </tr>
                         <tr class="parallel-inv">
-                            <th class="no-border">Parallel Investment 1<br>
+                            <th class="no-border parallel-start">Parallel Investment 1<br>
                                 <span style="font-size: x-small;">
                                     Could be a goal based separate portfolio, bonds, etc...
                                 </span>
@@ -613,12 +609,12 @@
                                     <div>Yes</div>
                                     <div><input type="radio" name="parallelInvestmentOne" value="yes"
                                             id="parallelInvestmentOneYes"
-                                            onclick="toggleParallelInvestmentOne(), hideStepUpOneSIP()">
+                                            onclick="toggleParallelInvestment('One'), hideStepUpOneSIP()">
                                     </div>
                                     <div></div>
                                     <div>No</div>
                                     <div><input type="radio" name="parallelInvestmentOne" value="no"
-                                            id="parallelInvestmentOneNo" onclick="toggleParallelInvestmentOne()"
+                                            id="parallelInvestmentOneNo" onclick="toggleParallelInvestment('One')"
                                             checked>
                                     </div>
                                 </div>
@@ -629,8 +625,32 @@
                                 <table class="sub-table hidden-table parallelInvestmentOneTable">
                                     <tbody>
                                         <tr>
-                                            <th>Investment Details</th>
-                                            <th></th>
+                                            <td>Starting Year</td>
+                                            <td>
+                                                <div class="selectWrapper">
+                                                    <select name="investmentYearOne" id="investmentYearOne"
+                                                        class="investmentYearOne">
+                                                    </select>
+                                                    <script>
+                                                        const currentYearOne = new Date().getFullYear();
+                                                        const selectElementOne = document.getElementById('investmentYearOne');
+                                                        for (let i = currentYearOne - 5; i <= currentYearOne + 50; i++) {
+                                                            // Create an option element
+                                                            const option = document.createElement('option');
+                                                            option.value = i;
+                                                            option.text = i;
+
+                                                            // Set current year as selected by default
+                                                            if (i === currentYearOne) {
+                                                                option.selected = true;
+                                                            }
+
+                                                            // Append option to select element
+                                                            selectElementOne.appendChild(option);
+                                                        }
+                                                    </script>
+                                                </div>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Initial Investment</td>
@@ -651,8 +671,8 @@
                                             <td>Yearly Interest Rate</td>
                                             <td>
                                                 <div class="divWrapper">
-                                                    <input type="text" value="10" placeholder="0" class="interestRateOne"
-                                                        id="numeric-input" pattern="[0-9]*"
+                                                    <input type="text" value="10" placeholder="0"
+                                                        class="interestRateOne" id="numeric-input" pattern="[0-9]*"
                                                         oninput="validateNumericInput(this);">
                                                     <div class="container">
                                                         <div class="pWrapper">
@@ -846,7 +866,7 @@
                             </td>
                         </tr>
                         <tr class="parallel-inv">
-                            <th class="no-border">Parallel Investment 2<br>
+                            <th class="no-border parallel-start">Parallel Investment 2<br>
                                 <span style="font-size: x-small;">
                                     Could be a PF, Compounding FD, etc...
                                 </span>
@@ -856,12 +876,12 @@
                                     <div>Yes</div>
                                     <div><input type="radio" name="parallelInvestmentTwo" value="yes"
                                             id="parallelInvestmentTwoYes"
-                                            onclick="toggleParallelInvestmentTwo(), hideStepUpTwoSIP()">
+                                            onclick="toggleParallelInvestment('Two'), hideStepUpTwoSIP()">
                                     </div>
                                     <div></div>
                                     <div>No</div>
                                     <div><input type="radio" name="parallelInvestmentTwo" value="no"
-                                            id="parallelInvestmentTwoNo" onclick="toggleParallelInvestmentTwo()"
+                                            id="parallelInvestmentTwoNo" onclick="toggleParallelInvestment('Two')"
                                             checked>
                                     </div>
                                 </div>
@@ -872,8 +892,32 @@
                                 <table class="sub-table hidden-table parallelInvestmentTwoTable">
                                     <tbody>
                                         <tr>
-                                            <th>Investment Details</th>
-                                            <th></th>
+                                            <td>Starting Year</td>
+                                            <td>
+                                                <div class="selectWrapper">
+                                                    <select name="investmentYearTwo" id="investmentYearTwo"
+                                                        class="investmentYearTwo">
+                                                    </select>
+                                                    <script>
+                                                        const currentYearTwo = new Date().getFullYear();
+                                                        const selectElementTwo = document.getElementById('investmentYearTwo');
+                                                        for (let i = currentYearTwo - 5; i <= currentYearTwo + 50; i++) {
+                                                            // Create an option element
+                                                            const option = document.createElement('option');
+                                                            option.value = i;
+                                                            option.text = i;
+
+                                                            // Set current year as selected by default
+                                                            if (i === currentYearOne) {
+                                                                option.selected = true;
+                                                            }
+
+                                                            // Append option to select element
+                                                            selectElementTwo.appendChild(option);
+                                                        }
+                                                    </script>
+                                                </div>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Initial Investment</td>
@@ -1210,7 +1254,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr id="showTotalWithdrawal">
                                 <td>Total Withdrawals</td>
                                 <td>
                                     <div class="divWrapper totalWrapper">
@@ -1249,7 +1293,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr id="showNoOfYearsSip">
                                 <td>Total No of Years with active SIP</td>
                                 <td>
                                     <div class="divWrapper totalWrapper">
@@ -1259,7 +1303,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr id="showNoOfYearsSwp">
                                 <td>Total No of Years with active SWP</td>
                                 <td>
                                     <div class="divWrapper totalWrapper">
@@ -1269,7 +1313,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr id="showNoOfLumpsumWithdrawals">
                                 <td>Total No Lumpsum Withdrawals</td>
                                 <td>
                                     <div class="divWrapper totalWrapper">
@@ -1557,8 +1601,8 @@
             toggleSIP();
             toggleSWP();
             toggleLumpsumWithdrawal();
-            toggleParallelInvestmentOne();
-            toggleParallelInvestmentTwo();
+            toggleParallelInvestment('One');
+            toggleParallelInvestment('Two');
             toggleBonusSIP();
             toggleStepUpSIP();
             toggleDecreaseStepUp();
@@ -1568,8 +1612,8 @@
             toggleBonusSipStepUp();
             toggleWithdrawalStepUp();
             calculate();
-            hideParallelInvestmentOneResult();
-            hideParallelInvestmentTwoResult();
+            hideParallelInvestmentResult('One');
+            hideParallelInvestmentResult('Two');
         };
         document.addEventListener('DOMContentLoaded', (event) => {
             const buttons = document.querySelectorAll('.yearMonthToggleBtn');

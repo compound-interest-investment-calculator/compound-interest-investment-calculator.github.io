@@ -63,44 +63,6 @@ function toggleLumpsumWithdrawal() {
         table.classList.add('hidden');
     }
 }
-
-function toggleParallelInvestmentOne() {
-    var yesRadio = document.getElementById('parallelInvestmentOneYes');
-    var table = document.querySelector('.parallelInvestmentOneTable');
-
-    if (yesRadio.checked) {
-        table.classList.remove('hidden');
-    } else {
-        table.classList.add('hidden');
-    }
-}
-
-function showParallelInvestmentOneResult() {
-    var resultTable = document.querySelector('.parallelInvestmentOneOverview');
-    resultTable.classList.remove('hidden');
-}
-
-function hideParallelInvestmentOneResult() {
-    var resultTable = document.querySelector('.parallelInvestmentOneOverview');
-    var monthlyResult = document.getElementById('monthlyResultTableForParallelInvestmentOne');
-    var yearlyResult = document.getElementById('yearlyResultTableForParallelInvestmentOne');
-    resultTable.classList.add('hidden');
-    monthlyResult.classList.add('hidden');
-    yearlyResult.classList.add('hidden');
-}
-
-
-function toggleParallelInvestmentTwo() {
-    var yesRadio = document.getElementById('parallelInvestmentTwoYes');
-    var table = document.querySelector('.parallelInvestmentTwoTable');
-
-    if (yesRadio.checked) {
-        table.classList.remove('hidden');
-    } else {
-        table.classList.add('hidden');
-    }
-}
-
 function showCombinedPortfolio() {
     var resultTable = document.querySelector('.combinedInvestmentOverview');
     resultTable.classList.remove('hidden');
@@ -109,20 +71,6 @@ function showCombinedPortfolio() {
 function hideCombinedPortfolio() {
     var resultTable = document.querySelector('.combinedInvestmentOverview');
     resultTable.classList.add('hidden');
-}
-
-function showParallelInvestmentTwoResult() {
-    var resultTable = document.querySelector('.parallelInvestmentTwoOverview');
-    resultTable.classList.remove('hidden');
-}
-
-function hideParallelInvestmentTwoResult() {
-    var resultTable = document.querySelector('.parallelInvestmentTwoOverview');
-    var monthlyResult = document.getElementById('monthlyResultTableForParallelInvestmentTwo');
-    var yearlyResult = document.getElementById('yearlyResultTableForParallelInvestmentTwo');
-    resultTable.classList.add('hidden');
-    monthlyResult.classList.add('hidden');
-    yearlyResult.classList.add('hidden');
 }
 
 function toggleBonusSIP() {
@@ -375,6 +323,8 @@ function calculate() {
 
     const parallelInvestmentOne = isChecked('parallelInvestmentOneYes');
     console.log("Parallel Investment?: " + parallelInvestmentOne);
+    const startingYearOne = getNumericValue('.investmentYearOne');
+    console.log("Investment Starting Year: " + startingYearOne);
     const initialInvestmentOne = getNumericValue('.initialInvestmentOne');
     console.log("Initial Investment: " + initialInvestmentOne);
     const annualInterestRateOne = getNumericValue('.interestRateOne');
@@ -402,6 +352,8 @@ function calculate() {
 
     const parallelInvestmentTwo = isChecked('parallelInvestmentTwoYes');
     console.log("Parallel Investment?: " + parallelInvestmentTwo);
+    const startingYearTwo = getNumericValue('.investmentYearTwo');
+    console.log("Investment Starting Year: " + startingYearTwo);
     const initialInvestmentTwo = getNumericValue('.initialInvestmentTwo');
     console.log("Initial Investment: " + initialInvestmentTwo);
     const annualInterestRateTwo = getNumericValue('.interestRateTwo');
@@ -433,9 +385,9 @@ function calculate() {
         systematicWithdrawalAfterYears, withdrawalPerMonth, stepUpWithdrawal, stepUpWithdrawalFrequency, stepUpWithdrawalIncrease,
         bonusSip, bonusSipAmount, bonusSipFrequency, lumpSumWithdrawals, lumpSumWithdrawalAmount,
         lumpSumWithdrawalYears, stepUpBonusSip, stepUpBonusSipPercent, stepUpBonusSipFrequency,
-        parallelInvestmentOne, initialInvestmentOne, annualInterestRateOne, yearsOne, monthsOne, investmentOneFrequency,
+        parallelInvestmentOne, startingYearOne, initialInvestmentOne, annualInterestRateOne, yearsOne, monthsOne, investmentOneFrequency,
         sipOne, sipOneAmount, stepUpSipOne, stepUpOne, stepUpIncreaseOne, stopSipOneAfterAPeriod, stopSipOneAfterYears,
-        parallelInvestmentTwo, initialInvestmentTwo, annualInterestRateTwo, yearsTwo, monthsTwo, investmentTwoFrequency,
+        parallelInvestmentTwo, startingYearTwo, initialInvestmentTwo, annualInterestRateTwo, yearsTwo, monthsTwo, investmentTwoFrequency,
         sipTwo, sipTwoAmount, stepUpSipTwo, stepUpTwo, stepUpIncreaseTwo, stopSipTwoAfterAPeriod, stopSipTwoAfterYears);
 
     formatInputFieldValues();
@@ -474,9 +426,9 @@ function calculateCompoundInterest(
     systematicWithdrawalAfterYears, withdrawalPerMonth, stepUpWithdrawal, stepUpWithdrawalFrequency, stepUpWithdrawalIncrease,
     bonusSip, bonusSipAmount, bonusSipFrequency, lumpSumWithdrawals, lumpSumWithdrawalAmount,
     lumpSumWithdrawalYears, stepUpBonusSip, stepUpBonusSipPercent, stepUpBonusSipFrequency,
-    parallelInvestmentOne, initialInvestmentOne, annualInterestRateOne, yearsOne, monthsOne, investmentOneFrequency,
+    parallelInvestmentOne, startingYearOne, initialInvestmentOne, annualInterestRateOne, yearsOne, monthsOne, investmentOneFrequency,
     sipOne, sipOneAmount, stepUpSipOne, stepUpOne, stepUpIncreaseOne, stopSipOneAfterAPeriod, stopSipOneAfterYears,
-    parallelInvestmentTwo, initialInvestmentTwo, annualInterestRateTwo, yearsTwo, monthsTwo, investmentTwoFrequency,
+    parallelInvestmentTwo, startingYearTwo, initialInvestmentTwo, annualInterestRateTwo, yearsTwo, monthsTwo, investmentTwoFrequency,
     sipTwo, sipTwoAmount, stepUpSipTwo, stepUpTwo, stepUpIncreaseTwo, stopSipTwoAfterAPeriod, stopSipTwoAfterYears) {
     console.log("************************************************************************************");
     const monthlyInterestRate = annualInterestRate / 12;
@@ -486,8 +438,8 @@ function calculateCompoundInterest(
     let totalInterest = 0;
     let totalWithdrawals = 0;
     let currentYear = startingYear;
-    let currentYearOne = startingYear;
-    let currentYearTwo = startingYear;
+    let currentYearOne = startingYearOne;
+    let currentYearTwo = startingYearTwo;
     let monthCounter = 0;
     let frequencyCounter = 0;
     const sipFrequency = getSipFrequency(investmentFrequency);
@@ -755,74 +707,18 @@ function calculateCompoundInterest(
     document.querySelector('.noOfYearsSwp').value = (systematicWithdrawalAfterAPeriod ? (years - systematicWithdrawalAfterYears) : 0);
     document.querySelector('.noOfLumpsumWithdrawals').value = lumpSumWithdrawalYears.length;
 
-    createMonthlyResultTable(monthlyInvestmentHistory, "monthlyResultTable");
-    createYearlyResultTable(yearlyInvestmentHistory, "yearlyResultTable");
 
-    if (parallelInvestmentOne) {
-        createMonthlyResultTable(monthlyInvestmentHistoryOne, "monthlyResultTableForParallelInvestmentOne");
-        createYearlyResultTable(yearlyInvestmentOneHistory, "yearlyResultTableForParallelInvestmentOne");
-        console.log();
-        console.log("************************************************************************************");
-        console.log("Total Parallel Deposit 1 : ₹" + totalDepositsOne);
-        console.log("Total Interest Earned in Parallel Investment 1: ₹" + totalInterestOne);
-        console.log("Future Investment Value of Parallel Investment 1: ₹" + totalAmountOne);
-        console.log("Total No of Years in Parallel Investment 1: " + yearsOne);
-        console.log("Total No of Years with Active SIP in Parallel Investment 1: " + activeSipYearsOne);
-        console.log("************************************************************************************");
-        document.querySelector('.totalDepositOne').value = totalDepositsOne;
-        document.querySelector('.totalInterestOne').value = totalInterestOne;
-        document.querySelector('.futureInvestmentOneValue').value = totalAmountOne;
-        document.querySelector('.noOfYearsOne').value = yearsOne;
-        document.querySelector('.noOfYearsSipOne').value = activeSipYearsOne;
-        showParallelInvestmentOneResult();
-    } else {
-        hideParallelInvestmentOneResult();
-    }
 
-    if (parallelInvestmentTwo) {
-        createMonthlyResultTable(monthlyInvestmentHistoryTwo, "monthlyResultTableForParallelInvestmentTwo");
-        createYearlyResultTable(yearlyInvestmentTwoHistory, "yearlyResultTableForParallelInvestmentTwo");
-        console.log();
-        console.log("************************************************************************************");
-        console.log("Total Parallel Deposit 2: ₹" + totalDepositsTwo);
-        console.log("Total Interest Earned in Parallel Investment 2: ₹" + totalInterestTwo);
-        console.log("Future Investment Value of Parallel Investment 2: ₹" + totalAmountTwo);
-        console.log("Total No of Years in Parallel Investment 2: " + yearsTwo);
-        console.log("Total No of Years with Active SIP in Parallel Investment 2: " + activeSipYearsTwo);
-        console.log("************************************************************************************");
-        document.querySelector('.totalDepositTwo').value = totalDepositsTwo;
-        document.querySelector('.totalInterestTwo').value = totalInterestTwo;
-        document.querySelector('.futureInvestmentTwoValue').value = totalAmountTwo;
-        document.querySelector('.noOfYearsTwo').value = yearsTwo;
-        document.querySelector('.noOfYearsSipTwo').value = activeSipYearsTwo;
-        showParallelInvestmentTwoResult();
-    } else {
-        hideParallelInvestmentTwoResult();
-    }
+    createMonthlyResultTable(monthlyInvestmentHistory, "monthlyResultTable", "Primary Investment");
+    createYearlyResultTable(yearlyInvestmentHistory, "yearlyResultTable", "Primary Investment");
 
-    if (parallelInvestmentOne || parallelInvestmentTwo) {
-        let combinedDeposit = (totalDeposits + totalDepositsOne + totalDepositsTwo);
-        let totalCombinedInterestEarned = (totalInterest + totalInterestOne + totalInterestTwo);
-        let totalFutureInvestmentValue = (totalAmount + totalAmountOne + totalAmountTwo);
-        let totalCombinedYears = Math.max(years, yearsOne, yearsTwo);;
-        let combinedSipYears = Math.max(activeSipYears, activeSipYearsOne, activeSipYearsTwo);
-        console.log();
-        console.log("************************************************************************************");
-        console.log("Total Combined Deposit: ₹" + combinedDeposit);
-        console.log("Total Combined Interest Earned: ₹" + totalCombinedInterestEarned);
-        console.log("Combined Future Investment Value: ₹" + totalFutureInvestmentValue);
-        console.log("Total Combined No of Years: " + totalCombinedYears);
-        console.log("Total Combined No of Years with Active SIP: " + combinedSipYears);
-        console.log("************************************************************************************");
-        document.querySelector('.combinedTotalDeposit').value = combinedDeposit;
-        document.querySelector('.combinedTotalInterest').value = totalCombinedInterestEarned;
-        document.querySelector('.combinedFutureInvestmentValue').value = totalFutureInvestmentValue;
-        document.querySelector('.combinedNoOfYears').value = totalCombinedYears;
-        document.querySelector('.combinedNoOfYearsSip').value = combinedSipYears;
-        showCombinedPortfolio();
-    } else {
-        hideCombinedPortfolio();
-    }
+    hideExtraInfoForPrimaryInvestment(sip, systematicWithdrawalAfterAPeriod, lumpSumWithdrawals);
+
+    updateInvestmentResults(parallelInvestmentOne, totalDepositsOne, totalInterestOne, totalAmountOne, yearsOne, activeSipYearsOne, monthlyInvestmentHistoryOne, yearlyInvestmentOneHistory, "One", "Parallel Investment 1");
+    updateInvestmentResults(parallelInvestmentTwo, totalDepositsTwo, totalInterestTwo, totalAmountTwo, yearsTwo, activeSipYearsTwo, monthlyInvestmentHistoryTwo, yearlyInvestmentTwoHistory, "Two", "Parallel Investment 2");
+    updateCombinedPortfolioResults(parallelInvestmentOne, parallelInvestmentTwo, totalDeposits, totalDepositsOne, totalDepositsTwo,
+        totalInterest, totalInterestOne, totalInterestTwo, totalAmount, totalAmountOne, totalAmountTwo, years, yearsOne, yearsTwo,
+        activeSipYears, activeSipYearsOne, activeSipYearsTwo)
 
     document.querySelector('.right-div-container').classList.remove('hidden');
     document.getElementById('yearly-data').classList.add('active');
@@ -830,43 +726,19 @@ function calculateCompoundInterest(
     showYearlyData();
 }
 
-function createMonthlyResultTable(monthlyInvestmentHistory, tableContainerId) {
-    const tableContainer = document.getElementById(tableContainerId);
-    const table = document.createElement('table');
-    const headerRow = table.insertRow();
-    const headers = ['Month', 'Deposit', 'Total Deposits', 'Interest', 'Accrued Interest', 'Balance'];
-
-    headers.forEach(headerText => {
-        const th = document.createElement('th');
-        th.textContent = headerText;
-        headerRow.appendChild(th);
-    });
-
-    for (const investmentDetails of monthlyInvestmentHistory) {
-        const row = table.insertRow();
-
-        // Check for yearly high light
-        if (investmentDetails.month !== 0 && investmentDetails.month % 12 === 0) {
-            row.classList.add('highlight');
-        }
-        row.insertCell().textContent = investmentDetails.month;
-        appendCellWithHtml(row, investmentDetails.sipAmount);
-        appendCellWithHtml(row, investmentDetails.principalForTheMonth);
-        appendCellWithHtml(row, investmentDetails.interestForTheMonth);
-        appendCellWithHtml(row, investmentDetails.totalInterest);
-        appendCellWithHtml(row, investmentDetails.totalAmount);
-    }
-
-    tableContainer.innerHTML = '';
-    tableContainer.appendChild(table);
-    tableContainer.classList.remove('hidden');
+function createMonthlyResultTable(monthlyInvestmentHistory, tableContainerId, tableHeader) {
+    createResultTable(monthlyInvestmentHistory, tableContainerId, tableHeader, 'Month');
 }
 
-function createYearlyResultTable(yearlyInvestmentHistory, tableContainerId) {
+function createYearlyResultTable(yearlyInvestmentHistory, tableContainerId, tableHeader) {
+    createResultTable(yearlyInvestmentHistory, tableContainerId, tableHeader, 'Year');
+}
+
+function createResultTable(investmentHistory, tableContainerId, tableHeader, timeUnit) {
     const tableContainer = document.getElementById(tableContainerId);
     const table = document.createElement('table');
     const headerRow = table.insertRow();
-    const headers = ['Year', 'Deposit', 'Total Deposits', 'Interest', 'Accrued Interest', 'Balance'];
+    const headers = [timeUnit, 'Deposit', 'Total Deposits', 'Interest', 'Accrued Interest', 'Balance'];
 
     headers.forEach(headerText => {
         const th = document.createElement('th');
@@ -874,19 +746,21 @@ function createYearlyResultTable(yearlyInvestmentHistory, tableContainerId) {
         headerRow.appendChild(th);
     });
 
-    for (const investmentDetails of yearlyInvestmentHistory) {
+    investmentHistory.forEach(details => {
         const row = table.insertRow();
-        row.insertCell().textContent = investmentDetails.year;
-        appendCellWithHtml(row, investmentDetails.sipAmount);
-        appendCellWithHtml(row, investmentDetails.principalForTheMonth);
-        appendCellWithHtml(row, investmentDetails.interestForTheMonth);
-        appendCellWithHtml(row, investmentDetails.totalInterest);
-        appendCellWithHtml(row, investmentDetails.totalAmount);
-    }
+        if (details.month !== 0 && details.month % 12 === 0) row.classList.add('highlight');
+        row.insertCell().textContent = timeUnit === 'Month' ? details.month : details.year;
+        appendCellWithHtml(row, details.sipAmount);
+        appendCellWithHtml(row, details.principalForTheMonth);
+        appendCellWithHtml(row, details.interestForTheMonth);
+        appendCellWithHtml(row, details.totalInterest);
+        appendCellWithHtml(row, details.totalAmount);
+    });
 
-    tableContainer.innerHTML = '';
+    tableContainer.innerHTML = '<div class="resultHeader">' + tableHeader + '</div>';
     tableContainer.appendChild(table);
     tableContainer.classList.remove('hidden');
+    table.classList.add('resultTable');
 }
 
 function appendCellWithHtml(row, data) {
@@ -981,4 +855,107 @@ function formatInputFieldValues() {
             input.value = 0;
         }
     });
+}
+
+function updateInvestmentResults(isActive, totalDeposits, totalInterest, totalAmount, years, activeSipYears, monthlyInvestmentHistory, yearlyInvestmentHistory, suffix, header) {
+    if (isActive) {
+        createMonthlyResultTable(monthlyInvestmentHistory, 'monthlyResultTableForParallelInvestment' + suffix, header);
+        createYearlyResultTable(yearlyInvestmentHistory, 'yearlyResultTableForParallelInvestment' + suffix, header);
+
+        console.log('\n************************************************************************************');
+        console.log('Total Parallel Deposit ' + suffix + ': ₹' + totalDeposits);
+        console.log('Total Interest Earned in Parallel Investment ' + suffix + ': ₹' + totalInterest);
+        console.log('Future Investment Value of Parallel Investment ' + suffix + ': ₹' + totalAmount);
+        console.log('Total No of Years in Parallel Investment ' + suffix + ': ' + years);
+        console.log('Total No of Years with Active SIP in Parallel Investment ' + suffix + ': ' + activeSipYears);
+        console.log('************************************************************************************');
+
+        document.querySelector('.totalDeposit' + suffix).value = totalDeposits;
+        document.querySelector('.totalInterest' + suffix).value = totalInterest;
+        document.querySelector('.futureInvestment' + suffix + 'Value').value = totalAmount;
+        document.querySelector('.noOfYears' + suffix).value = years;
+        document.querySelector('.noOfYearsSip' + suffix).value = activeSipYears;
+
+        showParallelInvestmentResult(suffix);
+    } else {
+        hideParallelInvestmentResult(suffix);
+    }
+}
+
+// Function to update combined portfolio results
+function updateCombinedPortfolioResults(parallelInvestmentOne, parallelInvestmentTwo, totalDeposits, totalDepositsOne, totalDepositsTwo,
+    totalInterest, totalInterestOne, totalInterestTwo, totalAmount, totalAmountOne, totalAmountTwo, years, yearsOne, yearsTwo,
+    activeSipYears, activeSipYearsOne, activeSipYearsTwo) {
+    if (parallelInvestmentOne || parallelInvestmentTwo) {
+        const combinedDeposit = totalDeposits + totalDepositsOne + totalDepositsTwo;
+        const totalCombinedInterestEarned = totalInterest + (parallelInvestmentOne ? totalInterestOne : 0) + (parallelInvestmentTwo ? totalInterestTwo : 0);
+        const totalFutureInvestmentValue = totalAmount + (parallelInvestmentOne ? totalAmountOne : 0) + (parallelInvestmentTwo ? totalAmountTwo : 0);
+        const totalCombinedYears = Math.max(years, parallelInvestmentOne ? yearsOne : 0, parallelInvestmentTwo ? yearsTwo : 0);
+        const combinedSipYears = Math.max(activeSipYears, parallelInvestmentOne ? activeSipYearsOne : 0, parallelInvestmentTwo ? activeSipYearsTwo : 0);
+
+        console.log('\n************************************************************************************');
+        console.log('Total Combined Deposit: ₹' + combinedDeposit);
+        console.log('Total Combined Interest Earned: ₹' + totalCombinedInterestEarned);
+        console.log('Combined Future Investment Value: ₹' + totalFutureInvestmentValue);
+        console.log('Total Combined No of Years: ' + totalCombinedYears);
+        console.log('Total Combined No of Years with Active SIP: ' + combinedSipYears);
+        console.log('************************************************************************************');
+
+        document.querySelector('.combinedTotalDeposit').value = combinedDeposit;
+        document.querySelector('.combinedTotalInterest').value = totalCombinedInterestEarned;
+        document.querySelector('.combinedFutureInvestmentValue').value = totalFutureInvestmentValue;
+        document.querySelector('.combinedNoOfYears').value = totalCombinedYears;
+        document.querySelector('.combinedNoOfYearsSip').value = combinedSipYears;
+
+        showCombinedPortfolio();
+    } else {
+        hideCombinedPortfolio();
+    }
+}
+
+function showParallelInvestmentResult(suffix) {
+    var resultTable = document.querySelector('.parallelInvestment' + suffix + 'Overview');
+    resultTable.classList.remove('hidden');
+}
+
+function hideParallelInvestmentResult(suffix) {
+    var resultTable = document.querySelector('.parallelInvestment' + suffix + 'Overview');
+    var monthlyResult = document.getElementById('monthlyResultTableForParallelInvestment' + suffix);
+    var yearlyResult = document.getElementById('yearlyResultTableForParallelInvestment' + suffix);
+    resultTable.classList.add('hidden');
+    monthlyResult.classList.add('hidden');
+    yearlyResult.classList.add('hidden');
+}
+
+function toggleParallelInvestment(suffix) {
+    var yesRadio = document.getElementById('parallelInvestment' + suffix + 'Yes');
+    var table = document.querySelector('.parallelInvestment' + suffix + 'Table');
+
+    if (yesRadio.checked) {
+        table.classList.remove('hidden');
+    } else {
+        table.classList.add('hidden');
+    }
+}
+
+function hideExtraInfoForPrimaryInvestment(sip, systematicWithdrawalAfterAPeriod, lumpSumWithdrawals) {
+    if (sip) {
+        document.getElementById('showNoOfYearsSip').classList.remove('hidden');
+    } else {
+        document.getElementById('showNoOfYearsSip').classList.add('hidden');
+    }
+
+    if (systematicWithdrawalAfterAPeriod) {
+        document.getElementById('showTotalWithdrawal').classList.remove('hidden');
+        document.getElementById('showNoOfYearsSwp').classList.remove('hidden');
+    } else {
+        document.getElementById('showTotalWithdrawal').classList.add('hidden');
+        document.getElementById('showNoOfYearsSwp').classList.add('hidden');
+    }
+
+    if (lumpSumWithdrawals) {
+        document.getElementById('showNoOfLumpsumWithdrawals').classList.remove('hidden');
+    } else {
+        document.getElementById('showNoOfLumpsumWithdrawals').classList.add('hidden');
+    }
 }
