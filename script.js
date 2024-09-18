@@ -277,6 +277,8 @@ function calculate() {
     console.log("StepUp Frequency: " + stepUp);
     const stepUpIncrease = getNumericValue('.stepUpIncreasePercentage');
     console.log("StepUp Increment By: " + stepUpIncrease + "%");
+    const sipThreshold = getNumericValue('.sipThreshold');
+    console.log("Miximum SIP Amount Allowed: " + sipThreshold);
     const decreaseStepUpPercent = isChecked('decreaseStepUpYes');
     console.log("Decrease StepUp After a period of time? " + decreaseStepUpPercent);
     const decreaseStepUpPercentAfterYears = getNumericValue('.decreaseStepUpAfterYears');
@@ -380,7 +382,7 @@ function calculate() {
     console.log("Stop SIP After Years: " + stopSipTwoAfterYears);
 
     calculateCompoundInterest(startingYear, initialInvestment, annualInterestRate, years, months, sip, investmentFrequency, sipAmount,
-        stepUpSip, stepUp, stepUpIncrease, decreaseStepUpPercent, decreaseStepUpPercentAfterYears,
+        stepUpSip, stepUp, stepUpIncrease, sipThreshold, decreaseStepUpPercent, decreaseStepUpPercentAfterYears,
         decreaseStepUpPercentTo, stopSipAfterAPeriod, stopSipAfterYears, systematicWithdrawalAfterAPeriod,
         systematicWithdrawalAfterYears, withdrawalPerMonth, stepUpWithdrawal, stepUpWithdrawalFrequency, stepUpWithdrawalIncrease,
         bonusSip, bonusSipAmount, bonusSipFrequency, lumpSumWithdrawals, lumpSumWithdrawalAmount,
@@ -421,7 +423,7 @@ const INVESTMENT_FREQUENCY = {
 
 function calculateCompoundInterest(
     startingYear, initialInvestment, annualInterestRate, years, months, sip, investmentFrequency, sipAmount,
-    stepUpSip, stepUp, stepUpIncrease, decreaseStepUpPercent, decreaseStepUpPercentAfterYears,
+    stepUpSip, stepUp, stepUpIncrease, sipThreshold, decreaseStepUpPercent, decreaseStepUpPercentAfterYears,
     decreaseStepUpPercentTo, stopSipAfterAPeriod, stopSipAfterYears, systematicWithdrawalAfterAPeriod,
     systematicWithdrawalAfterYears, withdrawalPerMonth, stepUpWithdrawal, stepUpWithdrawalFrequency, stepUpWithdrawalIncrease,
     bonusSip, bonusSipAmount, bonusSipFrequency, lumpSumWithdrawals, lumpSumWithdrawalAmount,
@@ -513,7 +515,7 @@ function calculateCompoundInterest(
             totalWithdrawals += lumpSumWithdrawalAmount;
         }
 
-        sipForThisMonth = Math.round(sipForThisMonth);
+        sipForThisMonth = Math.round(Math.min(sipThreshold, sipForThisMonth));
         const principalForTheMonth = Math.round(totalAmount + sipForThisMonth + withdrawalForThisMonth);
         totalDeposits = Math.round(totalDeposits + sipForThisMonth);
         const interestForTheMonth = Math.round(principalForTheMonth * monthlyInterestRate / 100);
@@ -534,7 +536,7 @@ function calculateCompoundInterest(
         if (sip && stepUpSip && stepUp !== STEP_UP_TYPE.NONE) {
             const stepUpFrequency = getStepUpFrequency(stepUp);
             if (monthCounter === stepUpFrequency) {
-                if (decreaseStepUpPercent && currentYear > decreaseStepUpPercentAfterYears && !decreasedStepUp) {
+                if (decreaseStepUpPercent && currentYear > (startingYear + decreaseStepUpPercentAfterYears) && !decreasedStepUp) {
                     stepUpIncrease = decreaseStepUpPercentTo;
                     decreasedStepUp = true;
                 }
