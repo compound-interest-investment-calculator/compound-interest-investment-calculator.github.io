@@ -86,7 +86,7 @@
                                         <td>Years</td>
                                         <td>
                                             <div class="divWrapper">
-                                                <input type="text" value="19" placeholder="0" class="years"
+                                                <input type="text" value="20" placeholder="0" class="years"
                                                     id="numeric-input" pattern="[0-9]*"
                                                     oninput="validateNumericInput(this);">
                                             </div>
@@ -202,6 +202,21 @@
                                                         <option value="6">Half-Yearly</option>
                                                         <option value="12" selected>Yearly</option>
                                                     </select>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>SIP Capping (Max SIP Allowed Per Month)</td>
+                                            <td>
+                                                <div class="divWrapper">
+                                                    <div class="container">
+                                                        <div class="pWrapper">
+                                                            <p>&#8377;</p>
+                                                        </div>
+                                                    </div>
+                                                    <input type="text" value="250000" placeholder="0"
+                                                        class="sipThreshold" id="numeric-input" pattern="[0-9]*"
+                                                        oninput="validateNumericInput(this);">
                                                 </div>
                                             </td>
                                         </tr>
