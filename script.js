@@ -1,3 +1,5 @@
+const inflationRate = 7;
+
 function validateNumericInput(input) {
     let value = input.value.replace(/\D/g, '');
     let formattedValue = Number(value).toLocaleString();
@@ -432,6 +434,14 @@ function calculateCompoundInterest(
     sipOne, sipOneAmount, stepUpSipOne, stepUpOne, stepUpIncreaseOne, stopSipOneAfterAPeriod, stopSipOneAfterYears,
     parallelInvestmentTwo, startingYearTwo, initialInvestmentTwo, annualInterestRateTwo, yearsTwo, monthsTwo, investmentTwoFrequency,
     sipTwo, sipTwoAmount, stepUpSipTwo, stepUpTwo, stepUpIncreaseTwo, stopSipTwoAfterAPeriod, stopSipTwoAfterYears) {
+    if (initialInvestment == 0 && !sip) {
+        alert('An initial Investment or an SIP is needed...');
+        console.log("************************************************************************************");
+        console.log("An initial Investment or an SIP is needed...");
+        console.log("************************************************************************************");
+        window.scrollTo(top);
+        return;
+    }
     console.log("************************************************************************************");
     const monthlyInterestRate = annualInterestRate / 12;
     const totalMonths = years * 12 + months;
@@ -615,7 +625,7 @@ function calculateCompoundInterest(
                 currentYearTwo++;
             }
             // Step-up logic for parallel investment SIP
-            if (sipTwo && stepUpSipTwo && stepUpTwo !== STEP_UP_TYPE.NTwo) {
+            if (sipTwo && stepUpSipTwo && stepUpTwo !== STEP_UP_TYPE.NONE) {
                 const stepUpFrequencyTwo = getStepUpFrequency(stepUpTwo);
                 if (monthCounterTwo === stepUpFrequencyTwo) {
                     sipTwoAmount += sipTwoAmount * (stepUpIncreaseTwo / 100);
@@ -688,12 +698,16 @@ function calculateCompoundInterest(
     } else {
         activeSipYearsTwo = 0;
     }
+
+    const presentValueOfFutureMoney = calculatePresentValueOfFutureMoney(currentYear - getCurrentYear(), totalAmount, inflationRate);
+
     console.log();
     console.log("************************************************************************************");
     console.log("Total Deposit: ₹" + totalDeposits);
     console.log("Total Withdrawal: ₹" + totalWithdrawals);
     console.log("Total Interest Earned: ₹" + totalInterest);
     console.log("Future Investment Value: ₹" + totalAmount);
+    console.log("Present Value of Future Money: ₹" + presentValueOfFutureMoney);
     console.log("Total No of Years: " + years);
     console.log("Total No of Years with Active SIP: " + activeSipYears);
     console.log("Total No of Years with Active SWP: " + (systematicWithdrawalAfterAPeriod ? (years - systematicWithdrawalAfterYears) : 0));
@@ -704,6 +718,7 @@ function calculateCompoundInterest(
     document.querySelector('.totalWithdrawal').value = totalWithdrawals;
     document.querySelector('.totalInterest').value = totalInterest;
     document.querySelector('.futureInvestmentValue').value = totalAmount;
+    document.querySelector('.presentValueOfFutureMoney').value = presentValueOfFutureMoney;
     document.querySelector('.noOfYears').value = years;
     document.querySelector('.noOfYearsSip').value = activeSipYears;
     document.querySelector('.noOfYearsSwp').value = (systematicWithdrawalAfterAPeriod ? (years - systematicWithdrawalAfterYears) : 0);
@@ -864,10 +879,13 @@ function updateInvestmentResults(isActive, totalDeposits, totalInterest, totalAm
         createMonthlyResultTable(monthlyInvestmentHistory, 'monthlyResultTableForParallelInvestment' + suffix, header);
         createYearlyResultTable(yearlyInvestmentHistory, 'yearlyResultTableForParallelInvestment' + suffix, header);
 
+        const presentValueOfFutureMoney = calculatePresentValueOfFutureMoney(years, totalAmount, inflationRate);
+
         console.log('\n************************************************************************************');
         console.log('Total Parallel Deposit ' + suffix + ': ₹' + totalDeposits);
         console.log('Total Interest Earned in Parallel Investment ' + suffix + ': ₹' + totalInterest);
         console.log('Future Investment Value of Parallel Investment ' + suffix + ': ₹' + totalAmount);
+        console.log('Present Value of Future Money (Parallel Investment ' + suffix + '): ₹' + presentValueOfFutureMoney);
         console.log('Total No of Years in Parallel Investment ' + suffix + ': ' + years);
         console.log('Total No of Years with Active SIP in Parallel Investment ' + suffix + ': ' + activeSipYears);
         console.log('************************************************************************************');
@@ -875,6 +893,7 @@ function updateInvestmentResults(isActive, totalDeposits, totalInterest, totalAm
         document.querySelector('.totalDeposit' + suffix).value = totalDeposits;
         document.querySelector('.totalInterest' + suffix).value = totalInterest;
         document.querySelector('.futureInvestment' + suffix + 'Value').value = totalAmount;
+        document.querySelector('.presentValueOfFutureMoneyParallelInvestment' + suffix + 'Value').value = presentValueOfFutureMoney;
         document.querySelector('.noOfYears' + suffix).value = years;
         document.querySelector('.noOfYearsSip' + suffix).value = activeSipYears;
 
@@ -895,10 +914,13 @@ function updateCombinedPortfolioResults(parallelInvestmentOne, parallelInvestmen
         const totalCombinedYears = Math.max(years, parallelInvestmentOne ? yearsOne : 0, parallelInvestmentTwo ? yearsTwo : 0);
         const combinedSipYears = Math.max(activeSipYears, parallelInvestmentOne ? activeSipYearsOne : 0, parallelInvestmentTwo ? activeSipYearsTwo : 0);
 
+        const presentValueOfFutureMoney = calculatePresentValueOfFutureMoney(totalCombinedYears, totalFutureInvestmentValue, inflationRate);
+
         console.log('\n************************************************************************************');
         console.log('Total Combined Deposit: ₹' + combinedDeposit);
         console.log('Total Combined Interest Earned: ₹' + totalCombinedInterestEarned);
         console.log('Combined Future Investment Value: ₹' + totalFutureInvestmentValue);
+        console.log('Combined Future Investment Value: ₹' + presentValueOfFutureMoney);
         console.log('Total Combined No of Years: ' + totalCombinedYears);
         console.log('Total Combined No of Years with Active SIP: ' + combinedSipYears);
         console.log('************************************************************************************');
@@ -906,6 +928,7 @@ function updateCombinedPortfolioResults(parallelInvestmentOne, parallelInvestmen
         document.querySelector('.combinedTotalDeposit').value = combinedDeposit;
         document.querySelector('.combinedTotalInterest').value = totalCombinedInterestEarned;
         document.querySelector('.combinedFutureInvestmentValue').value = totalFutureInvestmentValue;
+        document.querySelector('.combinedPresentValueOfFutureMoney').value = presentValueOfFutureMoney;
         document.querySelector('.combinedNoOfYears').value = totalCombinedYears;
         document.querySelector('.combinedNoOfYearsSip').value = combinedSipYears;
 
@@ -960,4 +983,20 @@ function hideExtraInfoForPrimaryInvestment(sip, systematicWithdrawalAfterAPeriod
     } else {
         document.getElementById('showNoOfLumpsumWithdrawals').classList.add('hidden');
     }
+}
+
+function calculatePresentValueOfFutureMoney(n, fv, inflationRate) {
+    const r = inflationRate / 100;
+    const pv = Math.round(fv / ((1 + r) ** n));
+    console.log("Inflation Calculation\n-------------------------------------------------")
+    console.log("Future Value: " + fv);
+    console.log("Inflation Rate: " + inflationRate + "%");
+    console.log("Years: " + n);
+    console.log("Present Value: " + pv);
+    console.log("************************************************************************************")
+    return pv;
+}
+
+function getCurrentYear() {
+    return new Date().getFullYear();
 }

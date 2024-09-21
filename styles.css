@@ -35,8 +35,8 @@ body {
 .div-left,
 .div-right {
     flex: 1;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    /* padding-top: 10px;
+    padding-bottom: 10px; */
     box-sizing: border-box;
 }
 
@@ -102,6 +102,67 @@ table.section-heading tr {
 
 table.section-heading-button {
     margin: 0px;
+}
+
+
+.divWrapper {
+    border-bottom: 1px solid rgb(228, 228, 228);
+    padding: 0 2px;
+    max-width: 100%;
+    height: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.divWrapper:has(.divWrapperInner) {
+    border-bottom: none;
+    gap: 10px;
+}
+
+.divWrapperInner {
+    border-bottom: 1px solid rgb(228, 228, 228);
+    display: flex;
+    align-items: center;
+    height: 30px;
+    width: 50%;
+}
+
+.divWrapper .selectWrapper {
+    width: 50%;
+}
+
+
+.calculate-button,
+.downloadBtn,
+.downloadCalculations,
+.yearMonthToggleBtn {
+    font-family: 'Outfit', sans-serif;
+    color: #676767;
+    font-size: 16px;
+    background-color: var(--hightlight-background);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 10px;
+    cursor: pointer;
+    width: 100%;
+    height: 50px;
+    align-items: center;
+}
+
+.downloadCalculations {
+    width: 13%;
+}
+
+.calculate-button:hover,
+.downloadBtn:hover,
+.downloadCalculations:hover,
+.yearMonthToggleBtn:hover {
+    background-color: #07709d;
+}
+
+.downloadButton {
+    margin-bottom: 10px;
 }
 
 @media (min-width: 1270px) {
@@ -170,6 +231,18 @@ table.section-heading-button {
     .resultTable {
         font-size: 10px;
     }
+
+    .divWrapperInner {
+        width: 40%;
+    }
+
+    .divWrapper .selectWrapper {
+        width: 60%;
+    }
+
+    .downloadCalculations {
+        width: 20%;
+    }
 }
 
 .centered-content {
@@ -190,15 +263,15 @@ table {
     margin-bottom: 20px;
 }
 
-table.resultTable{
+table.resultTable {
     margin-top: 0px;
 }
 
-div.resultTable{
+div.resultTable {
     margin-top: 20px;
 }
 
-.resultHeader{
+.resultHeader {
     background-color: rgb(228, 228, 228);
     font-weight: 600;
     padding-top: 8px;
@@ -246,7 +319,7 @@ table.dataTable th:not(.no-border) {
     border-bottom: 2px solid rgb(179, 179, 179);
 }
 
-.parallel-start{
+.parallel-start {
     padding-top: 25px;
 }
 
@@ -288,15 +361,6 @@ td {
 
 .sub-table {
     margin: 0px;
-}
-
-.divWrapper {
-    border-bottom: 1px solid rgb(228, 228, 228);
-    padding: 0 2px;
-    max-width: 100%;
-    height: 30px;
-    display: flex;
-    align-items: center;
 }
 
 .totalWrapper {
@@ -395,40 +459,8 @@ a {
     text-decoration: none;
 }
 
-.calculate-button,
-.downloadBtn,
-.downloadCalculations,
-.yearMonthToggleBtn {
-    font-family: 'Outfit', sans-serif;
-    color: #676767;
-    font-size: 16px;
-    background-color: var(--hightlight-background);
-    color: white;
-    border: none;
-    border-radius: 10px;
-    padding: 10px 10px;
-    cursor: pointer;
-    width: 100%;
-    height: 50px;
-}
-
-.downloadCalculations {
-    width: 10%;
-}
-
-.calculate-button:hover,
-.downloadBtn:hover,
-.downloadCalculations:hover,
-.yearMonthToggleBtn:hover {
-    background-color: #07709d;
-}
-
-.downloadButton {
-    margin-bottom: 10px;
-}
-
 .calc-button {
-    /* padding-top: 15px; */
+    /* padding-top: 10px; */
     margin-bottom: 10px;
 }
 
