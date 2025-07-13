@@ -35,8 +35,6 @@ body {
 .div-left,
 .div-right {
   flex: 1;
-  /* padding-top: 10px;
-    padding-bottom: 10px; */
   box-sizing: border-box;
 }
 
@@ -129,7 +127,33 @@ table.section-heading-button {
   width: 50%;
 }
 
+.button-container {
+  display: flex;
+  column-gap: 10px;
+}
+
+.left-button {
+  flex-grow: 1;
+}
+
+.right-button {
+  flex-basis: 30%;
+}
+
+.left-button button,
+.right-button button {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.hide-reset-button {
+  display: none;
+}
+
 .calculate-button,
+.reset-button,
 .downloadBtn,
 .downloadCalculations,
 .yearMonthToggleBtn {
@@ -152,6 +176,7 @@ table.section-heading-button {
 }
 
 .calculate-button:hover,
+.reset-button:hover,
 .downloadBtn:hover,
 .downloadCalculations:hover,
 .yearMonthToggleBtn:hover {
@@ -160,6 +185,13 @@ table.section-heading-button {
 
 .downloadButton {
   margin-bottom: 10px;
+}
+
+.resultTable th,
+.resultTable td {
+  text-align: left;
+  border: 1px solid var(--primary-border);
+  height: 20px;
 }
 
 @media (min-width: 1270px) {
@@ -173,9 +205,7 @@ table.section-heading-button {
 
   .resultTable th,
   .resultTable td {
-    text-align: left;
     padding-left: 10px;
-    border: 1px solid var(--primary-border);
   }
 }
 
@@ -195,9 +225,7 @@ table.section-heading-button {
 
   .resultTable th,
   .resultTable td {
-    text-align: left;
     padding-left: 5px;
-    border: 1px solid var(--primary-border);
   }
 }
 
@@ -307,15 +335,11 @@ table.parallelInvYear td:first-child {
 }
 
 table.dataTable th:not(.no-border) {
-  border-bottom: 2px solid rgb(179, 179, 179);
+  border-bottom: 1px solid rgb(179, 179, 179);
 }
 
-.parallel-inv {
+.subtable-wrapper {
   border-bottom: 2px solid rgb(179, 179, 179);
-}
-
-.parallel-start {
-  padding-top: 25px;
 }
 
 table.dataTable th,
@@ -324,7 +348,7 @@ table.total th {
   align-content: center;
 }
 
-table.dataTable th:not(.parallel-start),
+table.dataTable th,
 table.total th {
   padding-top: 10px;
   padding-bottom: 10px;
@@ -334,27 +358,26 @@ table.firstTable {
   margin-top: 10px;
 }
 
-table:not(".resultTable") td:nth-child(2),
-table:not(".resultTable") td:nth-child(4),
-table:not(".resultTable") th:nth-child(2),
-table:not(".resultTable") th:nth-child(4),
+table td:nth-child(2),
+table td:nth-child(4),
+table th:nth-child(2),
+table th:nth-child(4),
 .sub-table td:nth-child(4) {
   padding-left: 10px;
 }
 
-th {
-  padding-top: 5px;
-  padding-bottom: 10px;
-  font-weight: 600;
-}
-
+th,
 td {
   padding-top: 5px;
   padding-bottom: 5px;
 }
 
+th {
+  font-weight: 600;
+}
+
 .sub-table {
-  margin: 0px;
+  margin: 5px 0px;
 }
 
 .totalWrapper {
@@ -505,11 +528,6 @@ a {
 
 .resultTable table td:last-child {
   font-weight: 500;
-}
-
-.sub-table-wrapper {
-  padding-top: 0;
-  padding-bottom: 0;
 }
 
 .highlight {

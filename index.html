@@ -73,7 +73,6 @@
                       value="100000"
                       placeholder="0"
                       class="initialInvestment"
-                      id="numeric-input"
                       pattern="[0-9]*"
                       oninput="validateNumericInput(this);"
                     />
@@ -89,7 +88,6 @@
                       value="12"
                       placeholder="0"
                       class="interestRate"
-                      id="numeric-input"
                       pattern="[0-9]*"
                       oninput="validateNumericInput(this);"
                     />
@@ -113,7 +111,6 @@
                             value="20"
                             placeholder="0"
                             class="years"
-                            id="numeric-input"
                             pattern="[0-9]*"
                             oninput="validateNumericInput(this);"
                           />
@@ -128,7 +125,6 @@
                             value=""
                             placeholder="0"
                             class="months"
-                            id="numeric-input"
                             pattern="[0-9]*"
                             oninput="validateNumericInput(this);"
                           />
@@ -139,13 +135,18 @@
                 </td>
               </tr>
               <tr>
-                <td>
+                <td colspan="2">
+                  <div class="subtable-wrapper"></div>
+                </td>
+              </tr>
+              <tr>
+                <th class="no-border">
                   Want do an SIP?<br />
                   <span style="font-size: x-small">
                     A regular deposit plan to invest at a distinct period.
                   </span>
-                </td>
-                <td style="text-align: center">
+                </th>
+                <th class="no-border" style="text-align: center">
                   <div class="radio-wrapper">
                     <div>Yes</div>
                     <div>
@@ -170,100 +171,211 @@
                       />
                     </div>
                   </div>
-                </td>
+                </th>
               </tr>
               <tr>
                 <td colspan="2">
-                  <table class="sub-table hidden-table sipTable">
-                    <tbody>
-                      <tr>
-                        <th>SIP Details</th>
-                        <th></th>
-                      </tr>
-                      <tr>
-                        <td>Deposit Amount</td>
-                        <td>
-                          <div class="divWrapper">
-                            <div class="container">
-                              <div class="pWrapper">
-                                <p>&#8377;</p>
+                  <div class="subtable-wrapper">
+                    <table class="sub-table hidden-table sipTable">
+                      <tbody>
+                        <tr>
+                          <th>SIP Details</th>
+                          <th></th>
+                        </tr>
+                        <tr>
+                          <td>Deposit Amount</td>
+                          <td>
+                            <div class="divWrapper">
+                              <div class="container">
+                                <div class="pWrapper">
+                                  <p>&#8377;</p>
+                                </div>
                               </div>
-                            </div>
-                            <input
-                              type="text"
-                              value="25000"
-                              placeholder="0"
-                              class="sipAmount"
-                              id="numeric-input"
-                              pattern="[0-9]*"
-                              oninput="validateNumericInput(this);"
-                            />
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Deposit Frquency</td>
-                        <td>
-                          <div class="selectWrapper">
-                            <select
-                              name="investmentFrequency"
-                              id="investmentFrequency"
-                              class="investmentFrequency"
-                            >
-                              <option value="1" selected>Monthly</option>
-                              <option value="3">Quarterly</option>
-                              <option value="6">Half-Yearly</option>
-                              <option value="12">Yearly</option>
-                            </select>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Want to StepUp? <br />
-                          <span style="font-size: x-small">
-                            Want to increase deposit every
-                            year/quarter/half-yearly?
-                          </span>
-                        </td>
-                        <td style="text-align: center">
-                          <div class="radio-wrapper">
-                            <div>Yes</div>
-                            <div>
-                              <input
-                                type="radio"
-                                name="stepUp"
-                                value="yes"
-                                id="sipStepUpYes"
-                                onclick="toggleStepUpSIP()"
-                                checked
-                              />
-                            </div>
-                            <div></div>
-                            <div>No</div>
-                            <div>
-                              <input
-                                type="radio"
-                                name="stepUp"
-                                value="no"
-                                id="sipStepUpNo"
-                                onclick="toggleStepUpSIP()"
-                              />
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr class="sipStepUpRows">
-                        <td>Increase Deposit By</td>
-                        <td>
-                          <div class="divWrapper">
-                            <div class="divWrapperInner">
                               <input
                                 type="text"
-                                value="10"
+                                value="25000"
                                 placeholder="0"
-                                class="stepUpIncreasePercentage"
-                                id="numeric-input"
+                                class="sipAmount"
+                                pattern="[0-9]*"
+                                oninput="validateNumericInput(this);"
+                              />
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Deposit Frquency</td>
+                          <td>
+                            <div class="selectWrapper">
+                              <select
+                                name="investmentFrequency"
+                                id="investmentFrequency"
+                                class="investmentFrequency"
+                              >
+                                <option value="1" selected>Monthly</option>
+                                <option value="3">Quarterly</option>
+                                <option value="6">Half-Yearly</option>
+                                <option value="12">Yearly</option>
+                              </select>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            Want to StepUp? <br />
+                            <span style="font-size: x-small">
+                              Want to increase deposit every
+                              year/quarter/half-yearly?
+                            </span>
+                          </td>
+                          <td style="text-align: center">
+                            <div class="radio-wrapper">
+                              <div>Yes</div>
+                              <div>
+                                <input
+                                  type="radio"
+                                  name="stepUp"
+                                  value="yes"
+                                  id="sipStepUpYes"
+                                  onclick="toggleStepUpSIP()"
+                                  checked
+                                />
+                              </div>
+                              <div></div>
+                              <div>No</div>
+                              <div>
+                                <input
+                                  type="radio"
+                                  name="stepUp"
+                                  value="no"
+                                  id="sipStepUpNo"
+                                  onclick="toggleStepUpSIP()"
+                                />
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr class="sipStepUpRows">
+                          <td>Increase Deposit By</td>
+                          <td>
+                            <div class="divWrapper">
+                              <div class="divWrapperInner">
+                                <input
+                                  type="text"
+                                  value="10"
+                                  placeholder="0"
+                                  class="stepUpIncreasePercentage"
+                                  pattern="[0-9]*"
+                                  oninput="validateNumericInput(this);"
+                                />
+                                <div class="container">
+                                  <div class="pWrapper">
+                                    <p>%</p>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="selectWrapper">
+                                <select
+                                  name="stepUpFrequency"
+                                  id="stepUpFrequency"
+                                  class="stepUpFrequency"
+                                >
+                                  <option value="3">Quarterly</option>
+                                  <option value="6">Half-Yearly</option>
+                                  <option value="12" selected>Yearly</option>
+                                </select>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>SIP Capping (Max SIP Allowed Per Month)</td>
+                          <td>
+                            <div class="divWrapper">
+                              <div class="container">
+                                <div class="pWrapper">
+                                  <p>&#8377;</p>
+                                </div>
+                              </div>
+                              <input
+                                type="text"
+                                value="200000"
+                                placeholder="0"
+                                class="sipThreshold"
+                                pattern="[0-9]*"
+                                oninput="validateNumericInput(this);"
+                              />
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            Change StepUp Percentage After a Certain Period?
+                            <br />
+                            <span style="font-size: x-small">
+                              As the investment grows it might be difficult to
+                              maintain same % of increase/decrease after few
+                              years.
+                            </span>
+                          </td>
+                          <td style="text-align: center">
+                            <div class="radio-wrapper">
+                              <div>Yes</div>
+                              <div>
+                                <input
+                                  type="radio"
+                                  name="decreaseStepUpPercent"
+                                  value="yes"
+                                  id="decreaseStepUpYes"
+                                  onclick="toggleDecreaseStepUp()"
+                                />
+                              </div>
+                              <div></div>
+                              <div>No</div>
+                              <div>
+                                <input
+                                  type="radio"
+                                  name="decreaseStepUpPercent"
+                                  value="no"
+                                  id="decreaseStepUpNo"
+                                  onclick="toggleDecreaseStepUp()"
+                                  checked
+                                />
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr class="decreaseStepUpRows">
+                          <td>
+                            Change StepUp After Years<br />
+                            <span style="font-size: xx-small">
+                              This value should be less than total number of
+                              years...
+                            </span>
+                          </td>
+                          <td>
+                            <div class="divWrapper">
+                              <div class="divWrapper">
+                                <input
+                                  type="text"
+                                  value=""
+                                  placeholder="0"
+                                  class="decreaseStepUpAfterYears"
+                                  pattern="[0-9]*"
+                                  oninput="validateNumericInput(this);"
+                                />
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr class="decreaseStepUpRows">
+                          <td>Update StepUp To</td>
+                          <td>
+                            <div class="divWrapper">
+                              <input
+                                type="text"
+                                value=""
+                                placeholder="0"
+                                class="updatedStepUpPercentage"
                                 pattern="[0-9]*"
                                 oninput="validateNumericInput(this);"
                               />
@@ -273,348 +385,232 @@
                                 </div>
                               </div>
                             </div>
-                            <div class="selectWrapper">
-                              <select
-                                name="stepUpFrequency"
-                                id="stepUpFrequency"
-                                class="stepUpFrequency"
-                              >
-                                <option value="3">Quarterly</option>
-                                <option value="6">Half-Yearly</option>
-                                <option value="12" selected>Yearly</option>
-                              </select>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>SIP Capping (Max SIP Allowed Per Month)</td>
-                        <td>
-                          <div class="divWrapper">
-                            <div class="container">
-                              <div class="pWrapper">
-                                <p>&#8377;</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            Stop SIP after a certain period?<br />
+                            <span style="font-size: x-small">
+                              If you want to stop contributing more and just
+                              hold the investments.
+                            </span>
+                          </td>
+                          <td style="text-align: center">
+                            <div class="radio-wrapper">
+                              <div>Yes</div>
+                              <div>
+                                <input
+                                  type="radio"
+                                  name="stopSip"
+                                  value="yes"
+                                  id="stopSipYes"
+                                  onclick="toggleStopSip()"
+                                />
+                              </div>
+                              <div></div>
+                              <div>No</div>
+                              <div>
+                                <input
+                                  type="radio"
+                                  name="stopSip"
+                                  value="no"
+                                  id="stopSipNo"
+                                  onclick="toggleStopSip()"
+                                  checked
+                                />
                               </div>
                             </div>
-                            <input
-                              type="text"
-                              value="200000"
-                              placeholder="0"
-                              class="sipThreshold"
-                              id="numeric-input"
-                              pattern="[0-9]*"
-                              oninput="validateNumericInput(this);"
-                            />
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Change StepUp Percentage After a Certain Period?
-                          <br />
-                          <span style="font-size: x-small">
-                            As the investment grows it might be difficult to
-                            maintain same % of increase/decrease after few
-                            years.
-                          </span>
-                        </td>
-                        <td style="text-align: center">
-                          <div class="radio-wrapper">
-                            <div>Yes</div>
-                            <div>
-                              <input
-                                type="radio"
-                                name="decreaseStepUpPercent"
-                                value="yes"
-                                id="decreaseStepUpYes"
-                                onclick="toggleDecreaseStepUp()"
-                              />
-                            </div>
-                            <div></div>
-                            <div>No</div>
-                            <div>
-                              <input
-                                type="radio"
-                                name="decreaseStepUpPercent"
-                                value="no"
-                                id="decreaseStepUpNo"
-                                onclick="toggleDecreaseStepUp()"
-                                checked
-                              />
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr class="decreaseStepUpRows">
-                        <td>
-                          Change StepUp After Years<br />
-                          <span style="font-size: xx-small">
-                            This value should be less than total number of
-                            years...
-                          </span>
-                        </td>
-                        <td>
-                          <div class="divWrapper">
+                          </td>
+                        </tr>
+                        <tr class="stopSipRows">
+                          <td>
+                            Stop SIP After Years<br />
+                            <span style="font-size: xx-small">
+                              This value should be less than total number of
+                              years...
+                            </span>
+                          </td>
+                          <td>
                             <div class="divWrapper">
-                              <input
-                                type="text"
-                                value=""
-                                placeholder="0"
-                                class="decreaseStepUpAfterYears"
-                                id="numeric-input"
-                                pattern="[0-9]*"
-                                oninput="validateNumericInput(this);"
-                              />
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr class="decreaseStepUpRows">
-                        <td>Update StepUp To</td>
-                        <td>
-                          <div class="divWrapper">
-                            <input
-                              type="text"
-                              value=""
-                              placeholder="0"
-                              class="updatedStepUpPercentage"
-                              id="numeric-input"
-                              pattern="[0-9]*"
-                              oninput="validateNumericInput(this);"
-                            />
-                            <div class="container">
-                              <div class="pWrapper">
-                                <p>%</p>
+                              <div class="divWrapper">
+                                <input
+                                  type="text"
+                                  value=""
+                                  placeholder="0"
+                                  class="stopSipAfterYears"
+                                  pattern="[0-9]*"
+                                  oninput="validateNumericInput(this);"
+                                />
                               </div>
                             </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Stop SIP after a certain period?<br />
-                          <span style="font-size: x-small">
-                            If you want to stop contributing more and just hold
-                            the investments.
-                          </span>
-                        </td>
-                        <td style="text-align: center">
-                          <div class="radio-wrapper">
-                            <div>Yes</div>
-                            <div>
-                              <input
-                                type="radio"
-                                name="stopSip"
-                                value="yes"
-                                id="stopSipYes"
-                                onclick="toggleStopSip()"
-                              />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            Want to go for a Bonus SIP?<br />
+                            <span style="font-size: x-small">
+                              An additional investment you might do as you get a
+                              bonus or incentive.
+                            </span>
+                          </td>
+                          <td style="text-align: center">
+                            <div class="radio-wrapper">
+                              <div>Yes</div>
+                              <div>
+                                <input
+                                  type="radio"
+                                  name="bonusSip"
+                                  value="yes"
+                                  id="bonusSipYes"
+                                  onclick="toggleBonusSIP()"
+                                />
+                              </div>
+                              <div></div>
+                              <div>No</div>
+                              <div>
+                                <input
+                                  type="radio"
+                                  name="bonusSip"
+                                  value="no"
+                                  id="bonusSipNo"
+                                  onclick="toggleBonusSIP()"
+                                  checked
+                                />
+                              </div>
                             </div>
-                            <div></div>
-                            <div>No</div>
-                            <div>
-                              <input
-                                type="radio"
-                                name="stopSip"
-                                value="no"
-                                id="stopSipNo"
-                                onclick="toggleStopSip()"
-                                checked
-                              />
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr class="stopSipRows">
-                        <td>
-                          Stop SIP After Years<br />
-                          <span style="font-size: xx-small">
-                            This value should be less than total number of
-                            years...
-                          </span>
-                        </td>
-                        <td>
-                          <div class="divWrapper">
-                            <div class="divWrapper">
-                              <input
-                                type="text"
-                                value=""
-                                placeholder="0"
-                                class="stopSipAfterYears"
-                                id="numeric-input"
-                                pattern="[0-9]*"
-                                oninput="validateNumericInput(this);"
-                              />
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Want to go for a Bonus SIP?<br />
-                          <span style="font-size: x-small">
-                            An additional investment you might do as you get a
-                            bonus or incentive.
-                          </span>
-                        </td>
-                        <td style="text-align: center">
-                          <div class="radio-wrapper">
-                            <div>Yes</div>
-                            <div>
-                              <input
-                                type="radio"
-                                name="bonusSip"
-                                value="yes"
-                                id="bonusSipYes"
-                                onclick="toggleBonusSIP()"
-                              />
-                            </div>
-                            <div></div>
-                            <div>No</div>
-                            <div>
-                              <input
-                                type="radio"
-                                name="bonusSip"
-                                value="no"
-                                id="bonusSipNo"
-                                onclick="toggleBonusSIP()"
-                                checked
-                              />
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td colspan="2" class="sub-table-wrapper">
-                          <table class="sub-table hidden-table bonusSipTable">
-                            <tbody>
-                              <tr>
-                                <th>Bonus SIP Details</th>
-                                <th></th>
-                              </tr>
-                              <tr>
-                                <td>Bonus SIP Amount</td>
-                                <td>
-                                  <div class="divWrapper">
-                                    <div class="container">
-                                      <div class="pWrapper">
-                                        <p>&#8377;</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="2" class="sub-table-wrapper">
+                            <table class="sub-table hidden-table bonusSipTable">
+                              <tbody>
+                                <tr>
+                                  <th>Bonus SIP Details</th>
+                                  <th></th>
+                                </tr>
+                                <tr>
+                                  <td>Bonus SIP Amount</td>
+                                  <td>
+                                    <div class="divWrapper">
+                                      <div class="container">
+                                        <div class="pWrapper">
+                                          <p>&#8377;</p>
+                                        </div>
                                       </div>
-                                    </div>
-                                    <input
-                                      type="text"
-                                      value=""
-                                      placeholder="0"
-                                      class="bonusSipAmount"
-                                      id="numeric-input"
-                                      pattern="[0-9]*"
-                                      oninput="validateNumericInput(this);"
-                                    />
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>Bonus SIP Frquency</td>
-                                <td>
-                                  <div class="selectWrapper">
-                                    <select
-                                      name="bonusSipFrequency"
-                                      id="bonusSipFrequency"
-                                      class="bonusSipFrequency"
-                                    >
-                                      <option value="3">Quarterly</option>
-                                      <option value="6">Half-Yearly</option>
-                                      <option value="12">Yearly</option>
-                                    </select>
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  Want to StepUp? <br />
-                                  <span style="font-size: x-small">
-                                    Want to increase bonus SIP as time goes by?
-                                  </span>
-                                </td>
-                                <td style="text-align: center">
-                                  <div class="radio-wrapper">
-                                    <div>Yes</div>
-                                    <div>
-                                      <input
-                                        type="radio"
-                                        name="bonusSipStepUp"
-                                        value="yes"
-                                        id="bonusSipStepUpYes"
-                                        onclick="toggleBonusSipStepUp()"
-                                      />
-                                    </div>
-                                    <div></div>
-                                    <div>No</div>
-                                    <div>
-                                      <input
-                                        type="radio"
-                                        name="bonusSipStepUp"
-                                        value="no"
-                                        id="bonusSipStepUpNo"
-                                        onclick="toggleBonusSipStepUp()"
-                                        checked
-                                      />
-                                    </div>
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr class="bonusSipStepUpRows">
-                                <td>Increase Bonus SIP By</td>
-                                <td>
-                                  <div class="divWrapper">
-                                    <div class="divWrapperInner">
                                       <input
                                         type="text"
                                         value=""
                                         placeholder="0"
-                                        class="bonusSipStepUpPercentage"
-                                        id="numeric-input"
+                                        class="bonusSipAmount"
                                         pattern="[0-9]*"
                                         oninput="validateNumericInput(this);"
                                       />
-                                      <div class="container">
-                                        <div class="pWrapper">
-                                          <p>%</p>
-                                        </div>
-                                      </div>
                                     </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>Bonus SIP Frquency</td>
+                                  <td>
                                     <div class="selectWrapper">
                                       <select
-                                        name="bonusSipStepUpFrequency"
-                                        id="bonusSipStepUpFrequency"
-                                        class="bonusSipStepUpFrequency"
+                                        name="bonusSipFrequency"
+                                        id="bonusSipFrequency"
+                                        class="bonusSipFrequency"
                                       >
                                         <option value="3">Quarterly</option>
                                         <option value="6">Half-Yearly</option>
-                                        <option value="12" selected>
-                                          Yearly
-                                        </option>
+                                        <option value="12">Yearly</option>
                                       </select>
                                     </div>
-                                  </div>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    Want to StepUp? <br />
+                                    <span style="font-size: x-small">
+                                      Want to increase bonus SIP as time goes
+                                      by?
+                                    </span>
+                                  </td>
+                                  <td style="text-align: center">
+                                    <div class="radio-wrapper">
+                                      <div>Yes</div>
+                                      <div>
+                                        <input
+                                          type="radio"
+                                          name="bonusSipStepUp"
+                                          value="yes"
+                                          id="bonusSipStepUpYes"
+                                          onclick="toggleBonusSipStepUp()"
+                                        />
+                                      </div>
+                                      <div></div>
+                                      <div>No</div>
+                                      <div>
+                                        <input
+                                          type="radio"
+                                          name="bonusSipStepUp"
+                                          value="no"
+                                          id="bonusSipStepUpNo"
+                                          onclick="toggleBonusSipStepUp()"
+                                          checked
+                                        />
+                                      </div>
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr class="bonusSipStepUpRows">
+                                  <td>Increase Bonus SIP By</td>
+                                  <td>
+                                    <div class="divWrapper">
+                                      <div class="divWrapperInner">
+                                        <input
+                                          type="text"
+                                          value=""
+                                          placeholder="0"
+                                          class="bonusSipStepUpPercentage"
+                                          pattern="[0-9]*"
+                                          oninput="validateNumericInput(this);"
+                                        />
+                                        <div class="container">
+                                          <div class="pWrapper">
+                                            <p>%</p>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="selectWrapper">
+                                        <select
+                                          name="bonusSipStepUpFrequency"
+                                          id="bonusSipStepUpFrequency"
+                                          class="bonusSipStepUpFrequency"
+                                        >
+                                          <option value="3">Quarterly</option>
+                                          <option value="6">Half-Yearly</option>
+                                          <option value="12" selected>
+                                            Yearly
+                                          </option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </td>
               </tr>
               <tr>
-                <td>
+                <th class="no-border">
                   Want to go for a SWP?<br />
                   <span style="font-size: x-small">
                     A regular Withdrawal Plan after a certain period like SIP.
                   </span>
-                </td>
-                <td style="text-align: center">
+                </th>
+                <th class="no-border" style="text-align: center">
                   <div class="radio-wrapper">
                     <div>Yes</div>
                     <div>
@@ -639,160 +635,159 @@
                       />
                     </div>
                   </div>
-                </td>
+                </th>
               </tr>
               <tr>
                 <td colspan="2" class="sub-table-wrapper">
-                  <table class="sub-table hidden-table swpTable">
-                    <tbody>
-                      <tr>
-                        <th>SWP Details</th>
-                        <th></th>
-                      </tr>
-                      <tr>
-                        <td>
-                          Withdrawal After Years<br />
-                          <span style="font-size: xx-small">
-                            This value should be less than total number of
-                            years...
-                          </span>
-                        </td>
-                        <td>
-                          <div class="divWrapper">
+                  <div class="subtable-wrapper">
+                    <table class="sub-table hidden-table swpTable">
+                      <tbody>
+                        <tr>
+                          <th>SWP Details</th>
+                          <th></th>
+                        </tr>
+                        <tr>
+                          <td>
+                            Withdrawal After Years<br />
+                            <span style="font-size: xx-small">
+                              This value should be less than total number of
+                              years...
+                            </span>
+                          </td>
+                          <td>
                             <div class="divWrapper">
-                              <input
-                                type="text"
-                                value=""
-                                placeholder="0"
-                                class="withdrawalAfterYears"
-                                id="numeric-input"
-                                pattern="[0-9]*"
-                                oninput="validateNumericInput(this);"
-                              />
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Withdrawal Amount</td>
-                        <td>
-                          <div class="divWrapper">
-                            <div class="container">
-                              <div class="pWrapper">
-                                <p>&#8377;</p>
+                              <div class="divWrapper">
+                                <input
+                                  type="text"
+                                  value=""
+                                  placeholder="0"
+                                  class="withdrawalAfterYears"
+                                  pattern="[0-9]*"
+                                  oninput="validateNumericInput(this);"
+                                />
                               </div>
                             </div>
-                            <input
-                              type="text"
-                              value=""
-                              placeholder="0"
-                              class="withdrawalAmount"
-                              id="numeric-input"
-                              pattern="[0-9]*"
-                              oninput="validateNumericInput(this);"
-                            />
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Withdrawal Frquency</td>
-                        <td>
-                          <div class="selectWrapper">
-                            <select
-                              name="withdrawalFrequency"
-                              id="withdrawalFrequency"
-                              class="withdrawalFrequency"
-                            >
-                              <option value="1" selected>Monthly</option>
-                              <option value="3">Quarterly</option>
-                              <option value="6">Half-Yearly</option>
-                              <option value="12">Yearly</option>
-                            </select>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Want to StepUp the SWP? <br />
-                          <span style="font-size: x-small">
-                            Want to increase withdrawals every
-                            year/quarter/half-yearly?
-                          </span>
-                        </td>
-                        <td style="text-align: center">
-                          <div class="radio-wrapper">
-                            <div>Yes</div>
-                            <div>
-                              <input
-                                type="radio"
-                                name="stepUpWithdrawal"
-                                value="yes"
-                                id="stepUpWithdrawalYes"
-                                onclick="toggleWithdrawalStepUp()"
-                              />
-                            </div>
-                            <div></div>
-                            <div>No</div>
-                            <div>
-                              <input
-                                type="radio"
-                                name="stepUpWithdrawal"
-                                value="no"
-                                id="stepUpWithdrawalNo"
-                                onclick="toggleWithdrawalStepUp()"
-                                checked
-                              />
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr class="withdrawalStepUpRows">
-                        <td>Increase Withdrawal By</td>
-                        <td>
-                          <div class="divWrapper">
-                            <div class="divWrapperInner">
-                              <input
-                                type="text"
-                                value=""
-                                placeholder="0"
-                                class="withdrawalStepUpPercentage"
-                                id="numeric-input"
-                                pattern="[0-9]*"
-                                oninput="validateNumericInput(this);"
-                              />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Withdrawal Amount</td>
+                          <td>
+                            <div class="divWrapper">
                               <div class="container">
                                 <div class="pWrapper">
-                                  <p>%</p>
+                                  <p>&#8377;</p>
                                 </div>
                               </div>
+                              <input
+                                type="text"
+                                value=""
+                                placeholder="0"
+                                class="withdrawalAmount"
+                                pattern="[0-9]*"
+                                oninput="validateNumericInput(this);"
+                              />
                             </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Withdrawal Frquency</td>
+                          <td>
                             <div class="selectWrapper">
                               <select
-                                name="withdrawalStepUpFrequency"
-                                id="withdrawalStepUpFrequency"
-                                class="withdrawalStepUpFrequency"
+                                name="withdrawalFrequency"
+                                id="withdrawalFrequency"
+                                class="withdrawalFrequency"
                               >
+                                <option value="1" selected>Monthly</option>
                                 <option value="3">Quarterly</option>
                                 <option value="6">Half-Yearly</option>
-                                <option value="12" selected>Yearly</option>
+                                <option value="12">Yearly</option>
                               </select>
                             </div>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            Want to StepUp the SWP? <br />
+                            <span style="font-size: x-small">
+                              Want to increase withdrawals every
+                              year/quarter/half-yearly?
+                            </span>
+                          </td>
+                          <td style="text-align: center">
+                            <div class="radio-wrapper">
+                              <div>Yes</div>
+                              <div>
+                                <input
+                                  type="radio"
+                                  name="stepUpWithdrawal"
+                                  value="yes"
+                                  id="stepUpWithdrawalYes"
+                                  onclick="toggleWithdrawalStepUp()"
+                                />
+                              </div>
+                              <div></div>
+                              <div>No</div>
+                              <div>
+                                <input
+                                  type="radio"
+                                  name="stepUpWithdrawal"
+                                  value="no"
+                                  id="stepUpWithdrawalNo"
+                                  onclick="toggleWithdrawalStepUp()"
+                                  checked
+                                />
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr class="withdrawalStepUpRows">
+                          <td>Increase Withdrawal By</td>
+                          <td>
+                            <div class="divWrapper">
+                              <div class="divWrapperInner">
+                                <input
+                                  type="text"
+                                  value=""
+                                  placeholder="0"
+                                  class="withdrawalStepUpPercentage"
+                                  pattern="[0-9]*"
+                                  oninput="validateNumericInput(this);"
+                                />
+                                <div class="container">
+                                  <div class="pWrapper">
+                                    <p>%</p>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="selectWrapper">
+                                <select
+                                  name="withdrawalStepUpFrequency"
+                                  id="withdrawalStepUpFrequency"
+                                  class="withdrawalStepUpFrequency"
+                                >
+                                  <option value="3">Quarterly</option>
+                                  <option value="6">Half-Yearly</option>
+                                  <option value="12" selected>Yearly</option>
+                                </select>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </td>
               </tr>
               <tr>
-                <td>
+                <th class="no-border">
                   Want to make one or more Lumpsum Withdrawals?<br />
                   <span style="font-size: x-small">
                     Irregular Withdrawal Plan at any of years of your investment
                     for any kind of goals.
                   </span>
-                </td>
-                <td style="text-align: center">
+                </th>
+                <th class="no-border" style="text-align: center">
                   <div class="radio-wrapper">
                     <div>Yes</div>
                     <div>
@@ -817,66 +812,68 @@
                       />
                     </div>
                   </div>
-                </td>
+                </th>
               </tr>
               <tr>
                 <td colspan="2" class="sub-table-wrapper">
-                  <table class="sub-table hidden-table lumpsumWithdrawalTable">
-                    <tbody>
-                      <tr>
-                        <th>Lumpsum Withdrawal Details</th>
-                        <th></th>
-                      </tr>
-                      <tr>
-                        <td>Withdrawal Amount</td>
-                        <td>
-                          <div class="divWrapper">
-                            <div class="container">
-                              <div class="pWrapper">
-                                <p>&#8377;</p>
+                  <div class="subtable-wrapper">
+                    <table
+                      class="sub-table hidden-table lumpsumWithdrawalTable"
+                    >
+                      <tbody>
+                        <tr>
+                          <th>Lumpsum Withdrawal Details</th>
+                          <th></th>
+                        </tr>
+                        <tr>
+                          <td>Withdrawal Amount</td>
+                          <td>
+                            <div class="divWrapper">
+                              <div class="container">
+                                <div class="pWrapper">
+                                  <p>&#8377;</p>
+                                </div>
                               </div>
+                              <input
+                                type="text"
+                                value=""
+                                placeholder="0"
+                                class="lumpsumWithdrawalAmount"
+                                pattern="[0-9]*"
+                                oninput="validateNumericInput(this);"
+                              />
                             </div>
-                            <input
-                              type="text"
-                              value=""
-                              placeholder="0"
-                              class="lumpsumWithdrawalAmount"
-                              id="numeric-input"
-                              pattern="[0-9]*"
-                              oninput="validateNumericInput(this);"
-                            />
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          List of Years of the withdrawals<br />
-                          <span style="font-size: x-small">
-                            Comma separated years, e.g., 12, 15, 18 which means
-                            the specified amount will be withdrwan on 12th, 15th
-                            and 18th years.
-                          </span>
-                        </td>
-                        <td>
-                          <div class="divWrapper">
-                            <input
-                              type="text"
-                              value=""
-                              placeholder="0"
-                              class="lumpsumwithdrawalYears"
-                              id="numeric-input"
-                              pattern="[0-9,]*"
-                              oninput="validateNumericInputWithComma(this);"
-                            />
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            List of Years of the withdrawals<br />
+                            <span style="font-size: x-small">
+                              Comma separated years, e.g., 12, 15, 18 which
+                              means the specified amount will be withdrwan on
+                              12th, 15th and 18th years.
+                            </span>
+                          </td>
+                          <td>
+                            <div class="divWrapper">
+                              <input
+                                type="text"
+                                value=""
+                                placeholder="0"
+                                class="lumpsumwithdrawalYears"
+                                pattern="[0-9,]*"
+                                oninput="validateNumericInputWithComma(this);"
+                              />
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </td>
               </tr>
               <tr class="parallel-inv">
-                <th class="no-border parallel-start">
+                <th class="no-border">
                   Parallel Investment 1<br />
                   <span style="font-size: x-small">
                     Could be a goal based separate portfolio, bonds, etc...
@@ -911,347 +908,343 @@
               </tr>
               <tr>
                 <td colspan="2" class="sub-table-wrapper">
-                  <table
-                    class="sub-table hidden-table parallelInvestmentOneTable"
-                  >
-                    <tbody>
-                      <tr>
-                        <td>Starting Year</td>
-                        <td>
-                          <div class="selectWrapper">
-                            <select
-                              name="investmentYearOne"
-                              id="investmentYearOne"
-                              class="investmentYearOne"
-                            ></select>
-                            <script>
-                              const currentYearOne = getCurrentYear();
-                              const selectElementOne =
-                                document.getElementById("investmentYearOne");
-                              for (
-                                let i = currentYearOne - 5;
-                                i <= currentYearOne + 50;
-                                i++
-                              ) {
-                                // Create an option element
-                                const option = document.createElement("option");
-                                option.value = i;
-                                option.text = i;
+                  <div class="subtable-wrapper">
+                    <table
+                      class="sub-table hidden-table parallelInvestmentOneTable"
+                    >
+                      <tbody>
+                        <tr>
+                          <td>Starting Year</td>
+                          <td>
+                            <div class="selectWrapper">
+                              <select
+                                name="investmentYearOne"
+                                id="investmentYearOne"
+                                class="investmentYearOne"
+                              ></select>
+                              <script>
+                                const currentYearOne = getCurrentYear();
+                                const selectElementOne =
+                                  document.getElementById("investmentYearOne");
+                                for (
+                                  let i = currentYearOne - 5;
+                                  i <= currentYearOne + 50;
+                                  i++
+                                ) {
+                                  // Create an option element
+                                  const option =
+                                    document.createElement("option");
+                                  option.value = i;
+                                  option.text = i;
 
-                                // Set current year as selected by default
-                                if (i === currentYearOne) {
-                                  option.selected = true;
+                                  // Set current year as selected by default
+                                  if (i === currentYearOne) {
+                                    option.selected = true;
+                                  }
+
+                                  // Append option to select element
+                                  selectElementOne.appendChild(option);
                                 }
-
-                                // Append option to select element
-                                selectElementOne.appendChild(option);
-                              }
-                            </script>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Initial Investment</td>
-                        <td>
-                          <div class="divWrapper">
-                            <div class="container">
-                              <div class="pWrapper">
-                                <p>&#8377;</p>
-                              </div>
+                              </script>
                             </div>
-                            <input
-                              type="text"
-                              value="100000"
-                              placeholder="0"
-                              class="initialInvestmentOne"
-                              id="numeric-input"
-                              pattern="[0-9]*"
-                              oninput="validateNumericInput(this);"
-                            />
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Yearly Interest Rate</td>
-                        <td>
-                          <div class="divWrapper">
-                            <input
-                              type="text"
-                              value="10"
-                              placeholder="0"
-                              class="interestRateOne"
-                              id="numeric-input"
-                              pattern="[0-9]*"
-                              oninput="validateNumericInput(this);"
-                            />
-                            <div class="container">
-                              <div class="pWrapper">
-                                <p>%</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Initial Investment</td>
+                          <td>
+                            <div class="divWrapper">
+                              <div class="container">
+                                <div class="pWrapper">
+                                  <p>&#8377;</p>
+                                </div>
                               </div>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td colspan="2">
-                          <table class="sub-table parallelInvYear">
-                            <tr>
-                              <td>Years</td>
-                              <td>
-                                <div class="divWrapper">
-                                  <input
-                                    type="text"
-                                    value="15"
-                                    placeholder="0"
-                                    class="yearsOne"
-                                    id="numeric-input"
-                                    pattern="[0-9]*"
-                                    oninput="validateNumericInput(this);"
-                                  />
-                                </div>
-                              </td>
-                              <td></td>
-                              <td>Months</td>
-                              <td>
-                                <div class="divWrapper">
-                                  <input
-                                    type="text"
-                                    value=""
-                                    placeholder="0"
-                                    class="monthsOne"
-                                    id="numeric-input"
-                                    pattern="[0-9]*"
-                                    oninput="validateNumericInput(this);"
-                                  />
-                                </div>
-                              </td>
-                            </tr>
-                          </table>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Want do an SIP?<br />
-                          <span style="font-size: x-small">
-                            A regular deposit plan to invest at a distinct
-                            period.
-                          </span>
-                        </td>
-                        <td style="text-align: center">
-                          <div class="radio-wrapper">
-                            <div>Yes</div>
-                            <div>
                               <input
-                                type="radio"
-                                name="sipOne"
-                                value="yes"
-                                id="sipOneYes"
-                                onclick="toggleSIPOne()"
-                                checked
+                                type="text"
+                                value="100000"
+                                placeholder="0"
+                                class="initialInvestmentOne"
+                                pattern="[0-9]*"
+                                oninput="validateNumericInput(this);"
                               />
                             </div>
-                            <div></div>
-                            <div>No</div>
-                            <div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Yearly Interest Rate</td>
+                          <td>
+                            <div class="divWrapper">
                               <input
-                                type="radio"
-                                name="sipOne"
-                                value="no"
-                                id="sipOneNo"
-                                onclick="toggleSIPOne()"
+                                type="text"
+                                value="10"
+                                placeholder="0"
+                                class="interestRateOne"
+                                pattern="[0-9]*"
+                                oninput="validateNumericInput(this);"
                               />
+                              <div class="container">
+                                <div class="pWrapper">
+                                  <p>%</p>
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td colspan="2">
-                          <table class="sub-table hidden-table sipOneTable">
-                            <tbody>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="2">
+                            <table class="sub-table parallelInvYear">
                               <tr>
-                                <th>SIP Details</th>
-                                <th></th>
-                              </tr>
-                              <tr>
-                                <td>Deposit Amount</td>
+                                <td>Years</td>
                                 <td>
                                   <div class="divWrapper">
-                                    <div class="container">
-                                      <div class="pWrapper">
-                                        <p>&#8377;</p>
-                                      </div>
-                                    </div>
                                     <input
                                       type="text"
-                                      value="15000"
+                                      value="15"
                                       placeholder="0"
-                                      class="sipOneAmount"
-                                      id="numeric-input"
+                                      class="yearsOne"
+                                      pattern="[0-9]*"
+                                      oninput="validateNumericInput(this);"
+                                    />
+                                  </div>
+                                </td>
+                                <td></td>
+                                <td>Months</td>
+                                <td>
+                                  <div class="divWrapper">
+                                    <input
+                                      type="text"
+                                      value=""
+                                      placeholder="0"
+                                      class="monthsOne"
                                       pattern="[0-9]*"
                                       oninput="validateNumericInput(this);"
                                     />
                                   </div>
                                 </td>
                               </tr>
-                              <tr>
-                                <td>Deposit Frquency</td>
-                                <td>
-                                  <div class="selectWrapper">
-                                    <select
-                                      name="investmentOneFrequency"
-                                      id="investmentOneFrequency"
-                                      class="investmentOneFrequency"
-                                    >
-                                      <option value="1" selected>
-                                        Monthly
-                                      </option>
-                                      <option value="3">Quarterly</option>
-                                      <option value="6">Half-Yearly</option>
-                                      <option value="12">Yearly</option>
-                                    </select>
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  Want to StepUp? <br />
-                                  <span style="font-size: x-small">
-                                    Want to increase deposit every
-                                    year/quarter/half-yearly?
-                                  </span>
-                                </td>
-                                <td style="text-align: center">
-                                  <div class="radio-wrapper">
-                                    <div>Yes</div>
-                                    <div>
-                                      <input
-                                        type="radio"
-                                        name="stepUpOne"
-                                        value="yes"
-                                        id="sipStepUpOneYes"
-                                        onclick="toggleStepUpOneSIP()"
-                                        checked
-                                      />
-                                    </div>
-                                    <div></div>
-                                    <div>No</div>
-                                    <div>
-                                      <input
-                                        type="radio"
-                                        name="stepUpOne"
-                                        value="no"
-                                        id="sipStepUpOneNo"
-                                        onclick="toggleStepUpOneSIP()"
-                                      />
-                                    </div>
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr class="sipStepUpOneRows">
-                                <td>Increase Deposit By</td>
-                                <td>
-                                  <div class="divWrapper">
-                                    <div class="divWrapperInner">
-                                      <input
-                                        type="text"
-                                        value="5"
-                                        placeholder="0"
-                                        class="stepUpOneIncreasePercentage"
-                                        id="numeric-input"
-                                        pattern="[0-9]*"
-                                        oninput="validateNumericInput(this);"
-                                      />
+                            </table>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            Want do an SIP?<br />
+                            <span style="font-size: x-small">
+                              A regular deposit plan to invest at a distinct
+                              period.
+                            </span>
+                          </td>
+                          <td style="text-align: center">
+                            <div class="radio-wrapper">
+                              <div>Yes</div>
+                              <div>
+                                <input
+                                  type="radio"
+                                  name="sipOne"
+                                  value="yes"
+                                  id="sipOneYes"
+                                  onclick="toggleSIPOne()"
+                                  checked
+                                />
+                              </div>
+                              <div></div>
+                              <div>No</div>
+                              <div>
+                                <input
+                                  type="radio"
+                                  name="sipOne"
+                                  value="no"
+                                  id="sipOneNo"
+                                  onclick="toggleSIPOne()"
+                                />
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="2">
+                            <table class="sub-table hidden-table sipOneTable">
+                              <tbody>
+                                <tr>
+                                  <th>SIP Details</th>
+                                  <th></th>
+                                </tr>
+                                <tr>
+                                  <td>Deposit Amount</td>
+                                  <td>
+                                    <div class="divWrapper">
                                       <div class="container">
                                         <div class="pWrapper">
-                                          <p>%</p>
+                                          <p>&#8377;</p>
                                         </div>
                                       </div>
-                                    </div>
-                                    <div class="selectWrapper">
-                                      <select
-                                        name="stepUpOneFrequency"
-                                        id="stepUpOneFrequency"
-                                        class="stepUpOneFrequency"
-                                      >
-                                        <option value="3">Quarterly</option>
-                                        <option value="6">Half-Yearly</option>
-                                        <option value="12" selected>
-                                          Yearly
-                                        </option>
-                                      </select>
-                                    </div>
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  Stop SIP after a certain period?<br />
-                                  <span style="font-size: x-small">
-                                    If you want to stop contributing more and
-                                    just hold the investments.
-                                  </span>
-                                </td>
-                                <td style="text-align: center">
-                                  <div class="radio-wrapper">
-                                    <div>Yes</div>
-                                    <div>
-                                      <input
-                                        type="radio"
-                                        name="stopSipOne"
-                                        value="yes"
-                                        id="stopSipOneYes"
-                                        onclick="toggleStopSipOne()"
-                                      />
-                                    </div>
-                                    <div></div>
-                                    <div>No</div>
-                                    <div>
-                                      <input
-                                        type="radio"
-                                        name="stopSipOne"
-                                        value="no"
-                                        id="stopSipOneNo"
-                                        onclick="toggleStopSipOne()"
-                                        checked
-                                      />
-                                    </div>
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr class="stopSipOneRows">
-                                <td>
-                                  Stop SIP After Years<br />
-                                  <span style="font-size: xx-small">
-                                    This value should be less than total number
-                                    of years...
-                                  </span>
-                                </td>
-                                <td>
-                                  <div class="divWrapper">
-                                    <div class="divWrapper">
                                       <input
                                         type="text"
-                                        value=""
+                                        value="15000"
                                         placeholder="0"
-                                        class="stopSipOneAfterYears"
-                                        id="numeric-input"
+                                        class="sipOneAmount"
                                         pattern="[0-9]*"
                                         oninput="validateNumericInput(this);"
                                       />
                                     </div>
-                                  </div>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>Deposit Frquency</td>
+                                  <td>
+                                    <div class="selectWrapper">
+                                      <select
+                                        name="investmentOneFrequency"
+                                        id="investmentOneFrequency"
+                                        class="investmentOneFrequency"
+                                      >
+                                        <option value="1" selected>
+                                          Monthly
+                                        </option>
+                                        <option value="3">Quarterly</option>
+                                        <option value="6">Half-Yearly</option>
+                                        <option value="12">Yearly</option>
+                                      </select>
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    Want to StepUp? <br />
+                                    <span style="font-size: x-small">
+                                      Want to increase deposit every
+                                      year/quarter/half-yearly?
+                                    </span>
+                                  </td>
+                                  <td style="text-align: center">
+                                    <div class="radio-wrapper">
+                                      <div>Yes</div>
+                                      <div>
+                                        <input
+                                          type="radio"
+                                          name="stepUpOne"
+                                          value="yes"
+                                          id="sipStepUpOneYes"
+                                          onclick="toggleStepUpOneSIP()"
+                                          checked
+                                        />
+                                      </div>
+                                      <div></div>
+                                      <div>No</div>
+                                      <div>
+                                        <input
+                                          type="radio"
+                                          name="stepUpOne"
+                                          value="no"
+                                          id="sipStepUpOneNo"
+                                          onclick="toggleStepUpOneSIP()"
+                                        />
+                                      </div>
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr class="sipStepUpOneRows">
+                                  <td>Increase Deposit By</td>
+                                  <td>
+                                    <div class="divWrapper">
+                                      <div class="divWrapperInner">
+                                        <input
+                                          type="text"
+                                          value="5"
+                                          placeholder="0"
+                                          class="stepUpOneIncreasePercentage"
+                                          pattern="[0-9]*"
+                                          oninput="validateNumericInput(this);"
+                                        />
+                                        <div class="container">
+                                          <div class="pWrapper">
+                                            <p>%</p>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="selectWrapper">
+                                        <select
+                                          name="stepUpOneFrequency"
+                                          id="stepUpOneFrequency"
+                                          class="stepUpOneFrequency"
+                                        >
+                                          <option value="3">Quarterly</option>
+                                          <option value="6">Half-Yearly</option>
+                                          <option value="12" selected>
+                                            Yearly
+                                          </option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    Stop SIP after a certain period?<br />
+                                    <span style="font-size: x-small">
+                                      If you want to stop contributing more and
+                                      just hold the investments.
+                                    </span>
+                                  </td>
+                                  <td style="text-align: center">
+                                    <div class="radio-wrapper">
+                                      <div>Yes</div>
+                                      <div>
+                                        <input
+                                          type="radio"
+                                          name="stopSipOne"
+                                          value="yes"
+                                          id="stopSipOneYes"
+                                          onclick="toggleStopSipOne()"
+                                        />
+                                      </div>
+                                      <div></div>
+                                      <div>No</div>
+                                      <div>
+                                        <input
+                                          type="radio"
+                                          name="stopSipOne"
+                                          value="no"
+                                          id="stopSipOneNo"
+                                          onclick="toggleStopSipOne()"
+                                          checked
+                                        />
+                                      </div>
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr class="stopSipOneRows">
+                                  <td>
+                                    Stop SIP After Years<br />
+                                    <span style="font-size: xx-small">
+                                      This value should be less than total
+                                      number of years...
+                                    </span>
+                                  </td>
+                                  <td>
+                                    <div class="divWrapper">
+                                      <div class="divWrapper">
+                                        <input
+                                          type="text"
+                                          value=""
+                                          placeholder="0"
+                                          class="stopSipOneAfterYears"
+                                          pattern="[0-9]*"
+                                          oninput="validateNumericInput(this);"
+                                        />
+                                      </div>
+                                    </div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </td>
               </tr>
               <tr class="parallel-inv">
-                <th class="no-border parallel-start">
+                <th class="no-border">
                   Parallel Investment 2<br />
                   <span style="font-size: x-small">
                     Could be a PF, Compounding FD, etc...
@@ -1286,346 +1279,352 @@
               </tr>
               <tr>
                 <td colspan="2" class="sub-table-wrapper">
-                  <table
-                    class="sub-table hidden-table parallelInvestmentTwoTable"
-                  >
-                    <tbody>
-                      <tr>
-                        <td>Starting Year</td>
-                        <td>
-                          <div class="selectWrapper">
-                            <select
-                              name="investmentYearTwo"
-                              id="investmentYearTwo"
-                              class="investmentYearTwo"
-                            ></select>
-                            <script>
-                              const currentYearTwo = getCurrentYear();
-                              const selectElementTwo =
-                                document.getElementById("investmentYearTwo");
-                              for (
-                                let i = currentYearTwo - 5;
-                                i <= currentYearTwo + 50;
-                                i++
-                              ) {
-                                const option = document.createElement("option");
-                                option.value = i;
-                                option.text = i;
+                  <div class="subtable-wrapper">
+                    <table
+                      class="sub-table hidden-table parallelInvestmentTwoTable"
+                    >
+                      <tbody>
+                        <tr>
+                          <td>Starting Year</td>
+                          <td>
+                            <div class="selectWrapper">
+                              <select
+                                name="investmentYearTwo"
+                                id="investmentYearTwo"
+                                class="investmentYearTwo"
+                              ></select>
+                              <script>
+                                const currentYearTwo = getCurrentYear();
+                                const selectElementTwo =
+                                  document.getElementById("investmentYearTwo");
+                                for (
+                                  let i = currentYearTwo - 5;
+                                  i <= currentYearTwo + 50;
+                                  i++
+                                ) {
+                                  const option =
+                                    document.createElement("option");
+                                  option.value = i;
+                                  option.text = i;
 
-                                if (i === currentYearOne) {
-                                  option.selected = true;
+                                  if (i === currentYearOne) {
+                                    option.selected = true;
+                                  }
+
+                                  selectElementTwo.appendChild(option);
                                 }
-
-                                selectElementTwo.appendChild(option);
-                              }
-                            </script>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Initial Investment</td>
-                        <td>
-                          <div class="divWrapper">
-                            <div class="container">
-                              <div class="pWrapper">
-                                <p>&#8377;</p>
-                              </div>
+                              </script>
                             </div>
-                            <input
-                              type="text"
-                              value="100000"
-                              placeholder="0"
-                              class="initialInvestmentTwo"
-                              id="numeric-input"
-                              pattern="[0-9]*"
-                              oninput="validateNumericInput(this);"
-                            />
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Yearly Interest Rate</td>
-                        <td>
-                          <div class="divWrapper">
-                            <input
-                              type="text"
-                              value="8"
-                              placeholder="0"
-                              class="interestRateTwo"
-                              id="numeric-input"
-                              pattern="[0-9]*"
-                              oninput="validateNumericInput(this);"
-                            />
-                            <div class="container">
-                              <div class="pWrapper">
-                                <p>%</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Initial Investment</td>
+                          <td>
+                            <div class="divWrapper">
+                              <div class="container">
+                                <div class="pWrapper">
+                                  <p>&#8377;</p>
+                                </div>
                               </div>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td colspan="2">
-                          <table class="sub-table parallelInvYear">
-                            <tr>
-                              <td>Years</td>
-                              <td>
-                                <div class="divWrapper">
-                                  <input
-                                    type="text"
-                                    value="15"
-                                    placeholder="0"
-                                    class="yearsTwo"
-                                    id="numeric-input"
-                                    pattern="[0-9]*"
-                                    oninput="validateNumericInput(this);"
-                                  />
-                                </div>
-                              </td>
-                              <td></td>
-                              <td>Months</td>
-                              <td>
-                                <div class="divWrapper">
-                                  <input
-                                    type="text"
-                                    value=""
-                                    placeholder="0"
-                                    class="monthsTwo"
-                                    id="numeric-input"
-                                    pattern="[0-9]*"
-                                    oninput="validateNumericInput(this);"
-                                  />
-                                </div>
-                              </td>
-                            </tr>
-                          </table>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          Want do an SIP?<br />
-                          <span style="font-size: x-small">
-                            A regular deposit plan to invest at a distinct
-                            period.
-                          </span>
-                        </td>
-                        <td style="text-align: center">
-                          <div class="radio-wrapper">
-                            <div>Yes</div>
-                            <div>
                               <input
-                                type="radio"
-                                name="sipTwo"
-                                value="yes"
-                                id="sipTwoYes"
-                                onclick="toggleSIPTwo()"
-                                checked
+                                type="text"
+                                value="100000"
+                                placeholder="0"
+                                class="initialInvestmentTwo"
+                                pattern="[0-9]*"
+                                oninput="validateNumericInput(this);"
                               />
                             </div>
-                            <div></div>
-                            <div>No</div>
-                            <div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Yearly Interest Rate</td>
+                          <td>
+                            <div class="divWrapper">
                               <input
-                                type="radio"
-                                name="sipTwo"
-                                value="no"
-                                id="sipTwoNo"
-                                onclick="toggleSIPTwo()"
+                                type="text"
+                                value="8"
+                                placeholder="0"
+                                class="interestRateTwo"
+                                pattern="[0-9]*"
+                                oninput="validateNumericInput(this);"
                               />
+                              <div class="container">
+                                <div class="pWrapper">
+                                  <p>%</p>
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td colspan="2">
-                          <table class="sub-table hidden-table sipTwoTable">
-                            <tbody>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="2">
+                            <table class="sub-table parallelInvYear">
                               <tr>
-                                <th>SIP Details</th>
-                                <th></th>
-                              </tr>
-                              <tr>
-                                <td>Deposit Amount</td>
+                                <td>Years</td>
                                 <td>
                                   <div class="divWrapper">
-                                    <div class="container">
-                                      <div class="pWrapper">
-                                        <p>&#8377;</p>
-                                      </div>
-                                    </div>
                                     <input
                                       type="text"
-                                      value="10000"
+                                      value="15"
                                       placeholder="0"
-                                      class="sipTwoAmount"
-                                      id="numeric-input"
+                                      class="yearsTwo"
+                                      pattern="[0-9]*"
+                                      oninput="validateNumericInput(this);"
+                                    />
+                                  </div>
+                                </td>
+                                <td></td>
+                                <td>Months</td>
+                                <td>
+                                  <div class="divWrapper">
+                                    <input
+                                      type="text"
+                                      value=""
+                                      placeholder="0"
+                                      class="monthsTwo"
                                       pattern="[0-9]*"
                                       oninput="validateNumericInput(this);"
                                     />
                                   </div>
                                 </td>
                               </tr>
-                              <tr>
-                                <td>Deposit Frquency</td>
-                                <td>
-                                  <div class="selectWrapper">
-                                    <select
-                                      name="investmentTwoFrequency"
-                                      id="investmentTwoFrequency"
-                                      class="investmentTwoFrequency"
-                                    >
-                                      <option value="1" selected>
-                                        Monthly
-                                      </option>
-                                      <option value="3">Quarterly</option>
-                                      <option value="6">Half-Yearly</option>
-                                      <option value="12">Yearly</option>
-                                    </select>
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  Want to StepUp? <br />
-                                  <span style="font-size: x-small">
-                                    Want to increase deposit every
-                                    year/quarter/half-yearly?
-                                  </span>
-                                </td>
-                                <td style="text-align: center">
-                                  <div class="radio-wrapper">
-                                    <div>Yes</div>
-                                    <div>
-                                      <input
-                                        type="radio"
-                                        name="stepUpTwo"
-                                        value="yes"
-                                        id="sipStepUpTwoYes"
-                                        onclick="toggleStepUpTwoSIP()"
-                                        checked
-                                      />
-                                    </div>
-                                    <div></div>
-                                    <div>No</div>
-                                    <div>
-                                      <input
-                                        type="radio"
-                                        name="stepUpTwo"
-                                        value="no"
-                                        id="sipStepUpTwoNo"
-                                        onclick="toggleStepUpTwoSIP()"
-                                      />
-                                    </div>
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr class="sipStepUpTwoRows">
-                                <td>Increase Deposit By</td>
-                                <td>
-                                  <div class="divWrapper">
-                                    <div class="divWrapperInner">
-                                      <input
-                                        type="text"
-                                        value="5"
-                                        placeholder="0"
-                                        class="stepUpTwoIncreasePercentage"
-                                        id="numeric-input"
-                                        pattern="[0-9]*"
-                                        oninput="validateNumericInput(this);"
-                                      />
+                            </table>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            Want do an SIP?<br />
+                            <span style="font-size: x-small">
+                              A regular deposit plan to invest at a distinct
+                              period.
+                            </span>
+                          </td>
+                          <td style="text-align: center">
+                            <div class="radio-wrapper">
+                              <div>Yes</div>
+                              <div>
+                                <input
+                                  type="radio"
+                                  name="sipTwo"
+                                  value="yes"
+                                  id="sipTwoYes"
+                                  onclick="toggleSIPTwo()"
+                                  checked
+                                />
+                              </div>
+                              <div></div>
+                              <div>No</div>
+                              <div>
+                                <input
+                                  type="radio"
+                                  name="sipTwo"
+                                  value="no"
+                                  id="sipTwoNo"
+                                  onclick="toggleSIPTwo()"
+                                />
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="2">
+                            <table class="sub-table hidden-table sipTwoTable">
+                              <tbody>
+                                <tr>
+                                  <th>SIP Details</th>
+                                  <th></th>
+                                </tr>
+                                <tr>
+                                  <td>Deposit Amount</td>
+                                  <td>
+                                    <div class="divWrapper">
                                       <div class="container">
                                         <div class="pWrapper">
-                                          <p>%</p>
+                                          <p>&#8377;</p>
                                         </div>
                                       </div>
-                                    </div>
-                                    <div class="selectWrapper">
-                                      <select
-                                        name="stepUpTwoFrequency"
-                                        id="stepUpTwoFrequency"
-                                        class="stepUpTwoFrequency"
-                                      >
-                                        <option value="3">Quarterly</option>
-                                        <option value="6">Half-Yearly</option>
-                                        <option value="12" selected>
-                                          Yearly
-                                        </option>
-                                      </select>
-                                    </div>
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  Stop SIP after a certain period?<br />
-                                  <span style="font-size: x-small">
-                                    If you want to stop contributing more and
-                                    just hold the investments.
-                                  </span>
-                                </td>
-                                <td style="text-align: center">
-                                  <div class="radio-wrapper">
-                                    <div>Yes</div>
-                                    <div>
-                                      <input
-                                        type="radio"
-                                        name="stopSipTwo"
-                                        value="yes"
-                                        id="stopSipTwoYes"
-                                        onclick="toggleStopSipTwo()"
-                                      />
-                                    </div>
-                                    <div></div>
-                                    <div>No</div>
-                                    <div>
-                                      <input
-                                        type="radio"
-                                        name="stopSipTwo"
-                                        value="no"
-                                        id="stopSipTwoNo"
-                                        onclick="toggleStopSipTwo()"
-                                        checked
-                                      />
-                                    </div>
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr class="stopSipTwoRows">
-                                <td>
-                                  Stop SIP After Years<br />
-                                  <span style="font-size: xx-small">
-                                    This value should be less than total number
-                                    of years...
-                                  </span>
-                                </td>
-                                <td>
-                                  <div class="divWrapper">
-                                    <div class="divWrapper">
                                       <input
                                         type="text"
-                                        value=""
+                                        value="10000"
                                         placeholder="0"
-                                        class="stopSipTwoAfterYears"
-                                        id="numeric-input"
+                                        class="sipTwoAmount"
                                         pattern="[0-9]*"
                                         oninput="validateNumericInput(this);"
                                       />
                                     </div>
-                                  </div>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>Deposit Frquency</td>
+                                  <td>
+                                    <div class="selectWrapper">
+                                      <select
+                                        name="investmentTwoFrequency"
+                                        id="investmentTwoFrequency"
+                                        class="investmentTwoFrequency"
+                                      >
+                                        <option value="1" selected>
+                                          Monthly
+                                        </option>
+                                        <option value="3">Quarterly</option>
+                                        <option value="6">Half-Yearly</option>
+                                        <option value="12">Yearly</option>
+                                      </select>
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    Want to StepUp? <br />
+                                    <span style="font-size: x-small">
+                                      Want to increase deposit every
+                                      year/quarter/half-yearly?
+                                    </span>
+                                  </td>
+                                  <td style="text-align: center">
+                                    <div class="radio-wrapper">
+                                      <div>Yes</div>
+                                      <div>
+                                        <input
+                                          type="radio"
+                                          name="stepUpTwo"
+                                          value="yes"
+                                          id="sipStepUpTwoYes"
+                                          onclick="toggleStepUpTwoSIP()"
+                                          checked
+                                        />
+                                      </div>
+                                      <div></div>
+                                      <div>No</div>
+                                      <div>
+                                        <input
+                                          type="radio"
+                                          name="stepUpTwo"
+                                          value="no"
+                                          id="sipStepUpTwoNo"
+                                          onclick="toggleStepUpTwoSIP()"
+                                        />
+                                      </div>
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr class="sipStepUpTwoRows">
+                                  <td>Increase Deposit By</td>
+                                  <td>
+                                    <div class="divWrapper">
+                                      <div class="divWrapperInner">
+                                        <input
+                                          type="text"
+                                          value="5"
+                                          placeholder="0"
+                                          class="stepUpTwoIncreasePercentage"
+                                          pattern="[0-9]*"
+                                          oninput="validateNumericInput(this);"
+                                        />
+                                        <div class="container">
+                                          <div class="pWrapper">
+                                            <p>%</p>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="selectWrapper">
+                                        <select
+                                          name="stepUpTwoFrequency"
+                                          id="stepUpTwoFrequency"
+                                          class="stepUpTwoFrequency"
+                                        >
+                                          <option value="3">Quarterly</option>
+                                          <option value="6">Half-Yearly</option>
+                                          <option value="12" selected>
+                                            Yearly
+                                          </option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    Stop SIP after a certain period?<br />
+                                    <span style="font-size: x-small">
+                                      If you want to stop contributing more and
+                                      just hold the investments.
+                                    </span>
+                                  </td>
+                                  <td style="text-align: center">
+                                    <div class="radio-wrapper">
+                                      <div>Yes</div>
+                                      <div>
+                                        <input
+                                          type="radio"
+                                          name="stopSipTwo"
+                                          value="yes"
+                                          id="stopSipTwoYes"
+                                          onclick="toggleStopSipTwo()"
+                                        />
+                                      </div>
+                                      <div></div>
+                                      <div>No</div>
+                                      <div>
+                                        <input
+                                          type="radio"
+                                          name="stopSipTwo"
+                                          value="no"
+                                          id="stopSipTwoNo"
+                                          onclick="toggleStopSipTwo()"
+                                          checked
+                                        />
+                                      </div>
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr class="stopSipTwoRows">
+                                  <td>
+                                    Stop SIP After Years<br />
+                                    <span style="font-size: xx-small">
+                                      This value should be less than total
+                                      number of years...
+                                    </span>
+                                  </td>
+                                  <td>
+                                    <div class="divWrapper">
+                                      <div class="divWrapper">
+                                        <input
+                                          type="text"
+                                          value=""
+                                          placeholder="0"
+                                          class="stopSipTwoAfterYears"
+                                          pattern="[0-9]*"
+                                          oninput="validateNumericInput(this);"
+                                        />
+                                      </div>
+                                    </div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </td>
               </tr>
             </tbody>
           </table>
-          <div class="button calc-button">
-            <button class="calculate-button">Calculate</button>
+          <div class="button-container button calc-button">
+            <div class="left-button">
+              <button class="calculate-button">Calculate</button>
+            </div>
+            <div class="right-button hide-reset-button" id="reset-button">
+              <button
+                class="reset-button"
+                onclick="localStorage.removeItem('compoundInterestInputs'); location.reload();"
+              >
+                Reset
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -1655,7 +1654,6 @@
                         value=""
                         placeholder="0"
                         class="combinedFutureInvestmentValue"
-                        id="numeric-input"
                         pattern="[0-9]*"
                         oninput="validateNumericInput(this);"
                         disabled
@@ -1677,7 +1675,6 @@
                         value=""
                         placeholder="0"
                         class="presentValue combinedPresentValueOfFutureMoney"
-                        id="numeric-input"
                         pattern="[0-9]*"
                         oninput="validateNumericInput(this);"
                         disabled
@@ -1699,7 +1696,6 @@
                         value=""
                         placeholder="0"
                         class="combinedTotalDeposit"
-                        id="numeric-input"
                         pattern="[0-9]*"
                         oninput="validateNumericInput(this);"
                         disabled
@@ -1721,7 +1717,6 @@
                         value=""
                         placeholder="0"
                         class="combinedTotalInterest"
-                        id="numeric-input"
                         pattern="[0-9]*"
                         oninput="validateNumericInput(this);"
                         disabled
@@ -1738,7 +1733,6 @@
                         value=""
                         placeholder="0"
                         class="combinedNoOfYears"
-                        id="numeric-input"
                         pattern="[0-9]*"
                         oninput="validateNumericInput(this);"
                         disabled
@@ -1755,7 +1749,6 @@
                         value=""
                         placeholder="0"
                         class="combinedNoOfYearsSip"
-                        id="numeric-input"
                         pattern="[0-9]*"
                         oninput="validateNumericInput(this);"
                         disabled
@@ -1785,7 +1778,6 @@
                         value=""
                         placeholder="0"
                         class="futureInvestmentValue"
-                        id="numeric-input"
                         pattern="[0-9]*"
                         oninput="validateNumericInput(this);"
                         disabled
@@ -1807,7 +1799,6 @@
                         value=""
                         placeholder="0"
                         class="presentValue presentValueOfFutureMoney"
-                        id="numeric-input"
                         pattern="[0-9]*"
                         oninput="validateNumericInput(this);"
                         disabled
@@ -1829,7 +1820,6 @@
                         value=""
                         placeholder="0"
                         class="totalDeposit"
-                        id="numeric-input"
                         pattern="[0-9]*"
                         oninput="validateNumericInput(this);"
                         disabled
@@ -1851,7 +1841,6 @@
                         value=""
                         placeholder="0"
                         class="totalWithdrawal"
-                        id="numeric-input"
                         pattern="[0-9]*"
                         oninput="validateNumericInput(this);"
                         disabled
@@ -1873,7 +1862,6 @@
                         value=""
                         placeholder="0"
                         class="totalInterest"
-                        id="numeric-input"
                         pattern="[0-9]*"
                         oninput="validateNumericInput(this);"
                         disabled
@@ -1890,7 +1878,6 @@
                         value=""
                         placeholder="0"
                         class="noOfYears"
-                        id="numeric-input"
                         pattern="[0-9]*"
                         oninput="validateNumericInput(this);"
                         disabled
@@ -1907,7 +1894,6 @@
                         value=""
                         placeholder="0"
                         class="noOfYearsSip"
-                        id="numeric-input"
                         pattern="[0-9]*"
                         oninput="validateNumericInput(this);"
                         disabled
@@ -1924,7 +1910,6 @@
                         value=""
                         placeholder="0"
                         class="noOfYearsSwp"
-                        id="numeric-input"
                         pattern="[0-9]*"
                         oninput="validateNumericInput(this);"
                         disabled
@@ -1941,7 +1926,6 @@
                         value=""
                         placeholder="0"
                         class="noOfLumpsumWithdrawals"
-                        id="numeric-input"
                         pattern="[0-9]*"
                         oninput="validateNumericInput(this);"
                         disabled
@@ -1973,7 +1957,6 @@
                         value=""
                         placeholder="0"
                         class="futureInvestmentOneValue"
-                        id="numeric-input"
                         pattern="[0-9]*"
                         oninput="validateNumericInput(this);"
                         disabled
@@ -1998,7 +1981,6 @@
                         value=""
                         placeholder="0"
                         class="presentValue presentValueOfFutureMoneyParallelInvestmentOneValue"
-                        id="numeric-input"
                         pattern="[0-9]*"
                         oninput="validateNumericInput(this);"
                         disabled
@@ -2020,7 +2002,6 @@
                         value=""
                         placeholder="0"
                         class="totalDepositOne"
-                        id="numeric-input"
                         pattern="[0-9]*"
                         oninput="validateNumericInput(this);"
                         disabled
@@ -2042,7 +2023,6 @@
                         value=""
                         placeholder="0"
                         class="totalInterestOne"
-                        id="numeric-input"
                         pattern="[0-9]*"
                         oninput="validateNumericInput(this);"
                         disabled
@@ -2059,7 +2039,6 @@
                         value=""
                         placeholder="0"
                         class="noOfYearsOne"
-                        id="numeric-input"
                         pattern="[0-9]*"
                         oninput="validateNumericInput(this);"
                         disabled
@@ -2076,7 +2055,6 @@
                         value=""
                         placeholder="0"
                         class="noOfYearsSipOne"
-                        id="numeric-input"
                         pattern="[0-9]*"
                         oninput="validateNumericInput(this);"
                         disabled
@@ -2108,7 +2086,6 @@
                         value=""
                         placeholder="0"
                         class="futureInvestmentTwoValue"
-                        id="numeric-input"
                         pattern="[0-9]*"
                         oninput="validateNumericInput(this);"
                         disabled
@@ -2133,7 +2110,6 @@
                         value=""
                         placeholder="0"
                         class="presentValue presentValueOfFutureMoneyParallelInvestmentTwoValue"
-                        id="numeric-input"
                         pattern="[0-9]*"
                         oninput="validateNumericInput(this);"
                         disabled
@@ -2155,7 +2131,6 @@
                         value=""
                         placeholder="0"
                         class="totalDepositTwo"
-                        id="numeric-input"
                         pattern="[0-9]*"
                         oninput="validateNumericInput(this);"
                         disabled
@@ -2177,7 +2152,6 @@
                         value=""
                         placeholder="0"
                         class="totalInterestTwo"
-                        id="numeric-input"
                         pattern="[0-9]*"
                         oninput="validateNumericInput(this);"
                         disabled
@@ -2194,7 +2168,6 @@
                         value=""
                         placeholder="0"
                         class="noOfYearsTwo"
-                        id="numeric-input"
                         pattern="[0-9]*"
                         oninput="validateNumericInput(this);"
                         disabled
@@ -2211,7 +2184,6 @@
                         value=""
                         placeholder="0"
                         class="noOfYearsSipTwo"
-                        id="numeric-input"
                         pattern="[0-9]*"
                         oninput="validateNumericInput(this);"
                         disabled
@@ -2284,109 +2256,7 @@
         </div>
       </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <script>
-      window.onload = function () {
-        document.querySelectorAll("input").forEach(function (input) {
-          input.autocomplete = "off";
-        });
-      };
-
-      document
-        .getElementById("downloadCalculations")
-        .addEventListener("click", function () {
-          const table1 = document.getElementById("yearlyResultTable");
-          const table2 = document.getElementById("monthlyResultTable");
-          const table3 = document.getElementById(
-            "yearlyResultTableForParallelInvestmentOne"
-          );
-          const table4 = document.getElementById(
-            "monthlyResultTableForParallelInvestmentOne"
-          );
-          const table5 = document.getElementById(
-            "yearlyResultTableForParallelInvestmentTwo"
-          );
-          const table6 = document.getElementById(
-            "monthlyResultTableForParallelInvestmentTwo"
-          );
-
-          var parallelInvestmentOne = document.querySelector(
-            ".parallelInvestmentOneOverview"
-          );
-          var parallelInvestmentTwo = document.querySelector(
-            ".parallelInvestmentTwoOverview"
-          );
-
-          const wb = XLSX.utils.book_new(); // Create a new workbook
-
-          const ws1 = XLSX.utils.table_to_sheet(table1); // Convert the table to a sheet
-          XLSX.utils.book_append_sheet(wb, ws1, "Investment 1 - Yearly"); // Append the sheet to the workbook
-
-          if (!parallelInvestmentOne.classList.contains("hidden")) {
-            const ws3 = XLSX.utils.table_to_sheet(table3); // Convert the table to a sheet
-            XLSX.utils.book_append_sheet(wb, ws3, "Investment 2 - Yearly"); // Append another sheet
-          }
-
-          if (!parallelInvestmentTwo.classList.contains("hidden")) {
-            const ws5 = XLSX.utils.table_to_sheet(table5); // Convert the table to a sheet
-            XLSX.utils.book_append_sheet(wb, ws5, "Investment 3 - Yearly"); // Append another sheet
-          }
-
-          const ws2 = XLSX.utils.table_to_sheet(table2); // Convert the table to a sheet
-          XLSX.utils.book_append_sheet(wb, ws2, "Investment 1 - Monthly"); // Append another sheet
-
-          if (!parallelInvestmentOne.classList.contains("hidden")) {
-            const ws4 = XLSX.utils.table_to_sheet(table4); // Convert the table to a sheet
-            XLSX.utils.book_append_sheet(wb, ws4, "Investment 2 - Monthly"); // Append the sheet to the workbook
-          }
-
-          if (!parallelInvestmentTwo.classList.contains("hidden")) {
-            const ws6 = XLSX.utils.table_to_sheet(table6); // Convert the table to a sheet
-            XLSX.utils.book_append_sheet(wb, ws6, "Investment 3 - Monthly"); // Append another sheet
-          }
-          // Save the workbook with multiple sheets
-          XLSX.writeFile(wb, "Investment_Calculations.xlsx");
-        });
-      window.onload = function () {
-        toggleSIP();
-        toggleSWP();
-        toggleLumpsumWithdrawal();
-        toggleParallelInvestment("One");
-        toggleParallelInvestment("Two");
-        toggleBonusSIP();
-        toggleStepUpSIP();
-        toggleDecreaseStepUp();
-        toggleStopSip();
-        toggleStopSipOne();
-        toggleStopSipTwo();
-        toggleBonusSipStepUp();
-        toggleWithdrawalStepUp();
-        calculate();
-        hideParallelInvestmentResult("One");
-        hideParallelInvestmentResult("Two");
-      };
-      document.addEventListener("DOMContentLoaded", (event) => {
-        const buttons = document.querySelectorAll(".yearMonthToggleBtn");
-
-        buttons.forEach((button) => {
-          button.addEventListener("click", function () {
-            buttons.forEach((btn) => btn.classList.remove("active"));
-            this.classList.add("active");
-          });
-        });
-      });
-
-      document.addEventListener(
-        "DOMContentLoaded",
-        loadUserInputsFromLocalStorage
-      );
-
-      document
-        .querySelector(".calculate-button")
-        .addEventListener("click", () => {
-          saveUserInputsToLocalStorage();
-          calculate();
-        });
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/exceljs/dist/exceljs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
   </body>
 </html>

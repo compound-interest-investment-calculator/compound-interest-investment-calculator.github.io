@@ -1527,3 +1527,228 @@ function loadUserInputsFromLocalStorage() {
     }
   });
 }
+async function downloadExcelReport() {
+  const workbook = new ExcelJS.Workbook();
+
+  // === 1. Portfolio Overview Tables (Merged into One Sheet) ===
+  const overviewTables = [
+    {
+      selector: ".combinedInvestmentOverview",
+      label: "Combined Investment Overview",
+    },
+    {
+      selector: ".investmentOverview",
+      label: "Investment Overview",
+    },
+    {
+      selector: ".parallelInvestmentOneOverview",
+      label: "Parallel Investment 1 Overview",
+    },
+    {
+      selector: ".parallelInvestmentTwoOverview",
+      label: "Parallel Investment 2 Overview",
+    },
+  ];
+
+  const overviewSheet = workbook.addWorksheet("Portfolio Overview");
+
+  overviewTables.forEach(({ selector, label }) => {
+    const el = document.querySelector(selector);
+    if (el && !el.classList.contains("hidden")) {
+      const tableRows = extractOverviewTableData(el);
+
+      // Add label/title row
+      // overviewSheet.addRow([label]);
+      // overviewSheet.lastRow.font = { bold: true };
+
+      // overviewSheet.addRow([]); // spacer
+
+      tableRows.forEach((row) => {
+        const added = overviewSheet.addRow(row);
+        if (row.length > 1) {
+          added.getCell(2).alignment = { horizontal: "right" };
+        }
+      });
+
+      overviewSheet.addRow([]); // spacer between sections
+    }
+  });
+  overviewSheet.getRow(1).font = { bold: true };
+  autoFitSheetColumns(overviewSheet);
+
+  // === 2. Investment Result Tables (One Sheet Each) ===
+  const tablePairs = [
+    { table: "yearlyResultTable", name: "Investment 1 - Yearly" },
+    { table: "monthlyResultTable", name: "Investment 1 - Monthly" },
+    {
+      table: "yearlyResultTableForParallelInvestmentOne",
+      name: "Investment 2 - Yearly",
+      check: ".parallelInvestmentOneOverview",
+    },
+    {
+      table: "monthlyResultTableForParallelInvestmentOne",
+      name: "Investment 2 - Monthly",
+      check: ".parallelInvestmentOneOverview",
+    },
+    {
+      table: "yearlyResultTableForParallelInvestmentTwo",
+      name: "Investment 3 - Yearly",
+      check: ".parallelInvestmentTwoOverview",
+    },
+    {
+      table: "monthlyResultTableForParallelInvestmentTwo",
+      name: "Investment 3 - Monthly",
+      check: ".parallelInvestmentTwoOverview",
+    },
+  ];
+
+  tablePairs.forEach(({ table, name, check }) => {
+    const el = document.getElementById(table);
+    const checkEl = check ? document.querySelector(check) : null;
+
+    if (el && (!checkEl || !checkEl.classList.contains("hidden"))) {
+      const data = extractResultTableData(el);
+      const sheet = workbook.addWorksheet(name);
+
+      data.forEach((row) => {
+        const added = sheet.addRow(row);
+        row.forEach((_, index) => {
+          // Align all columns except the first (index 0)
+          if (index > 0) {
+            added.getCell(index + 1).alignment = { horizontal: "right" };
+          }
+        });
+      });
+      sheet.getRow(1).font = { bold: true };
+      autoFitSheetColumns(sheet);
+    }
+  });
+
+  // === 3. Export Workbook ===
+  const buffer = await workbook.xlsx.writeBuffer();
+  const blob = new Blob([buffer], {
+    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  });
+  saveAs(blob, "Investment_Calculations.xlsx");
+}
+
+// For Overview Tables (include ₹ symbol)
+function extractOverviewTableData(tableEl) {
+  const rows = [];
+  const trs = tableEl.querySelectorAll("tr");
+
+  trs.forEach((tr) => {
+    const row = [];
+    tr.querySelectorAll("th, td").forEach((cell) => {
+      const input = cell.querySelector("input");
+      if (input) {
+        const value = input.value?.trim() || input.placeholder || "";
+
+        // ✅ Only prefix ₹ if ₹ symbol exists in the cell
+        const hasSymbol = !!cell.querySelector("p")?.textContent?.includes("₹");
+        row.push(hasSymbol ? "₹ " + value : value);
+      } else {
+        const text = cell.innerText.replace(/₹/g, "").trim();
+        row.push(text);
+      }
+    });
+    rows.push(row);
+  });
+
+  return rows;
+}
+
+// For Result Tables (no ₹ symbol)
+function extractResultTableData(tableEl) {
+  const rows = [];
+  const trs = tableEl.querySelectorAll("tr");
+
+  trs.forEach((tr) => {
+    const row = [];
+    tr.querySelectorAll("th, td").forEach((cell) => {
+      // Case 1: cell contains a div.resultNumber (your scenario)
+      const resultDiv = cell.querySelector(".resultNumber");
+      if (resultDiv) {
+        const value = resultDiv.textContent.trim();
+        row.push("₹ " + value); // ✅ Only number, no ₹ symbol
+      } else {
+        // Case 2: fallback to text content (e.g., headers)
+        const text = cell.innerText.replace(/₹/g, "").trim();
+        row.push(text);
+      }
+    });
+    rows.push(row);
+  });
+
+  return rows;
+}
+
+function autoFitSheetColumns(sheet) {
+  sheet.columns.forEach((col) => {
+    let maxLength = 0;
+    col.eachCell({ includeEmpty: true }, (cell) => {
+      const val = cell.value || "";
+      const len = val.toString().length;
+      if (len > maxLength) maxLength = len;
+    });
+    col.width = maxLength + 2;
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  // Disable autocomplete
+  document.querySelectorAll("input").forEach(function (input) {
+    input.autocomplete = "off";
+  });
+
+  // Year-Month toggle button logic
+  const buttons = document.querySelectorAll(".yearMonthToggleBtn");
+  buttons.forEach((button) => {
+    button.addEventListener("click", function () {
+      buttons.forEach((btn) => btn.classList.remove("active"));
+      this.classList.add("active");
+    });
+  });
+
+  // Load stored inputs and show reset button if needed
+  loadUserInputsFromLocalStorage();
+  if (localStorage.getItem("compoundInterestInputs")) {
+    document
+      .getElementById("reset-button")
+      .classList.remove("hide-reset-button");
+  }
+
+  // Run toggle and setup functions
+  toggleSIP();
+  toggleSWP();
+  toggleLumpsumWithdrawal();
+  toggleParallelInvestment("One");
+  toggleParallelInvestment("Two");
+  toggleBonusSIP();
+  toggleStepUpSIP();
+  toggleDecreaseStepUp();
+  toggleStopSip();
+  toggleStopSipOne();
+  toggleStopSipTwo();
+  toggleBonusSipStepUp();
+  toggleWithdrawalStepUp();
+  calculate();
+  hideParallelInvestmentResult("One");
+  hideParallelInvestmentResult("Two");
+
+  // Calculate button click handler
+  document.querySelector(".calculate-button").addEventListener("click", () => {
+    saveUserInputsToLocalStorage();
+    calculate();
+    document
+      .getElementById("reset-button")
+      .classList.remove("hide-reset-button");
+  });
+
+  // Download calculations handler
+  document
+    .getElementById("downloadCalculations")
+    .addEventListener("click", downloadExcelReport);
+
+  calculate();
+});
