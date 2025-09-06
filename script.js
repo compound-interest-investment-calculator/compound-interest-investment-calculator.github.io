@@ -1,4 +1,5 @@
 const inflationRate = 7;
+let goalCounter = 1;
 
 function validateNumericInput(input) {
   let value = input.value.replace(/\D/g, "");
@@ -61,18 +62,38 @@ function toggleLumpsumWithdrawal() {
 
   if (yesRadio.checked) {
     table.classList.remove("hidden");
+    if (document.querySelectorAll("#goalWithdrawalRows tr").length === 0) {
+      addGoalRow(); // Add default goal row on enable
+    }
   } else {
     table.classList.add("hidden");
   }
 }
+
+function showHideCombinedPortfolioDetails() {
+  const parallelInvestment =
+    isChecked("parallelInvestmentOneYes") ||
+    isChecked("parallelInvestmentTwoYes");
+  if (parallelInvestment) showCombinedPortfolio();
+  else hideCombinedPortfolio();
+}
+
 function showCombinedPortfolio() {
-  var resultTable = document.querySelector(".combinedInvestmentOverview");
-  resultTable.classList.remove("hidden");
+  var resultOverview = document.querySelector(".combinedInvestmentOverview");
+  var resultTable = document.querySelectorAll(".combined-table");
+  resultOverview.classList.remove("hidden");
+  resultTable.forEach((el) => {
+    el.classList.remove("hidden");
+  });
 }
 
 function hideCombinedPortfolio() {
-  var resultTable = document.querySelector(".combinedInvestmentOverview");
-  resultTable.classList.add("hidden");
+  var resultOverview = document.querySelector(".combinedInvestmentOverview");
+  var resultTable = document.querySelectorAll(".combined-table");
+  resultOverview.classList.add("hidden");
+  resultTable.forEach((el) => {
+    el.classList.add("hidden");
+  });
 }
 
 function toggleBonusSIP() {
@@ -152,6 +173,46 @@ function toggleDecreaseStepUp() {
     }
   });
 }
+
+function toggleDecreaseInterestRate() {
+  var yesRadio = document.getElementById("decreaseInterestRateYes");
+  var rows = document.querySelectorAll(".decreaseInterestRateRows");
+
+  rows.forEach(function (row) {
+    if (yesRadio.checked) {
+      row.classList.remove("hidden");
+    } else {
+      row.classList.add("hidden");
+    }
+  });
+}
+
+function toggleDecreaseInterestRateOne() {
+  var yesRadio = document.getElementById("decreaseInterestRateYesOne");
+  var rows = document.querySelectorAll(".decreaseInterestRateRowsOne");
+
+  rows.forEach(function (row) {
+    if (yesRadio.checked) {
+      row.classList.remove("hidden");
+    } else {
+      row.classList.add("hidden");
+    }
+  });
+}
+
+function toggleDecreaseInterestRateTwo() {
+  var yesRadio = document.getElementById("decreaseInterestRateYesTwo");
+  var rows = document.querySelectorAll(".decreaseInterestRateRowsTwo");
+
+  rows.forEach(function (row) {
+    if (yesRadio.checked) {
+      row.classList.remove("hidden");
+    } else {
+      row.classList.add("hidden");
+    }
+  });
+}
+
 function toggleStopSip() {
   var yesRadio = document.getElementById("stopSipYes");
   var rows = document.querySelectorAll(".stopSipRows");
@@ -263,6 +324,18 @@ function calculate() {
   console.log("Initial Investment: " + initialInvestment);
   const annualInterestRate = getNumericValue(".interestRate");
   console.log("Interest Rate: " + annualInterestRate + "%");
+  const decreaseInterestRate = isChecked("decreaseInterestRateYes");
+  console.log(
+    "Decrease Interest Rate After a period of time? " + decreaseInterestRate
+  );
+  const decreaseInterestRateAfterYears = getNumericValue(
+    ".decreaseInterestRateAfterYears"
+  );
+  console.log(
+    "Decrease Interest Rate After Years: " + decreaseInterestRateAfterYears
+  );
+  const decreaseInterestRateTo = getNumericValue(".updatedInterestRate");
+  console.log("Decrease InterestRate to: " + decreaseInterestRateTo + "%");
   const years = getNumericValue(".years");
   console.log("Years: " + years);
   const months = getNumericValue(".months");
@@ -329,11 +402,8 @@ function calculate() {
   console.log("Bonus SIP Frequency: " + bonusSipFrequency);
   const lumpSumWithdrawals = isChecked("lumpsumWithdrawalYes");
   console.log("LumpSum Withdrawals? " + lumpSumWithdrawals);
-  const lumpSumWithdrawalAmount = getNumericValue(".lumpsumWithdrawalAmount");
-  console.log("LumpSum Withdrawal Amount: " + lumpSumWithdrawalAmount);
-  const lumpSumWithdrawalYears = getYearsArray();
-  console.log("LumpSum Withdrawal Years: " + lumpSumWithdrawalYears);
-  console.log("Total Lumsum Withdrawals: " + lumpSumWithdrawalYears.length);
+  const goalWithdrawals = getGoalWithdrawals(startingYear);
+  console.log("Goal Withdrawals:", goalWithdrawals);
   const stepUpBonusSip = isChecked("bonusSipStepUpYes");
   console.log("Bonus SIP StepUp: " + stepUpBonusSip);
   const stepUpBonusSipPercent = getNumericValue(".bonusSipStepUpPercentage");
@@ -349,10 +419,18 @@ function calculate() {
   console.log("Initial Investment: " + initialInvestmentOne);
   const annualInterestRateOne = getNumericValue(".interestRateOne");
   console.log("Interest Rate: " + annualInterestRateOne + "%");
-  const yearsOne = getNumericValue(".yearsOne");
-  console.log("Years: " + yearsOne);
-  const monthsOne = getNumericValue(".monthsOne");
-  console.log("Months: " + monthsOne);
+  const decreaseInterestRateOne = isChecked("decreaseInterestRateYesOne");
+  console.log(
+    "Decrease Interest Rate After a period of time? " + decreaseInterestRateOne
+  );
+  const decreaseInterestRateAfterYearsOne = getNumericValue(
+    ".decreaseInterestRateAfterYearsOne"
+  );
+  console.log(
+    "Decrease Interest Rate After Years: " + decreaseInterestRateAfterYearsOne
+  );
+  const decreaseInterestRateToOne = getNumericValue(".updatedInterestRateOne");
+  console.log("Decrease InterestRate to: " + decreaseInterestRateToOne + "%");
   const investmentOneFrequency = getSelectedValue("investmentOneFrequency");
   console.log("Investment Frequency: " + investmentOneFrequency);
   const sipOne = isChecked("sipOneYes");
@@ -378,10 +456,18 @@ function calculate() {
   console.log("Initial Investment: " + initialInvestmentTwo);
   const annualInterestRateTwo = getNumericValue(".interestRateTwo");
   console.log("Interest Rate: " + annualInterestRateTwo + "%");
-  const yearsTwo = getNumericValue(".yearsTwo");
-  console.log("Years: " + yearsTwo);
-  const monthsTwo = getNumericValue(".monthsTwo");
-  console.log("Months: " + monthsTwo);
+  const decreaseInterestRateTwo = isChecked("decreaseInterestRateYesTwo");
+  console.log(
+    "Decrease Interest Rate After a period of time? " + decreaseInterestRateTwo
+  );
+  const decreaseInterestRateAfterYearsTwo = getNumericValue(
+    ".decreaseInterestRateAfterYearsTwo"
+  );
+  console.log(
+    "Decrease Interest Rate After Years: " + decreaseInterestRateAfterYearsTwo
+  );
+  const decreaseInterestRateToTwo = getNumericValue(".updatedInterestRateTwo");
+  console.log("Decrease InterestRate to: " + decreaseInterestRateToTwo + "%");
   const investmentTwoFrequency = getSelectedValue("investmentTwoFrequency");
   console.log("Investment Frequency: " + investmentTwoFrequency);
   const sipTwo = isChecked("sipTwoYes");
@@ -403,6 +489,9 @@ function calculate() {
     startingYear,
     initialInvestment,
     annualInterestRate,
+    decreaseInterestRate,
+    decreaseInterestRateAfterYears,
+    decreaseInterestRateTo,
     years,
     months,
     sip,
@@ -427,8 +516,7 @@ function calculate() {
     bonusSipAmount,
     bonusSipFrequency,
     lumpSumWithdrawals,
-    lumpSumWithdrawalAmount,
-    lumpSumWithdrawalYears,
+    goalWithdrawals,
     stepUpBonusSip,
     stepUpBonusSipPercent,
     stepUpBonusSipFrequency,
@@ -436,8 +524,9 @@ function calculate() {
     startingYearOne,
     initialInvestmentOne,
     annualInterestRateOne,
-    yearsOne,
-    monthsOne,
+    decreaseInterestRateOne,
+    decreaseInterestRateAfterYearsOne,
+    decreaseInterestRateToOne,
     investmentOneFrequency,
     sipOne,
     sipOneAmount,
@@ -450,8 +539,9 @@ function calculate() {
     startingYearTwo,
     initialInvestmentTwo,
     annualInterestRateTwo,
-    yearsTwo,
-    monthsTwo,
+    decreaseInterestRateTwo,
+    decreaseInterestRateAfterYearsTwo,
+    decreaseInterestRateToTwo,
     investmentTwoFrequency,
     sipTwo,
     sipTwoAmount,
@@ -503,6 +593,9 @@ function calculateCompoundInterest(
   startingYear,
   initialInvestment,
   annualInterestRate,
+  decreaseInterestRate,
+  decreaseInterestRateAfterYears,
+  decreaseInterestRateTo,
   years,
   months,
   sip,
@@ -527,8 +620,7 @@ function calculateCompoundInterest(
   bonusSipAmount,
   bonusSipFrequency,
   lumpSumWithdrawals,
-  lumpSumWithdrawalAmount,
-  lumpSumWithdrawalYears,
+  goalWithdrawals,
   stepUpBonusSip,
   stepUpBonusSipPercent,
   stepUpBonusSipFrequency,
@@ -536,8 +628,9 @@ function calculateCompoundInterest(
   startingYearOne,
   initialInvestmentOne,
   annualInterestRateOne,
-  yearsOne,
-  monthsOne,
+  decreaseInterestRateOne,
+  decreaseInterestRateAfterYearsOne,
+  decreaseInterestRateToOne,
   investmentOneFrequency,
   sipOne,
   sipOneAmount,
@@ -550,8 +643,9 @@ function calculateCompoundInterest(
   startingYearTwo,
   initialInvestmentTwo,
   annualInterestRateTwo,
-  yearsTwo,
-  monthsTwo,
+  decreaseInterestRateTwo,
+  decreaseInterestRateAfterYearsTwo,
+  decreaseInterestRateToTwo,
   investmentTwoFrequency,
   sipTwo,
   sipTwoAmount,
@@ -576,12 +670,20 @@ function calculateCompoundInterest(
   console.log(
     "************************************************************************************"
   );
-  const monthlyInterestRate = annualInterestRate / 12;
   const totalMonths = years * 12 + months;
+  stopSipAfterYears = years >= stopSipAfterYears ? stopSipAfterYears : years;
+  stopSipOneAfterYears =
+    years >= stopSipOneAfterYears ? stopSipOneAfterYears : years;
+  stopSipTwoAfterYears =
+    years >= stopSipTwoAfterYears ? stopSipTwoAfterYears : years;
+
+  let monthlyInterestRate = annualInterestRate / 12;
   let totalDeposits = initialInvestment;
   let totalAmount = initialInvestment;
   let totalInterest = 0;
   let totalWithdrawals = 0;
+  let totalSWP = 0;
+  let netDeposit = 0;
   let currentYear = startingYear;
   let currentYearOne = startingYearOne;
   let currentYearTwo = startingYearTwo;
@@ -596,12 +698,11 @@ function calculateCompoundInterest(
 
   let decreasedStepUp = false;
 
-  // Parallel investment 1 variables
+  // Secondary investment variables
   let totalDepositsOne = initialInvestmentOne;
   let totalAmountOne = initialInvestmentOne;
   let totalInterestOne = 0;
-  const monthlyInterestRateOne = annualInterestRateOne / 12;
-  const totalMonthsOne = yearsOne * 12 + monthsOne;
+  let monthlyInterestRateOne = annualInterestRateOne / 12;
   let monthCounterOne = 0;
   let frequencyCounterOne = 0;
   const sipFrequencyOne = parallelInvestmentOne
@@ -610,12 +711,11 @@ function calculateCompoundInterest(
   const stopSipAfterMonthsOne = stopSipOneAfterYears * 12;
   const monthlyInvestmentHistoryOne = []; // Track parallel investment history
 
-  // Parallel investment 2 variables
+  // Terniary investment variables
   let totalDepositsTwo = initialInvestmentTwo;
   let totalAmountTwo = initialInvestmentTwo;
   let totalInterestTwo = 0;
-  const monthlyInterestRateTwo = annualInterestRateTwo / 12;
-  const totalMonthsTwo = yearsTwo * 12 + monthsTwo;
+  let monthlyInterestRateTwo = annualInterestRateTwo / 12;
   let monthCounterTwo = 0;
   let frequencyCounterTwo = 0;
   const sipFrequencyTwo = parallelInvestmentTwo
@@ -627,9 +727,6 @@ function calculateCompoundInterest(
   // Determine the bonus SIP frequency in months
   const bonusSipFreq = getStepUpFrequency(bonusSipFrequency);
   const stepUpBonusSipFreq = getStepUpFrequency(stepUpBonusSipFrequency);
-  const lumpSumWithdrawalMonths = lumpSumWithdrawalYears.map(
-    (year) => year * 12
-  );
 
   if (initialInvestment !== 0) {
     monthlyInvestmentHistory.push(
@@ -674,8 +771,17 @@ function calculateCompoundInterest(
   }
 
   for (let i = 1; i <= totalMonths; i++) {
+    if (
+      decreaseInterestRate &&
+      currentYear >= startingYear + decreaseInterestRateAfterYears
+    ) {
+      // Switch to the reduced interest rate
+      monthlyInterestRate = decreaseInterestRateTo / 12;
+    }
+
     let sipForThisMonth = 0;
     if (
+      i <= totalMonths &&
       sip &&
       frequencyCounter === 0 &&
       (!stopSipAfterAPeriod || i <= stopSipAfterMonths)
@@ -694,13 +800,38 @@ function calculateCompoundInterest(
 
     let withdrawalForThisMonth = 0;
     if (systematicWithdrawalAfterAPeriod && i > startWithdrawalAfterMonths) {
-      withdrawalForThisMonth = -withdrawalPerMonth;
-      totalWithdrawals += withdrawalPerMonth;
+      const allowedWithdrawal = Math.min(withdrawalPerMonth, totalAmount);
+
+      withdrawalForThisMonth -= allowedWithdrawal;
+      totalWithdrawals += allowedWithdrawal;
+      totalSWP += allowedWithdrawal;
+
+      if (allowedWithdrawal < withdrawalPerMonth) {
+        console.warn(
+          `Month ${
+            i + 1
+          }: Systematic Withdrawal of ₹${withdrawalPerMonth} capped to available ₹${totalAmount}`
+        );
+      }
     }
 
-    if (lumpSumWithdrawals && lumpSumWithdrawalMonths.includes(i)) {
-      withdrawalForThisMonth -= lumpSumWithdrawalAmount;
-      totalWithdrawals += lumpSumWithdrawalAmount;
+    let lumpSumWithdrawal = goalWithdrawals
+      .filter((goal) => goal.monthIndex === i)
+      .reduce((sum, goal) => sum + goal.inflatedAmount, 0);
+
+    if (lumpSumWithdrawal > 0) {
+      const allowedWithdrawal = Math.min(lumpSumWithdrawal, totalAmount);
+
+      withdrawalForThisMonth -= allowedWithdrawal;
+      totalWithdrawals += allowedWithdrawal;
+
+      if (allowedWithdrawal < lumpSumWithdrawal) {
+        console.warn(
+          `Month ${
+            i + 1
+          }: Goal withdrawal of ₹${lumpSumWithdrawal} capped to available ₹${totalAmount}`
+        );
+      }
     }
 
     sipForThisMonth = Math.round(Math.min(sipThreshold, sipForThisMonth));
@@ -780,9 +911,17 @@ function calculateCompoundInterest(
 
   // Parallel investment 1 calculations (SIP, Step-up, Stop SIP logic)
   if (parallelInvestmentOne) {
-    for (let i = 1; i <= totalMonthsOne; i++) {
+    for (let i = 1; i <= totalMonths; i++) {
+      if (
+        decreaseInterestRateOne &&
+        currentYearOne >= startingYearOne + decreaseInterestRateAfterYearsOne
+      ) {
+        // Switch to the reduced interest rate
+        monthlyInterestRateOne = decreaseInterestRateToOne / 12;
+      }
       let sipForThisMonthOne = 0;
       if (
+        i <= totalMonths &&
         sipOne &&
         frequencyCounterOne === 0 &&
         (!stopSipOneAfterAPeriod || i <= stopSipAfterMonthsOne)
@@ -833,9 +972,17 @@ function calculateCompoundInterest(
 
   // Parallel investment 2 calculations (SIP, Step-up, Stop SIP logic)
   if (parallelInvestmentTwo) {
-    for (let i = 1; i <= totalMonthsTwo; i++) {
+    for (let i = 1; i <= totalMonths; i++) {
+      if (
+        decreaseInterestRateTwo &&
+        currentYearTwo >= startingYearTwo + decreaseInterestRateAfterYearsTwo
+      ) {
+        // Switch to the reduced interest rate
+        monthlyInterestRateTwo = decreaseInterestRateToTwo / 12;
+      }
       let sipForThisMonthTwo = 0;
       if (
+        i <= totalMonths &&
         sipTwo &&
         frequencyCounterTwo === 0 &&
         (!stopSipTwoAfterAPeriod || i <= stopSipAfterMonthsTwo)
@@ -945,7 +1092,7 @@ function calculateCompoundInterest(
   let activeSipYearsOne = 0;
   if (sipOne) {
     if (stopSipOneAfterAPeriod) activeSipYearsOne = stopSipOneAfterYears;
-    else activeSipYearsOne = yearsOne;
+    else activeSipYearsOne = years;
   } else {
     activeSipYearsOne = 0;
   }
@@ -953,7 +1100,7 @@ function calculateCompoundInterest(
   let activeSipYearsTwo = 0;
   if (sipTwo) {
     if (stopSipTwoAfterAPeriod) activeSipYearsTwo = stopSipTwoAfterYears;
-    else activeSipYearsTwo = yearsTwo;
+    else activeSipYearsTwo = years;
   } else {
     activeSipYearsTwo = 0;
   }
@@ -964,12 +1111,15 @@ function calculateCompoundInterest(
     inflationRate
   );
 
+  netDeposit = totalDeposits - totalWithdrawals;
+
   console.log();
   console.log(
     "************************************************************************************"
   );
   console.log("Total Deposit: ₹" + totalDeposits);
   console.log("Total Withdrawal: ₹" + totalWithdrawals);
+  console.log("Net Deposit: ₹" + netDeposit);
   console.log("Total Interest Earned: ₹" + totalInterest);
   console.log("Future Investment Value: ₹" + totalAmount);
   console.log("Present Value of Future Money: ₹" + presentValueOfFutureMoney);
@@ -981,7 +1131,8 @@ function calculateCompoundInterest(
         ? years - systematicWithdrawalAfterYears
         : 0)
   );
-  console.log("Total No Lumpsum Withdrawals: " + lumpSumWithdrawalYears.length);
+  console.log("Total Systematic Withdrawal: ₹" + totalSWP);
+  console.log("Total No Lumpsum Withdrawals: " + goalWithdrawals.length);
   console.log(
     "************************************************************************************"
   );
@@ -998,8 +1149,16 @@ function calculateCompoundInterest(
     systematicWithdrawalAfterAPeriod
       ? years - systematicWithdrawalAfterYears
       : 0;
-  document.querySelector(".noOfLumpsumWithdrawals").value =
-    lumpSumWithdrawalYears.length;
+
+  document.querySelector(".totalSWPAmount").value = totalSWP;
+
+  document.querySelectorAll(".noOfLumpsumWithdrawals").forEach((el) => {
+    el.value = goalWithdrawals.length;
+  });
+
+  document.querySelectorAll(".totalLumpsumWithdrawalAmount").forEach((el) => {
+    el.value = goalWithdrawals.reduce((sum, g) => sum + g.inflatedAmount, 0);
+  });
 
   createMonthlyResultTable(
     monthlyInvestmentHistory,
@@ -1015,7 +1174,8 @@ function calculateCompoundInterest(
   hideExtraInfoForPrimaryInvestment(
     sip,
     systematicWithdrawalAfterAPeriod,
-    lumpSumWithdrawals
+    lumpSumWithdrawals,
+    parallelInvestmentOne || parallelInvestmentTwo
   );
 
   updateInvestmentResults(
@@ -1023,29 +1183,73 @@ function calculateCompoundInterest(
     totalDepositsOne,
     totalInterestOne,
     totalAmountOne,
-    yearsOne,
+    years,
     activeSipYearsOne,
     monthlyInvestmentHistoryOne,
     yearlyInvestmentOneHistory,
     "One",
-    "Parallel Investment 1"
+    "Secondary Investment"
   );
   updateInvestmentResults(
     parallelInvestmentTwo,
     totalDepositsTwo,
     totalInterestTwo,
     totalAmountTwo,
-    yearsTwo,
+    years,
     activeSipYearsTwo,
     monthlyInvestmentHistoryTwo,
     yearlyInvestmentTwoHistory,
     "Two",
-    "Parallel Investment 2"
+    "Secondary Investment"
   );
+
+  const combinedMonthly = [];
+  for (let i = 0; i <= totalMonths; i++) {
+    const m1 = monthlyInvestmentHistory[i];
+    const m2 = monthlyInvestmentHistoryOne[i];
+    const m3 = monthlyInvestmentHistoryTwo[i];
+    if (m1 || m2 || m3) {
+      combinedMonthly.push(
+        new InvestmentHistory(
+          m1?.year || m2?.year || m3?.year,
+          i,
+          (m1?.sipAmount || 0) + (m2?.sipAmount || 0) + (m3?.sipAmount || 0),
+          (m1?.principalForTheMonth || 0) +
+            (m2?.principalForTheMonth || 0) +
+            (m3?.principalForTheMonth || 0),
+          (m1?.interestForTheMonth || 0) +
+            (m2?.interestForTheMonth || 0) +
+            (m3?.interestForTheMonth || 0),
+          (m1?.totalInterest || 0) +
+            (m2?.totalInterest || 0) +
+            (m3?.totalInterest || 0),
+          (m1?.totalAmount || 0) +
+            (m2?.totalAmount || 0) +
+            (m3?.totalAmount || 0)
+        )
+      );
+    }
+  }
+  const combinedYearly = aggregateYearlyInvestmentHistory(combinedMonthly);
+
+  if (parallelInvestmentOne || parallelInvestmentTwo) {
+    createMonthlyResultTable(
+      combinedMonthly,
+      "monthlyResultTableForCombinedView",
+      "Combined Investment"
+    );
+    createYearlyResultTable(
+      combinedYearly,
+      "yearlyResultTableForCombinedView",
+      "Combined Investment"
+    );
+  }
+
   updateCombinedPortfolioResults(
     parallelInvestmentOne,
     parallelInvestmentTwo,
     totalDeposits,
+    totalWithdrawals,
     totalDepositsOne,
     totalDepositsTwo,
     totalInterest,
@@ -1055,8 +1259,6 @@ function calculateCompoundInterest(
     totalAmountOne,
     totalAmountTwo,
     years,
-    yearsOne,
-    yearsTwo,
     activeSipYears,
     activeSipYearsOne,
     activeSipYearsTwo
@@ -1066,6 +1268,7 @@ function calculateCompoundInterest(
   document.getElementById("yearly-data").classList.add("active");
   document.getElementById("monthly-data").classList.remove("active");
   showYearlyData();
+  showHideCombinedPortfolioDetails();
 }
 
 function createMonthlyResultTable(
@@ -1230,7 +1433,7 @@ function aggregateYearlyInvestmentHistory(monthlyInvestmentHistory) {
 
 function formatInputFieldValues() {
   const inputElements = document.querySelectorAll(
-    'input[type="text"]:not(.lumpsumwithdrawalYears)'
+    'input[type="text"]:not(.goalName)'
   );
   inputElements.forEach((input) => {
     let value = input.value.replace(/\D/g, "");
@@ -1329,6 +1532,7 @@ function updateCombinedPortfolioResults(
   parallelInvestmentOne,
   parallelInvestmentTwo,
   totalDeposits,
+  totalWithdrawals,
   totalDepositsOne,
   totalDepositsTwo,
   totalInterest,
@@ -1338,8 +1542,6 @@ function updateCombinedPortfolioResults(
   totalAmountOne,
   totalAmountTwo,
   years,
-  yearsOne,
-  yearsTwo,
   activeSipYears,
   activeSipYearsOne,
   activeSipYearsTwo
@@ -1354,11 +1556,6 @@ function updateCombinedPortfolioResults(
       totalAmount +
       (parallelInvestmentOne ? totalAmountOne : 0) +
       (parallelInvestmentTwo ? totalAmountTwo : 0);
-    const totalCombinedYears = Math.max(
-      years,
-      parallelInvestmentOne ? yearsOne : 0,
-      parallelInvestmentTwo ? yearsTwo : 0
-    );
     const combinedSipYears = Math.max(
       activeSipYears,
       parallelInvestmentOne ? activeSipYearsOne : 0,
@@ -1366,7 +1563,7 @@ function updateCombinedPortfolioResults(
     );
 
     const presentValueOfFutureMoney = calculatePresentValueOfFutureMoney(
-      totalCombinedYears,
+      years,
       totalFutureInvestmentValue,
       inflationRate
     );
@@ -1384,7 +1581,7 @@ function updateCombinedPortfolioResults(
     console.log(
       "Combined Future Investment Value: ₹" + presentValueOfFutureMoney
     );
-    console.log("Total Combined No of Years: " + totalCombinedYears);
+    console.log("Total Combined No of Years: " + years);
     console.log(
       "Total Combined No of Years with Active SIP: " + combinedSipYears
     );
@@ -1393,18 +1590,21 @@ function updateCombinedPortfolioResults(
     );
 
     document.querySelector(".combinedTotalDeposit").value = combinedDeposit;
+    document.querySelector(".combinedTotalWithdrawal").value = totalWithdrawals;
     document.querySelector(".combinedTotalInterest").value =
       totalCombinedInterestEarned;
     document.querySelector(".combinedFutureInvestmentValue").value =
       totalFutureInvestmentValue;
     document.querySelector(".combinedPresentValueOfFutureMoney").value =
       presentValueOfFutureMoney;
-    document.querySelector(".combinedNoOfYears").value = totalCombinedYears;
+    document.querySelector(".combinedNoOfYears").value = years;
     document.querySelector(".combinedNoOfYearsSip").value = combinedSipYears;
 
-    showCombinedPortfolio();
+    document.querySelectorAll(".individualYears").forEach((el) => {
+      el.classList.add("hidden");
+    });
   } else {
-    hideCombinedPortfolio();
+    document.querySelector(".primaryYears").classList.remove("hidden");
   }
 }
 
@@ -1444,7 +1644,8 @@ function toggleParallelInvestment(suffix) {
 function hideExtraInfoForPrimaryInvestment(
   sip,
   systematicWithdrawalAfterAPeriod,
-  lumpSumWithdrawals
+  lumpSumWithdrawals,
+  parallelInvestment
 ) {
   if (sip) {
     document.getElementById("showNoOfYearsSip").classList.remove("hidden");
@@ -1453,21 +1654,27 @@ function hideExtraInfoForPrimaryInvestment(
   }
 
   if (systematicWithdrawalAfterAPeriod) {
-    document.getElementById("showTotalWithdrawal").classList.remove("hidden");
-    document.getElementById("showNoOfYearsSwp").classList.remove("hidden");
+    document.getElementById("showSWP").classList.remove("hidden");
+    //document.getElementById("showNoOfYearsSwp").classList.remove("hidden");
   } else {
-    document.getElementById("showTotalWithdrawal").classList.add("hidden");
-    document.getElementById("showNoOfYearsSwp").classList.add("hidden");
+    document.getElementById("showSWP").classList.add("hidden");
   }
+  document.getElementById("showNoOfYearsSwp").classList.add("hidden");
+
+  document.querySelectorAll(".lumpsumOverview").forEach((el) => {
+    el.classList.add("hidden");
+  });
 
   if (lumpSumWithdrawals) {
-    document
-      .getElementById("showNoOfLumpsumWithdrawals")
-      .classList.remove("hidden");
-  } else {
-    document
-      .getElementById("showNoOfLumpsumWithdrawals")
-      .classList.add("hidden");
+    if (parallelInvestment) {
+      document
+        .querySelector(".lumpsum-count-combined")
+        .classList.remove("hidden");
+    } else {
+      document
+        .querySelector(".lumpsum-count-primary")
+        .classList.remove("hidden");
+    }
   }
 }
 
@@ -1496,16 +1703,38 @@ function saveUserInputsToLocalStorage() {
     "input[type='text'], input[type='number'], select"
   );
   const data = {};
+
+  // Save static fields by class name
   fieldsToSave.forEach((field) => {
-    data[field.className] = field.value;
+    if (!field.closest("#goalWithdrawalRows")) {
+      data[field.className] = field.value;
+    }
   });
 
+  // Save goal rows separately
+  const goalRows = document.querySelectorAll("#goalWithdrawalRows tr");
+  const goals = [];
+  goalRows.forEach((row) => {
+    goals.push({
+      name: row.querySelector(".goalName")?.value ?? "",
+      year: row.querySelector(".goalYear")?.value ?? "",
+      amount: row.querySelector(".goalAmount")?.value ?? "",
+    });
+  });
+
+  data.goalWithdrawals = goals;
+
+  // Save selected radio buttons
   const selectedRadios = document.querySelectorAll(
     "input[type='radio']:checked"
   );
   selectedRadios.forEach((radio) => {
     data[radio.name] = radio.value;
   });
+
+  if (typeof goalCounter !== "undefined") {
+    data.goalCounter = goalCounter;
+  }
 
   localStorage.setItem("compoundInterestInputs", JSON.stringify(data));
 }
@@ -1515,7 +1744,9 @@ function loadUserInputsFromLocalStorage() {
   if (!saved) return;
   const data = JSON.parse(saved);
 
+  // Load static fields
   Object.entries(data).forEach(([key, value]) => {
+    if (key === "goalWithdrawals") return; // handled separately
     const input = document.querySelector(`.${key}`);
     if (input) {
       input.value = value;
@@ -1526,7 +1757,81 @@ function loadUserInputsFromLocalStorage() {
       if (radio) radio.checked = true;
     }
   });
+
+  // Load goal rows
+  if (Array.isArray(data.goalWithdrawals)) {
+    const tbody = document.getElementById("goalWithdrawalRows");
+    tbody.innerHTML = ""; // clear existing rows
+
+    data.goalWithdrawals.forEach((goal) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td><input type="text" class="goalName" value="${goal.name}"></td>
+        <td>
+          <select class="goalYear">
+            ${generateGoalYearOptions(goal.year)}
+          </select>
+        </td>
+        <td>
+          <div class="divWrapper">
+            <div class="container">
+              <div class="pWrapper"><p>₹</p></div>
+            </div>
+            <input
+              type="text"
+              class="goalAmount numericOnly"
+              value="${goal.amount}"
+              pattern="[0-9]*"
+              oninput="validateNumericInput(this);"
+              autocomplete="off"
+            />
+          </div>
+        </td>
+        <td class="goalActions desktop-only">
+          <button type="button" onclick="moveGoalRowUp(this)" title="Move Up">
+            <i class="fas fa-chevron-up"></i>
+          </button>
+          <button type="button" onclick="moveGoalRowDown(this)" title="Move Down">
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <button type="button" onclick="removeGoalRow(this)" title="Remove">
+            <i class="fas fa-minus-circle"></i>
+          </button>
+        </td>
+      `;
+      tbody.appendChild(row);
+    });
+  }
+  if (typeof data.goalCounter !== "undefined") {
+    goalCounter = data.goalCounter;
+  }
 }
+
+function removeGoalRow(button) {
+  const row = button.closest("tr");
+
+  const tbody = document.getElementById("goalWithdrawalRows");
+  if (tbody.rows.length <= 1) {
+    alert(
+      "At least one goal needs to be added. You can toggle off the Goal-Based Withdrawals as well..."
+    );
+    return;
+  }
+
+  row.remove();
+}
+
+function generateGoalYearOptions(selectedYear) {
+  const start = new Date().getFullYear();
+  let options = "";
+  for (let y = start; y <= start + 50; y++) {
+    options += `<option value="${y}" ${
+      y == selectedYear ? "selected" : ""
+    }>${y}</option>`;
+  }
+  return options;
+}
+
 async function downloadExcelReport() {
   const workbook = new ExcelJS.Workbook();
 
@@ -1542,11 +1847,11 @@ async function downloadExcelReport() {
     },
     {
       selector: ".parallelInvestmentOneOverview",
-      label: "Parallel Investment 1 Overview",
+      label: "Secondary Investment Overview",
     },
     {
       selector: ".parallelInvestmentTwoOverview",
-      label: "Parallel Investment 2 Overview",
+      label: "Terniary Investment Overview",
     },
   ];
 
@@ -1557,11 +1862,7 @@ async function downloadExcelReport() {
     if (el && !el.classList.contains("hidden")) {
       const tableRows = extractOverviewTableData(el);
 
-      // Add label/title row
-      // overviewSheet.addRow([label]);
-      // overviewSheet.lastRow.font = { bold: true };
-
-      // overviewSheet.addRow([]); // spacer
+      let startRowIndex = overviewSheet.rowCount + 1; // Save the index before adding new rows
 
       tableRows.forEach((row) => {
         const added = overviewSheet.addRow(row);
@@ -1570,14 +1871,26 @@ async function downloadExcelReport() {
         }
       });
 
+      // Make the first row of this section bold
+      const firstRowOfSection = overviewSheet.getRow(startRowIndex);
+      firstRowOfSection.font = { bold: true };
+
       overviewSheet.addRow([]); // spacer between sections
     }
   });
-  overviewSheet.getRow(1).font = { bold: true };
+
   autoFitSheetColumns(overviewSheet);
 
   // === 2. Investment Result Tables (One Sheet Each) ===
   const tablePairs = [
+    {
+      table: "yearlyResultTableForCombinedView",
+      name: "Combined Investment - Yearly",
+    },
+    {
+      table: "monthlyResultTableForCombinedView",
+      name: "Combined Investment - Monthly",
+    },
     { table: "yearlyResultTable", name: "Investment 1 - Yearly" },
     { table: "monthlyResultTable", name: "Investment 1 - Monthly" },
     {
@@ -1695,6 +2008,102 @@ function autoFitSheetColumns(sheet) {
   });
 }
 
+function addGoalRow(startingYear = getNumericValue(".investmentYear")) {
+  const table = document.getElementById("goalWithdrawalRows");
+  const row = document.createElement("tr");
+
+  const yearOptions = [];
+  for (let y = startingYear; y <= startingYear + 50; y++) {
+    yearOptions.push(`<option value="${y}">${y}</option>`);
+  }
+
+  row.innerHTML = `
+    <td><input type="text" class="goalName" autocomplete="off" value="Goal ${goalCounter}" /></td>
+    <td>
+      <select class="goalYear">${yearOptions.join("")}</select>
+    </td>
+    <td>
+      <div class="divWrapper">
+        <div class="container">
+          <div class="pWrapper"><p>₹</p></div>
+        </div>
+        <input type="text" class="goalAmount" pattern="[0-9]*" oninput="validateNumericInput(this);" autocomplete="off" value="0" />
+      </div>
+    </td>
+    <td class="goalActions desktop-only">
+      <button type="button" onclick="moveGoalRowUp(this)" title="Move Up">
+        <i class="fas fa-chevron-up"></i>
+      </button>
+      <button type="button" onclick="moveGoalRowDown(this)" title="Move Down">
+        <i class="fas fa-chevron-down"></i>
+      </button>
+      <button type="button" onclick="removeGoalRow(this)" title="Remove">
+        <i class="fas fa-minus-circle"></i>
+      </button>
+    </td>
+  `;
+
+  table.appendChild(row);
+  goalCounter++;
+}
+
+function moveGoalRowUp(button) {
+  const row = button.closest("tr");
+  const prev = row.previousElementSibling;
+  if (prev) {
+    row.parentNode.insertBefore(row, prev);
+  }
+}
+
+function moveGoalRowDown(button) {
+  const row = button.closest("tr");
+  const next = row.nextElementSibling;
+  if (next) {
+    row.parentNode.insertBefore(next, row);
+  }
+}
+
+function getGoalWithdrawals(startingYear) {
+  const rows = document.querySelectorAll("#goalWithdrawalRows tr");
+  const goals = [];
+
+  rows.forEach((row) => {
+    const nameInput = row.querySelector(".goalName");
+    const yearInput = row.querySelector(".goalYear");
+    const amountInput = row.querySelector(".goalAmount");
+
+    if (!nameInput || !yearInput || !amountInput) return;
+    const name = nameInput.value.trim();
+    const year = parseInt(yearInput.value.replace(/,/g, "") || "0", 10);
+    const amountToday = parseFloat(amountInput.value.replace(/,/g, "") || "0");
+
+    console.log("Amount Today: " + amountToday);
+    if (name && !isNaN(year) && !isNaN(amountToday)) {
+      const yearsUntilGoal = year - startingYear + 1;
+      console.log("startingYear (type):", startingYear, typeof startingYear);
+      console.log("goal year (type):", year, typeof year);
+      console.log("Year Until Goal: " + yearsUntilGoal);
+      if (yearsUntilGoal >= 0) {
+        const inflatedAmount = Math.round(
+          amountToday * Math.pow(1 + inflationRate / 100, yearsUntilGoal)
+        );
+        const monthIndex = yearsUntilGoal * 12;
+
+        goals.push({
+          name,
+          year,
+          amountToday,
+          inflationRate,
+          inflatedAmount,
+          monthIndex,
+        });
+      }
+    }
+  });
+
+  return goals;
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   // Disable autocomplete
   document.querySelectorAll("input").forEach(function (input) {
@@ -1719,6 +2128,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Run toggle and setup functions
+  toggleDecreaseInterestRate();
+  toggleDecreaseInterestRateOne();
+  toggleDecreaseInterestRateTwo();
   toggleSIP();
   toggleSWP();
   toggleLumpsumWithdrawal();
@@ -1733,8 +2145,6 @@ document.addEventListener("DOMContentLoaded", () => {
   toggleBonusSipStepUp();
   toggleWithdrawalStepUp();
   calculate();
-  hideParallelInvestmentResult("One");
-  hideParallelInvestmentResult("Two");
 
   // Calculate button click handler
   document.querySelector(".calculate-button").addEventListener("click", () => {

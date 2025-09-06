@@ -6,6 +6,10 @@
     <script src="script.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <title>Compound Interest Investment Calculator by Pabitra</title>
   </head>
 
@@ -88,6 +92,85 @@
                       value="12"
                       placeholder="0"
                       class="interestRate"
+                      pattern="[0-9]*"
+                      oninput="validateNumericInput(this);"
+                    />
+                    <div class="container">
+                      <div class="pWrapper">
+                        <p>%</p>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Adjust Interest Rate As You Age?
+                  <br />
+                  <span style="font-size: x-small">
+                    As you get older your risk appetite might be low and you
+                    would be little conservative.
+                  </span>
+                </td>
+                <td style="text-align: center">
+                  <div class="radio-wrapper">
+                    <div>Yes</div>
+                    <div>
+                      <input
+                        type="radio"
+                        name="decreaseInterestRate"
+                        value="yes"
+                        id="decreaseInterestRateYes"
+                        onclick="toggleDecreaseInterestRate()"
+                      />
+                    </div>
+                    <div></div>
+                    <div>No</div>
+                    <div>
+                      <input
+                        type="radio"
+                        name="decreaseInterestRate"
+                        value="no"
+                        id="decreaseInterestRateNo"
+                        onclick="toggleDecreaseInterestRate()"
+                        checked
+                      />
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="decreaseInterestRateRows">
+                <td>
+                  Change Interest Rate After Years<br />
+                  <span style="font-size: xx-small">
+                    Ideally this value should be less than total number of
+                    years...
+                  </span>
+                </td>
+                <td>
+                  <div class="divWrapper">
+                    <div class="divWrapper">
+                      <input
+                        type="text"
+                        value=""
+                        placeholder="0"
+                        class="decreaseInterestRateAfterYears"
+                        pattern="[0-9]*"
+                        oninput="validateNumericInput(this);"
+                      />
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr class="decreaseInterestRateRows">
+                <td>Update Interest Rate To</td>
+                <td>
+                  <div class="divWrapper">
+                    <input
+                      type="text"
+                      value=""
+                      placeholder="0"
+                      class="updatedInterestRate"
                       pattern="[0-9]*"
                       oninput="validateNumericInput(this);"
                     />
@@ -348,8 +431,8 @@
                           <td>
                             Change StepUp After Years<br />
                             <span style="font-size: xx-small">
-                              This value should be less than total number of
-                              years...
+                              Ideally this value should be less than total
+                              number of years...
                             </span>
                           </td>
                           <td>
@@ -426,8 +509,8 @@
                           <td>
                             Stop SIP After Years<br />
                             <span style="font-size: xx-small">
-                              This value should be less than total number of
-                              years...
+                              Ideally this value should be less than total
+                              number of years...
                             </span>
                           </td>
                           <td>
@@ -650,8 +733,8 @@
                           <td>
                             Withdrawal After Years<br />
                             <span style="font-size: xx-small">
-                              This value should be less than total number of
-                              years...
+                              Ideally this value should be less than total
+                              number of years...
                             </span>
                           </td>
                           <td>
@@ -781,10 +864,11 @@
               </tr>
               <tr>
                 <th class="no-border">
-                  Want to make one or more Lumpsum Withdrawals?<br />
+                  Lumpsum Goal-Based Withdrawals?<br />
                   <span style="font-size: x-small">
                     Irregular Withdrawal Plan at any of years of your investment
-                    for any kind of goals.
+                    for any kind of goals. <br />7% Inflation is considered for
+                    goal based withdrawals...
                   </span>
                 </th>
                 <th class="no-border" style="text-align: center">
@@ -822,49 +906,38 @@
                     >
                       <tbody>
                         <tr>
-                          <th>Lumpsum Withdrawal Details</th>
-                          <th></th>
-                        </tr>
-                        <tr>
-                          <td>Withdrawal Amount</td>
-                          <td>
-                            <div class="divWrapper">
-                              <div class="container">
-                                <div class="pWrapper">
-                                  <p>&#8377;</p>
-                                </div>
-                              </div>
-                              <input
-                                type="text"
-                                value=""
-                                placeholder="0"
-                                class="lumpsumWithdrawalAmount"
-                                pattern="[0-9]*"
-                                oninput="validateNumericInput(this);"
-                              />
+                          <td colspan="2">
+                            <div style="text-align: right">
+                              <button
+                                type="button"
+                                class="add-goal-btn"
+                                onclick="addGoalRow()"
+                                title="Add Goal"
+                              >
+                                <i
+                                  class="fas fa-plus-circle"
+                                  style="margin-right: 6px; color: currentColor"
+                                ></i>
+                                Add Goal
+                              </button>
                             </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            List of Years of the withdrawals<br />
-                            <span style="font-size: x-small">
-                              Comma separated years, e.g., 12, 15, 18 which
-                              means the specified amount will be withdrwan on
-                              12th, 15th and 18th years.
-                            </span>
-                          </td>
-                          <td>
-                            <div class="divWrapper">
-                              <input
-                                type="text"
-                                value=""
-                                placeholder="0"
-                                class="lumpsumwithdrawalYears"
-                                pattern="[0-9,]*"
-                                oninput="validateNumericInputWithComma(this);"
-                              />
-                            </div>
+
+                            <table
+                              class="goalWithdrawalTable"
+                              style="margin-top: 10px; width: 100%"
+                            >
+                              <thead>
+                                <tr>
+                                  <th>Goal Name</th>
+                                  <th>Year</th>
+                                  <th>Today's Value (₹)</th>
+                                  <th class="desktop-only">Action</th>
+                                </tr>
+                              </thead>
+                              <tbody id="goalWithdrawalRows">
+                                <!-- Dynamic goal rows here -->
+                              </tbody>
+                            </table>
                           </td>
                         </tr>
                       </tbody>
@@ -874,7 +947,7 @@
               </tr>
               <tr class="parallel-inv">
                 <th class="no-border">
-                  Parallel Investment 1<br />
+                  Secondary Investment<br />
                   <span style="font-size: x-small">
                     Could be a goal based separate portfolio, bonds, etc...
                   </span>
@@ -990,38 +1063,82 @@
                           </td>
                         </tr>
                         <tr>
-                          <td colspan="2">
-                            <table class="sub-table parallelInvYear">
-                              <tr>
-                                <td>Years</td>
-                                <td>
-                                  <div class="divWrapper">
-                                    <input
-                                      type="text"
-                                      value="15"
-                                      placeholder="0"
-                                      class="yearsOne"
-                                      pattern="[0-9]*"
-                                      oninput="validateNumericInput(this);"
-                                    />
-                                  </div>
-                                </td>
-                                <td></td>
-                                <td>Months</td>
-                                <td>
-                                  <div class="divWrapper">
-                                    <input
-                                      type="text"
-                                      value=""
-                                      placeholder="0"
-                                      class="monthsOne"
-                                      pattern="[0-9]*"
-                                      oninput="validateNumericInput(this);"
-                                    />
-                                  </div>
-                                </td>
-                              </tr>
-                            </table>
+                          <td>
+                            Adjust Interest Rate As You Age?
+                            <br />
+                            <span style="font-size: x-small">
+                              As you get older your risk appetite might be low
+                              and you would be little conservative.
+                            </span>
+                          </td>
+                          <td style="text-align: center">
+                            <div class="radio-wrapper">
+                              <div>Yes</div>
+                              <div>
+                                <input
+                                  type="radio"
+                                  name="decreaseInterestRateOne"
+                                  value="yes"
+                                  id="decreaseInterestRateYesOne"
+                                  onclick="toggleDecreaseInterestRateOne()"
+                                />
+                              </div>
+                              <div></div>
+                              <div>No</div>
+                              <div>
+                                <input
+                                  type="radio"
+                                  name="decreaseInterestRateOne"
+                                  value="no"
+                                  id="decreaseInterestRateNoOne"
+                                  onclick="toggleDecreaseInterestRateOne()"
+                                  checked
+                                />
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr class="decreaseInterestRateRowsOne">
+                          <td>
+                            Change Interest Rate After Years<br />
+                            <span style="font-size: xx-small">
+                              Ideally this value should be less than total
+                              number of years...
+                            </span>
+                          </td>
+                          <td>
+                            <div class="divWrapper">
+                              <div class="divWrapper">
+                                <input
+                                  type="text"
+                                  value=""
+                                  placeholder="0"
+                                  class="decreaseInterestRateAfterYearsOne"
+                                  pattern="[0-9]*"
+                                  oninput="validateNumericInput(this);"
+                                />
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr class="decreaseInterestRateRowsOne">
+                          <td>Update Interest Rate To</td>
+                          <td>
+                            <div class="divWrapper">
+                              <input
+                                type="text"
+                                value=""
+                                placeholder="0"
+                                class="updatedInterestRateOne"
+                                pattern="[0-9]*"
+                                oninput="validateNumericInput(this);"
+                              />
+                              <div class="container">
+                                <div class="pWrapper">
+                                  <p>%</p>
+                                </div>
+                              </div>
+                            </div>
                           </td>
                         </tr>
                         <tr>
@@ -1215,8 +1332,8 @@
                                   <td>
                                     Stop SIP After Years<br />
                                     <span style="font-size: xx-small">
-                                      This value should be less than total
-                                      number of years...
+                                      Ideally this value should be less than
+                                      total number of years...
                                     </span>
                                   </td>
                                   <td>
@@ -1245,7 +1362,7 @@
               </tr>
               <tr class="parallel-inv">
                 <th class="no-border">
-                  Parallel Investment 2<br />
+                  Tertiary Investment<br />
                   <span style="font-size: x-small">
                     Could be a PF, Compounding FD, etc...
                   </span>
@@ -1358,38 +1475,82 @@
                           </td>
                         </tr>
                         <tr>
-                          <td colspan="2">
-                            <table class="sub-table parallelInvYear">
-                              <tr>
-                                <td>Years</td>
-                                <td>
-                                  <div class="divWrapper">
-                                    <input
-                                      type="text"
-                                      value="15"
-                                      placeholder="0"
-                                      class="yearsTwo"
-                                      pattern="[0-9]*"
-                                      oninput="validateNumericInput(this);"
-                                    />
-                                  </div>
-                                </td>
-                                <td></td>
-                                <td>Months</td>
-                                <td>
-                                  <div class="divWrapper">
-                                    <input
-                                      type="text"
-                                      value=""
-                                      placeholder="0"
-                                      class="monthsTwo"
-                                      pattern="[0-9]*"
-                                      oninput="validateNumericInput(this);"
-                                    />
-                                  </div>
-                                </td>
-                              </tr>
-                            </table>
+                          <td>
+                            Adjust Interest Rate As You Age?
+                            <br />
+                            <span style="font-size: x-small">
+                              As you get older your risk appetite might be low
+                              and you would be little conservative.
+                            </span>
+                          </td>
+                          <td style="text-align: center">
+                            <div class="radio-wrapper">
+                              <div>Yes</div>
+                              <div>
+                                <input
+                                  type="radio"
+                                  name="decreaseInterestRateTwo"
+                                  value="yes"
+                                  id="decreaseInterestRateYesTwo"
+                                  onclick="toggleDecreaseInterestRateTwo()"
+                                />
+                              </div>
+                              <div></div>
+                              <div>No</div>
+                              <div>
+                                <input
+                                  type="radio"
+                                  name="decreaseInterestRateTwo"
+                                  value="no"
+                                  id="decreaseInterestRateNoTwo"
+                                  onclick="toggleDecreaseInterestRateTwo()"
+                                  checked
+                                />
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr class="decreaseInterestRateRowsTwo">
+                          <td>
+                            Change Interest Rate After Years<br />
+                            <span style="font-size: xx-small">
+                              Ideally this value should be less than total
+                              number of years...
+                            </span>
+                          </td>
+                          <td>
+                            <div class="divWrapper">
+                              <div class="divWrapper">
+                                <input
+                                  type="text"
+                                  value=""
+                                  placeholder="0"
+                                  class="decreaseInterestRateAfterYearsTwo"
+                                  pattern="[0-9]*"
+                                  oninput="validateNumericInput(this);"
+                                />
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr class="decreaseInterestRateRowsTwo">
+                          <td>Update Interest Rate To</td>
+                          <td>
+                            <div class="divWrapper">
+                              <input
+                                type="text"
+                                value=""
+                                placeholder="0"
+                                class="updatedInterestRateTwo"
+                                pattern="[0-9]*"
+                                oninput="validateNumericInput(this);"
+                              />
+                              <div class="container">
+                                <div class="pWrapper">
+                                  <p>%</p>
+                                </div>
+                              </div>
+                            </div>
                           </td>
                         </tr>
                         <tr>
@@ -1583,8 +1744,8 @@
                                   <td>
                                     Stop SIP After Years<br />
                                     <span style="font-size: xx-small">
-                                      This value should be less than total
-                                      number of years...
+                                      Ideally this value should be less than
+                                      total number of years...
                                     </span>
                                   </td>
                                   <td>
@@ -1637,7 +1798,7 @@
             <table class="dataTable combinedInvestmentOverview">
               <tbody>
                 <tr>
-                  <th>Combined Portfolio Value</th>
+                  <th>Future Value of your Investment(s)</th>
                   <th></th>
                 </tr>
                 <tr>
@@ -1704,6 +1865,27 @@
                   </td>
                 </tr>
                 <tr>
+                  <td>Total Withdrawals</td>
+                  <td>
+                    <div class="divWrapper totalWrapper">
+                      <div class="container">
+                        <div class="pWrapper">
+                          <p>&#8377;</p>
+                        </div>
+                      </div>
+                      <input
+                        type="text"
+                        value=""
+                        placeholder="0"
+                        class="combinedTotalWithdrawal"
+                        pattern="[0-9]*"
+                        oninput="validateNumericInput(this);"
+                        disabled
+                      />
+                    </div>
+                  </td>
+                </tr>
+                <tr>
                   <td>Total Interest Earned</td>
                   <td>
                     <div class="divWrapper totalWrapper">
@@ -1756,6 +1938,38 @@
                     </div>
                   </td>
                 </tr>
+                <tr class="lumpsumOverview lumpsum-count-combined">
+                  <td>Total No Goal-Based Withdrawals</td>
+                  <td>
+                    <div class="divWrapper totalWrapper">
+                      <input
+                        type="text"
+                        value=""
+                        placeholder="0"
+                        class="noOfLumpsumWithdrawals"
+                        pattern="[0-9]*"
+                        oninput="validateNumericInput(this);"
+                        disabled
+                      />
+                    </div>
+                  </td>
+                </tr>
+                <tr class="lumpsumOverview lumpsum-amount-combined">
+                  <td>Total Lumpsum Withdrawal Amount</td>
+                  <td>
+                    <div class="divWrapper totalWrapper">
+                      <input
+                        type="text"
+                        value=""
+                        placeholder="0"
+                        class="totalLumpsumWithdrawalAmount"
+                        pattern="[0-9]*"
+                        oninput="validateNumericInput(this);"
+                        disabled
+                      />
+                    </div>
+                  </td>
+                </tr>
               </tbody>
             </table>
             <table class="dataTable firstTable investmentOverview">
@@ -1786,7 +2000,9 @@
                   </td>
                 </tr>
                 <tr>
-                  <td>Present Value of Future Money (7% Inflation Adjusted)</td>
+                  <td>
+                    Present Value of Primary Investment (7% Inflation Adjusted)
+                  </td>
                   <td>
                     <div class="divWrapper totalWrapper">
                       <div class="container">
@@ -1827,7 +2043,7 @@
                     </div>
                   </td>
                 </tr>
-                <tr id="showTotalWithdrawal">
+                <tr>
                   <td>Total Withdrawals</td>
                   <td>
                     <div class="divWrapper totalWrapper">
@@ -1841,6 +2057,27 @@
                         value=""
                         placeholder="0"
                         class="totalWithdrawal"
+                        pattern="[0-9]*"
+                        oninput="validateNumericInput(this);"
+                        disabled
+                      />
+                    </div>
+                  </td>
+                </tr>
+                <tr id="showSWP">
+                  <td>Total Systematic Withdrawals</td>
+                  <td>
+                    <div class="divWrapper totalWrapper">
+                      <div class="container">
+                        <div class="pWrapper">
+                          <p>&#8377;</p>
+                        </div>
+                      </div>
+                      <input
+                        type="text"
+                        value=""
+                        placeholder="0"
+                        class="totalSWPAmount"
                         pattern="[0-9]*"
                         oninput="validateNumericInput(this);"
                         disabled
@@ -1869,7 +2106,7 @@
                     </div>
                   </td>
                 </tr>
-                <tr>
+                <tr class="individualYears primaryYears">
                   <td>Total No of Years</td>
                   <td>
                     <div class="divWrapper totalWrapper">
@@ -1917,8 +2154,8 @@
                     </div>
                   </td>
                 </tr>
-                <tr id="showNoOfLumpsumWithdrawals">
-                  <td>Total No Lumpsum Withdrawals</td>
+                <tr class="lumpsumOverview lumpsum-count-primary">
+                  <td>Total Goal-Based Withdrawals</td>
                   <td>
                     <div class="divWrapper totalWrapper">
                       <input
@@ -1933,6 +2170,22 @@
                     </div>
                   </td>
                 </tr>
+                <tr class="lumpsumOverview lumpsum-amount-primary">
+                  <td>Total Lumpsum Withdrawal Amount</td>
+                  <td>
+                    <div class="divWrapper totalWrapper">
+                      <input
+                        type="text"
+                        value=""
+                        placeholder="0"
+                        class="totalLumpsumWithdrawalAmount"
+                        pattern="[0-9]*"
+                        oninput="validateNumericInput(this);"
+                        disabled
+                      />
+                    </div>
+                  </td>
+                </tr>
               </tbody>
             </table>
             <table
@@ -1940,7 +2193,7 @@
             >
               <tbody>
                 <tr>
-                  <th>Future Value of your Parallel Investment 1</th>
+                  <th>Future Value of your Secondary Investment</th>
                   <th></th>
                 </tr>
                 <tr>
@@ -1966,7 +2219,7 @@
                 </tr>
                 <tr>
                   <td>
-                    Present Value of Parallel Investment 1 (7% Inflation
+                    Present Value of Secondary Investment (7% Inflation
                     Adjusted)
                   </td>
                   <td>
@@ -2030,7 +2283,7 @@
                     </div>
                   </td>
                 </tr>
-                <tr>
+                <tr class="individualYears secondaryYears">
                   <td>Total No of Years</td>
                   <td>
                     <div class="divWrapper totalWrapper">
@@ -2069,7 +2322,7 @@
             >
               <tbody>
                 <tr>
-                  <th>Future Value of your Parallel Investment 2</th>
+                  <th>Future Value of your Tertiary Investment</th>
                   <th></th>
                 </tr>
                 <tr>
@@ -2095,8 +2348,7 @@
                 </tr>
                 <tr>
                   <td>
-                    Present Value of Parallel Investment 2 (7% Inflation
-                    Adjusted)
+                    Present Value of Tertiary Investment (7% Inflation Adjusted)
                   </td>
                   <td>
                     <div class="divWrapper totalWrapper">
@@ -2159,7 +2411,7 @@
                     </div>
                   </td>
                 </tr>
-                <tr>
+                <tr class="individualYears terniaryYears">
                   <td>Total No of Years</td>
                   <td>
                     <div class="divWrapper totalWrapper">
@@ -2231,6 +2483,10 @@
               NOT fit the screen.
             </div>
             <div class="monthly-data">
+              <div
+                class="resultTable combined-table hidden"
+                id="monthlyResultTableForCombinedView"
+              ></div>
               <div class="resultTable" id="monthlyResultTable"></div>
               <div
                 class="resultTable"
@@ -2242,6 +2498,10 @@
               ></div>
             </div>
             <div class="yearly-data">
+              <div
+                class="resultTable combined-table hidden"
+                id="yearlyResultTableForCombinedView"
+              ></div>
               <div class="resultTable" id="yearlyResultTable"></div>
               <div
                 class="resultTable"
