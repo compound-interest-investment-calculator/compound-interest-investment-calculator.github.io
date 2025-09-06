@@ -485,6 +485,8 @@ function calculate() {
   const stopSipTwoAfterYears = getNumericValue(".stopSipTwoAfterYears");
   console.log("Stop SIP After Years: " + stopSipTwoAfterYears);
 
+  sortGoals();
+
   calculateCompoundInterest(
     startingYear,
     initialInvestment,
@@ -1766,7 +1768,9 @@ function loadUserInputsFromLocalStorage() {
     data.goalWithdrawals.forEach((goal) => {
       const row = document.createElement("tr");
       row.innerHTML = `
-        <td><input type="text" class="goalName" value="${goal.name}"></td>
+        <td><div class="divWrapper"><input type="text" class="goalName" value="${
+          goal.name
+        }"></div></td>
         <td>
           <select class="goalYear">
             ${generateGoalYearOptions(goal.year)}
@@ -2018,7 +2022,7 @@ function addGoalRow(startingYear = getNumericValue(".investmentYear")) {
   }
 
   row.innerHTML = `
-    <td><input type="text" class="goalName" autocomplete="off" value="Goal ${goalCounter}" /></td>
+    <td><div class="divWrapper"><input type="text" class="goalName" autocomplete="off" value="Goal ${goalCounter}" /></div></td>
     <td>
       <select class="goalYear">${yearOptions.join("")}</select>
     </td>
@@ -2102,6 +2106,26 @@ function getGoalWithdrawals(startingYear) {
   });
 
   return goals;
+}
+
+function sortGoals() {
+  const table = document.getElementById("goalWithdrawalRows");
+  const rows = Array.from(table.querySelectorAll("tr"));
+
+  // Sort rows based on the value inside input with class goal-year
+  rows.sort((a, b) => {
+    const selectA =
+      a.querySelector(".goalYear select") || a.querySelector(".goalYear");
+    const selectB =
+      b.querySelector(".goalYear select") || b.querySelector(".goalYear");
+
+    const yearA = parseInt(selectA?.value) || 0;
+    const yearB = parseInt(selectB?.value) || 0;
+    return yearA - yearB; // ascending order
+  });
+
+  // Append rows back in sorted order
+  rows.forEach((row) => table.appendChild(row));
 }
 
 document.addEventListener("DOMContentLoaded", () => {
