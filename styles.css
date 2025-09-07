@@ -47,6 +47,11 @@ body {
   box-sizing: border-box;
 }
 
+.last-child {
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+}
+
 .child-note {
   padding-left: 10px;
   padding-right: 10px;
@@ -130,6 +135,21 @@ table.section-heading-button {
 .button-container {
   display: flex;
   column-gap: 10px;
+  display: flex; /* enable flex layout */
+  justify-content: space-between; /* left goes left, right goes right */
+  align-items: center; /* vertically align items if needed */
+  width: 100%; /* full width container */
+  gap: 10px;
+}
+
+.left-container {
+  display: flex;
+  gap: 5px; /* spacing between left buttons */
+}
+
+.right-container {
+  display: flex;
+  gap: 5px; /* spacing between right buttons */
 }
 
 .left-button {
@@ -292,6 +312,10 @@ table {
   margin-bottom: 20px;
 }
 
+table.parallelTable {
+  margin: 0px;
+}
+
 table.resultTable {
   margin-top: 0px;
 }
@@ -427,7 +451,7 @@ table.dataTable th:not(.no-border) {
   border-bottom: 1px solid rgb(179, 179, 179);
 }
 
-.subtable-wrapper {
+.subtable-wrapper:not(.no-border) {
   border-bottom: 2px solid rgb(179, 179, 179);
 }
 
@@ -466,7 +490,7 @@ th {
 }
 
 .sub-table {
-  margin: 5px 0px;
+  margin: 0px 0px;
 }
 
 .totalWrapper {
@@ -514,6 +538,7 @@ select {
   font-size: 16px;
   font-weight: 400;
   text-align: center;
+  background: none;
 }
 
 .totalwrapper {
@@ -549,6 +574,13 @@ input {
   margin-left: 3px;
 }
 
+input.inflationRate,
+input.interestRate,
+input.years,
+input.months {
+  text-align: center;
+}
+
 input.total-sal-annual,
 input.total-sal-monthly,
 input.payslip-total {
@@ -561,12 +593,20 @@ p {
   max-height: 30px;
 }
 
+.info {
+  font-size: 11px;
+  margin-top: 10px;
+  color: #555;
+  max-height: 30px;
+  font-weight: normal;
+}
+
 a {
   text-decoration: none;
 }
 
 .calc-button {
-  /* padding-top: 10px; */
+  padding-top: 10px;
   margin-bottom: 10px;
 }
 
@@ -585,6 +625,15 @@ a {
 .parallelInvestmentOverview input,
 .combinedInvestmentOverview input {
   font-weight: 600;
+}
+
+.investmentOverview td:last-child span,
+.parallelInvestmentOverview td:last-child span,
+.combinedInvestmentOverview td:last-child span {
+  font-weight: 600;
+  font-family: "Outfit", sans-serif;
+  font-size: 16px;
+  color: rgb(84, 84, 84);
 }
 
 .combinedInvestmentOverview,
@@ -625,5 +674,16 @@ a {
 }
 
 .investmentDetails {
-  margin-bottom: 15px;
+  margin-bottom: 0px;
+}
+
+.div-left .child.sticky-buttons {
+  position: sticky;
+  bottom: 0;
+  background: #fff;
+  z-index: 10;
+}
+
+.goal-compromised {
+  background-color: #f8d7da; /* light red */
 }

@@ -1,4 +1,4 @@
-const inflationRate = 7;
+let inflationRate = 6;
 let goalCounter = 1;
 
 function validateNumericInput(input) {
@@ -317,13 +317,40 @@ function showYearlyData() {
   document.querySelector(".yearly-data").classList.remove("hidden");
 }
 
+async function downloadGoalTemplate() {
+  const workbook = new ExcelJS.Workbook();
+  const sheet = workbook.addWorksheet("Goals Template");
+
+  sheet.columns = [
+    { header: "Goal Name", key: "name", width: 30 },
+    { header: "Year", key: "year", width: 15 },
+    { header: "Amount Today", key: "amount", width: 20 },
+  ];
+
+  sheet.addRow(["Dream Home", new Date().getFullYear() + 5, 5000000]);
+  sheet.addRow(["Car Purchase", new Date().getFullYear() + 2, 1000000]);
+
+  const buf = await workbook.xlsx.writeBuffer();
+  const blob = new Blob([buf], {
+    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "GoalsTemplate.xlsx";
+  link.click();
+}
+
 function calculate() {
+  inflationRate = document.querySelector(".inflationRate").value;
+  console.log("Inflation Rate: " + inflationRate + "%");
   const startingYear = getNumericValue(".investmentYear");
   console.log("Investment Starting Year: " + startingYear);
   const initialInvestment = getNumericValue(".initialInvestment");
   console.log("Initial Investment: " + initialInvestment);
   const annualInterestRate = getNumericValue(".interestRate");
   console.log("Interest Rate: " + annualInterestRate + "%");
+  const compoundingFrequency = getSelectedValue("compoundingFrequency");
+  console.log("Compounding Frequency: " + compoundingFrequency);
   const decreaseInterestRate = isChecked("decreaseInterestRateYes");
   console.log(
     "Decrease Interest Rate After a period of time? " + decreaseInterestRate
@@ -419,6 +446,8 @@ function calculate() {
   console.log("Initial Investment: " + initialInvestmentOne);
   const annualInterestRateOne = getNumericValue(".interestRateOne");
   console.log("Interest Rate: " + annualInterestRateOne + "%");
+  const compoundingFrequencyOne = getSelectedValue("compoundingFrequencyOne");
+  console.log("Compounding Frequency: " + compoundingFrequencyOne);
   const decreaseInterestRateOne = isChecked("decreaseInterestRateYesOne");
   console.log(
     "Decrease Interest Rate After a period of time? " + decreaseInterestRateOne
@@ -456,6 +485,8 @@ function calculate() {
   console.log("Initial Investment: " + initialInvestmentTwo);
   const annualInterestRateTwo = getNumericValue(".interestRateTwo");
   console.log("Interest Rate: " + annualInterestRateTwo + "%");
+  const compoundingFrequencyTwo = getSelectedValue("compoundingFrequencyTwo");
+  console.log("Compounding Frequency: " + compoundingFrequencyTwo);
   const decreaseInterestRateTwo = isChecked("decreaseInterestRateYesTwo");
   console.log(
     "Decrease Interest Rate After a period of time? " + decreaseInterestRateTwo
@@ -484,13 +515,16 @@ function calculate() {
   console.log("Stop SIP After a period of time? " + stopSipTwoAfterAPeriod);
   const stopSipTwoAfterYears = getNumericValue(".stopSipTwoAfterYears");
   console.log("Stop SIP After Years: " + stopSipTwoAfterYears);
-
+  document
+    .querySelectorAll("#goalWithdrawalRows tr.goal-compromised")
+    .forEach((row) => row.classList.remove("goal-compromised"));
   sortGoals();
 
   calculateCompoundInterest(
     startingYear,
     initialInvestment,
     annualInterestRate,
+    compoundingFrequency,
     decreaseInterestRate,
     decreaseInterestRateAfterYears,
     decreaseInterestRateTo,
@@ -526,6 +560,7 @@ function calculate() {
     startingYearOne,
     initialInvestmentOne,
     annualInterestRateOne,
+    compoundingFrequencyOne,
     decreaseInterestRateOne,
     decreaseInterestRateAfterYearsOne,
     decreaseInterestRateToOne,
@@ -541,6 +576,7 @@ function calculate() {
     startingYearTwo,
     initialInvestmentTwo,
     annualInterestRateTwo,
+    compoundingFrequencyTwo,
     decreaseInterestRateTwo,
     decreaseInterestRateAfterYearsTwo,
     decreaseInterestRateToTwo,
@@ -591,10 +627,20 @@ const INVESTMENT_FREQUENCY = {
   YEARLY: 12,
 };
 
+function getPeriodicRate(annualRate, compoundingPerYear) {
+  return annualRate / compoundingPerYear;
+}
+
+function calculateEAR(nominalRate, compoundingPerYear) {
+  const r = nominalRate / 100;
+  return (Math.pow(1 + r / compoundingPerYear, compoundingPerYear) - 1) * 100;
+}
+
 function calculateCompoundInterest(
   startingYear,
   initialInvestment,
   annualInterestRate,
+  compoundingPerYear,
   decreaseInterestRate,
   decreaseInterestRateAfterYears,
   decreaseInterestRateTo,
@@ -630,6 +676,7 @@ function calculateCompoundInterest(
   startingYearOne,
   initialInvestmentOne,
   annualInterestRateOne,
+  compoundingPerYearOne,
   decreaseInterestRateOne,
   decreaseInterestRateAfterYearsOne,
   decreaseInterestRateToOne,
@@ -645,6 +692,7 @@ function calculateCompoundInterest(
   startingYearTwo,
   initialInvestmentTwo,
   annualInterestRateTwo,
+  compoundingPerYearTwo,
   decreaseInterestRateTwo,
   decreaseInterestRateAfterYearsTwo,
   decreaseInterestRateToTwo,
@@ -679,6 +727,7 @@ function calculateCompoundInterest(
   stopSipTwoAfterYears =
     years >= stopSipTwoAfterYears ? stopSipTwoAfterYears : years;
 
+  let periodicRate = getPeriodicRate(annualInterestRate, compoundingPerYear);
   let monthlyInterestRate = annualInterestRate / 12;
   let totalDeposits = initialInvestment;
   let totalAmount = initialInvestment;
@@ -704,6 +753,10 @@ function calculateCompoundInterest(
   let totalDepositsOne = initialInvestmentOne;
   let totalAmountOne = initialInvestmentOne;
   let totalInterestOne = 0;
+  let periodicRateOne = getPeriodicRate(
+    annualInterestRateOne,
+    compoundingPerYearOne
+  );
   let monthlyInterestRateOne = annualInterestRateOne / 12;
   let monthCounterOne = 0;
   let frequencyCounterOne = 0;
@@ -717,6 +770,10 @@ function calculateCompoundInterest(
   let totalDepositsTwo = initialInvestmentTwo;
   let totalAmountTwo = initialInvestmentTwo;
   let totalInterestTwo = 0;
+  let periodicRateTwo = getPeriodicRate(
+    annualInterestRateTwo,
+    compoundingPerYearTwo
+  );
   let monthlyInterestRateTwo = annualInterestRateTwo / 12;
   let monthCounterTwo = 0;
   let frequencyCounterTwo = 0;
@@ -772,7 +829,9 @@ function calculateCompoundInterest(
     );
   }
 
+  let compoundingCounter = 0;
   for (let i = 1; i <= totalMonths; i++) {
+    compoundingCounter++;
     if (
       decreaseInterestRate &&
       currentYear >= startingYear + decreaseInterestRateAfterYears
@@ -817,35 +876,55 @@ function calculateCompoundInterest(
       }
     }
 
-    let lumpSumWithdrawal = goalWithdrawals
-      .filter((goal) => goal.monthIndex === i)
-      .reduce((sum, goal) => sum + goal.inflatedAmount, 0);
+    let monthlyGoals = goalWithdrawals.filter((goal) => goal.monthIndex === i);
+    let lumpSumWithdrawal = monthlyGoals.reduce(
+      (sum, goal) => sum + goal.inflatedAmount,
+      0
+    );
 
     if (lumpSumWithdrawal > 0) {
       const allowedWithdrawal = Math.min(lumpSumWithdrawal, totalAmount);
+      const shortfall = Math.abs(allowedWithdrawal - lumpSumWithdrawal);
 
       withdrawalForThisMonth -= allowedWithdrawal;
       totalWithdrawals += allowedWithdrawal;
 
       if (allowedWithdrawal < lumpSumWithdrawal) {
         console.warn(
-          `Month ${
-            i + 1
-          }: Goal withdrawal of ₹${lumpSumWithdrawal} capped to available ₹${totalAmount}`
+          `Month ${i}: Goal Compromised. Goal withdrawals capped to available ₹${totalAmount}. Details:`
         );
+        monthlyGoals.forEach((goal) => {
+          console.warn(
+            `Goal: "${goal.name}", Requested: ₹${goal.inflatedAmount}, Shortfall: ₹${shortfall}`
+          );
+
+          // Highlight the goal row in the table
+          const row = document.querySelector(
+            `#goalWithdrawalRows tr:nth-child(${goal.index + 1})`
+          );
+          if (row) row.classList.add("goal-compromised");
+        });
       }
     }
 
     sipForThisMonth = Math.round(Math.min(sipThreshold, sipForThisMonth));
-    const principalForTheMonth = Math.round(
-      totalAmount + sipForThisMonth + withdrawalForThisMonth
-    );
-    totalDeposits = Math.round(totalDeposits + sipForThisMonth);
-    const interestForTheMonth = Math.round(
-      (principalForTheMonth * monthlyInterestRate) / 100
-    );
-    totalInterest = Math.round(totalInterest + interestForTheMonth);
-    totalAmount = Math.round(principalForTheMonth + interestForTheMonth);
+
+    // Apply SIP & withdrawals first
+    totalDeposits += sipForThisMonth;
+    totalAmount += sipForThisMonth + withdrawalForThisMonth;
+
+    let interestThisStep = 0;
+
+    // Interest only when compounding period is reached
+    if (compoundingCounter === 12 / compoundingPerYear) {
+      const interestForThePeriod = Math.round(
+        (totalAmount * periodicRate) / 100
+      );
+      totalInterest += interestForThePeriod;
+      totalAmount += interestForThePeriod;
+      interestThisStep = interestForThePeriod; // record interest applied this month
+      compoundingCounter = 0;
+    }
 
     monthlyInvestmentHistory.push(
       new InvestmentHistory(
@@ -853,7 +932,7 @@ function calculateCompoundInterest(
         i,
         sipForThisMonth + withdrawalForThisMonth,
         totalDeposits,
-        interestForTheMonth,
+        interestThisStep,
         totalInterest,
         totalAmount
       )
@@ -913,7 +992,9 @@ function calculateCompoundInterest(
 
   // Parallel investment 1 calculations (SIP, Step-up, Stop SIP logic)
   if (parallelInvestmentOne) {
+    let compoundingCounterOne = 0;
     for (let i = 1; i <= totalMonths; i++) {
+      compoundingCounterOne++;
       if (
         decreaseInterestRateOne &&
         currentYearOne >= startingYearOne + decreaseInterestRateAfterYearsOne
@@ -930,18 +1011,22 @@ function calculateCompoundInterest(
       ) {
         sipForThisMonthOne = sipOneAmount;
       }
-
+      // Apply SIP first
       totalDepositsOne += sipForThisMonthOne;
-      const principalForTheMonthOne = Math.round(
-        totalAmountOne + sipForThisMonthOne
-      );
-      const interestForTheMonthOne = Math.round(
-        (principalForTheMonthOne * monthlyInterestRateOne) / 100
-      );
-      totalInterestOne += interestForTheMonthOne;
-      totalAmountOne = Math.round(
-        principalForTheMonthOne + interestForTheMonthOne
-      );
+      totalAmountOne += sipForThisMonthOne;
+
+      let interestThisStepOne = 0;
+
+      // Interest only when compounding period is reached
+      if (compoundingCounterOne === 12 / compoundingPerYearOne) {
+        const interestForThePeriodOne = Math.round(
+          (totalAmountOne * periodicRateOne) / 100
+        );
+        totalInterestOne += interestForThePeriodOne;
+        totalAmountOne += interestForThePeriodOne;
+        interestThisStepOne = interestForThePeriodOne; // record interest applied this month
+        compoundingCounterOne = 0;
+      }
 
       // Record monthly data for parallel investment
       monthlyInvestmentHistoryOne.push(
@@ -950,11 +1035,12 @@ function calculateCompoundInterest(
           i,
           sipForThisMonthOne,
           totalDepositsOne,
-          interestForTheMonthOne,
+          interestThisStepOne, // ✅ only non-zero on compounding months
           totalInterestOne,
           totalAmountOne
         )
       );
+
       monthCounterOne++;
       if (i % 12 === 0) {
         currentYearOne++;
@@ -974,7 +1060,9 @@ function calculateCompoundInterest(
 
   // Parallel investment 2 calculations (SIP, Step-up, Stop SIP logic)
   if (parallelInvestmentTwo) {
+    let compoundingCounterTwo = 0;
     for (let i = 1; i <= totalMonths; i++) {
+      compoundingCounterTwo++;
       if (
         decreaseInterestRateTwo &&
         currentYearTwo >= startingYearTwo + decreaseInterestRateAfterYearsTwo
@@ -992,17 +1080,22 @@ function calculateCompoundInterest(
         sipForThisMonthTwo = sipTwoAmount;
       }
 
+      // Apply SIP first
       totalDepositsTwo += sipForThisMonthTwo;
-      const principalForTheMonthTwo = Math.round(
-        totalAmountTwo + sipForThisMonthTwo
-      );
-      const interestForTheMonthTwo = Math.round(
-        (principalForTheMonthTwo * monthlyInterestRateTwo) / 100
-      );
-      totalInterestTwo += interestForTheMonthTwo;
-      totalAmountTwo = Math.round(
-        principalForTheMonthTwo + interestForTheMonthTwo
-      );
+      totalAmountTwo += sipForThisMonthTwo;
+
+      let interestThisStepTwo = 0;
+
+      // Interest only when compounding period is reached
+      if (compoundingCounterTwo === 12 / compoundingPerYearTwo) {
+        const interestForThePeriodTwo = Math.round(
+          (totalAmountTwo * periodicRateTwo) / 100
+        );
+        totalInterestTwo += interestForThePeriodTwo;
+        totalAmountTwo += interestForThePeriodTwo;
+        interestThisStepTwo = interestForThePeriodTwo; // record interest applied this month
+        compoundingCounterTwo = 0;
+      }
 
       // Record monthly data for parallel investment
       monthlyInvestmentHistoryTwo.push(
@@ -1011,11 +1104,12 @@ function calculateCompoundInterest(
           i,
           sipForThisMonthTwo,
           totalDepositsTwo,
-          interestForTheMonthTwo,
+          interestThisStepTwo, // ✅ only non-zero on compounding months
           totalInterestTwo,
           totalAmountTwo
         )
       );
+
       monthCounterTwo++;
       if (i % 12 === 0) {
         currentYearTwo++;
@@ -1115,6 +1209,34 @@ function calculateCompoundInterest(
 
   netDeposit = totalDeposits - totalWithdrawals;
 
+  // Primary
+  const earPrimary = calculateEAR(annualInterestRate, compoundingPerYear);
+
+  // Secondary
+  const earSecondary = parallelInvestmentOne
+    ? calculateEAR(annualInterestRateOne, compoundingPerYearOne)
+    : 0;
+
+  // Tertiary
+  const earTertiary = parallelInvestmentTwo
+    ? calculateEAR(annualInterestRateTwo, compoundingPerYearTwo)
+    : 0;
+
+  // Combined (weighted EAR)
+  let earCombined = 0;
+  if (parallelInvestmentOne || parallelInvestmentTwo) {
+    const totalPrincipal =
+      initialInvestment + initialInvestmentOne + initialInvestmentTwo;
+
+    const weightedEar =
+      (earPrimary * initialInvestment +
+        earSecondary * initialInvestmentOne +
+        earTertiary * initialInvestmentTwo) /
+      totalPrincipal;
+
+    earCombined = weightedEar;
+  }
+
   console.log();
   console.log(
     "************************************************************************************"
@@ -1145,6 +1267,15 @@ function calculateCompoundInterest(
   document.querySelector(".futureInvestmentValue").value = totalAmount;
   document.querySelector(".presentValueOfFutureMoney").value =
     presentValueOfFutureMoney;
+  document.querySelector(".combinedEar").textContent =
+    earCombined.toFixed(2) + " %";
+  document.querySelector(".ear").textContent = earPrimary.toFixed(2) + " %";
+  document.querySelector(".earOne").textContent =
+    earSecondary.toFixed(2) + " %";
+  document.querySelector(".earTwo").textContent = earTertiary.toFixed(2) + " %";
+  document.querySelectorAll(".inflation").forEach((el) => {
+    el.textContent = inflationRate;
+  });
   document.querySelector(".noOfYears").value = years;
   document.querySelector(".noOfYearsSip").value = activeSipYears;
   document.querySelector(".noOfYearsSwp").value =
@@ -1816,9 +1947,10 @@ function removeGoalRow(button) {
 
   const tbody = document.getElementById("goalWithdrawalRows");
   if (tbody.rows.length <= 1) {
-    alert(
-      "At least one goal needs to be added. You can toggle off the Goal-Based Withdrawals as well..."
-    );
+    row.remove();
+    document.querySelector(".lumpsumWithdrawalTable").classList.add("hidden");
+    document.getElementById("lumpsumWithdrawalNo").click();
+    goalCounter = 1;
     return;
   }
 
@@ -2012,26 +2144,44 @@ function autoFitSheetColumns(sheet) {
   });
 }
 
-function addGoalRow(startingYear = getNumericValue(".investmentYear")) {
+function addGoalRow(
+  name = `Goal ${goalCounter}`,
+  year = getNumericValue(".investmentYear"),
+  amount = 0,
+  startingYear = getNumericValue(".investmentYear")
+) {
   const table = document.getElementById("goalWithdrawalRows");
   const row = document.createElement("tr");
 
+  // Assign a unique index for the row
+  const goalIndex = goalCounter;
+  row.setAttribute("data-goal-index", goalIndex);
+
+  // Build year options
   const yearOptions = [];
   for (let y = startingYear; y <= startingYear + 50; y++) {
-    yearOptions.push(`<option value="${y}">${y}</option>`);
+    yearOptions.push(
+      `<option value="${y}" ${y == year ? "selected" : ""}>${y}</option>`
+    );
   }
 
   row.innerHTML = `
-    <td><div class="divWrapper"><input type="text" class="goalName" autocomplete="off" value="Goal ${goalCounter}" /></div></td>
+    <td>
+      <div class="divWrapper">
+        <input type="text" class="goalName" autocomplete="off" value="${name}" />
+      </div>
+    </td>
     <td>
       <select class="goalYear">${yearOptions.join("")}</select>
     </td>
     <td>
       <div class="divWrapper">
-        <div class="container">
-          <div class="pWrapper"><p>₹</p></div>
-        </div>
-        <input type="text" class="goalAmount" pattern="[0-9]*" oninput="validateNumericInput(this);" autocomplete="off" value="0" />
+        <div class="container"><div class="pWrapper"><p>₹</p></div></div>
+        <input type="text" class="goalAmount" 
+               pattern="[0-9]*" 
+               oninput="validateNumericInput(this);" 
+               autocomplete="off" 
+               value="${amount}" />
       </div>
     </td>
     <td class="goalActions desktop-only">
@@ -2071,7 +2221,7 @@ function getGoalWithdrawals(startingYear) {
   const rows = document.querySelectorAll("#goalWithdrawalRows tr");
   const goals = [];
 
-  rows.forEach((row) => {
+  rows.forEach((row, idx) => {
     const nameInput = row.querySelector(".goalName");
     const yearInput = row.querySelector(".goalYear");
     const amountInput = row.querySelector(".goalAmount");
@@ -2094,6 +2244,7 @@ function getGoalWithdrawals(startingYear) {
         const monthIndex = yearsUntilGoal * 12;
 
         goals.push({
+          index: idx,
           name,
           year,
           amountToday,
@@ -2142,6 +2293,80 @@ document.addEventListener("DOMContentLoaded", () => {
       this.classList.add("active");
     });
   });
+
+  document.querySelectorAll(".months").forEach((monthInput) => {
+    monthInput.addEventListener("input", () => {
+      let val = parseInt(monthInput.value, 10);
+      if (isNaN(val)) return;
+
+      if (val >= 12) {
+        // Find the corresponding years input (same row or nearest)
+        const yearInput = monthInput.closest("tr").querySelector(".years");
+
+        if (yearInput) {
+          const years = parseInt(yearInput.value, 10) || 0;
+          const extraYears = Math.floor(val / 12);
+          yearInput.value = years + extraYears;
+        }
+
+        // Keep remainder months
+        monthInput.value = val % 12;
+      }
+    });
+  });
+
+  const table = document.getElementById("goalWithdrawalRows");
+
+  table.addEventListener("input", (e) => {
+    const row = e.target.closest("tr");
+    if (row) {
+      row.classList.remove("goal-compromised");
+    }
+  });
+
+  document.getElementById("goalFile").addEventListener("change", importGoals);
+
+  async function importGoals(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    try {
+      const data = await file.arrayBuffer();
+      const workbook = new ExcelJS.Workbook();
+      await workbook.xlsx.load(data);
+      const sheet = workbook.getWorksheet(1);
+
+      // Validate template headers
+      const headers = sheet.getRow(1).values.slice(1);
+      if (
+        headers[0] !== "Goal Name" ||
+        headers[1] !== "Year" ||
+        headers[2] !== "Amount Today"
+      ) {
+        alert("Invalid file format. Please use the provided template.");
+        return;
+      }
+
+      // Clear current rows
+      document.getElementById("goalWithdrawalRows").innerHTML = "";
+
+      // Add rows from file
+      sheet.eachRow((row, rowNumber) => {
+        if (rowNumber === 1) return; // skip header
+        const name = row.getCell(1).value;
+        const year = row.getCell(2).value;
+        const amount = row.getCell(3).value;
+        if (name && year && amount) {
+          addGoalRow(name, year, amount);
+        }
+      });
+    } catch (err) {
+      console.error(err);
+      alert("Failed to read file. Please try again with the correct template.");
+    } finally {
+      event.target.value = ""; // reset file input
+    }
+  }
 
   // Load stored inputs and show reset button if needed
   loadUserInputsFromLocalStorage();
