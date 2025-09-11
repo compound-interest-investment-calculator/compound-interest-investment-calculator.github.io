@@ -1496,16 +1496,15 @@
           <div class="button-container button calc-button">
             <div class="left-button">
               <button class="calculate-button">Calculate</button>
-            </div>
-            <div class="right-button" id="reset-button">
+
               <button class="reset-button" onclick="resetForm();">Reset</button>
             </div>
-            <div class="json-column">
-              <button class="json-button" onclick="exportJSON()" title="Export">
-                Export&nbsp;
-                <i class="fas fa-file-export"></i>
-              </button>
-              <button class="json-button" onclick="importJSON()" title="Import">
+            <div class="right-button">
+              <button
+                class="json-button import"
+                onclick="importJSON()"
+                title="Import"
+              >
                 Import&nbsp; <i class="fas fa-file-import"></i
                 ><input
                   type="file"
@@ -1513,6 +1512,14 @@
                   accept=".json"
                   style="display: none"
                 />
+              </button>
+              <button
+                class="json-button export"
+                onclick="exportJSON()"
+                title="Export"
+              >
+                Export&nbsp;
+                <i class="fas fa-file-export"></i>
               </button>
             </div>
           </div>

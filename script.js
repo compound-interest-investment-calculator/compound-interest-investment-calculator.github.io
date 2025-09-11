@@ -2709,11 +2709,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Load stored inputs and show reset button if needed
   loadUserInputsFromLocalStorage();
-  if (localStorage.getItem("compoundInterestInputs")) {
-    document
-      .getElementById("reset-button")
-      .classList.remove("hide-reset-button");
-  }
 
   // Run toggle and setup functions
   toggleDecreaseInterestRate("");
@@ -2753,9 +2748,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     saveUserInputsToLocalStorage();
     calculate();
-    document
-      .getElementById("reset-button")
-      .classList.remove("hide-reset-button");
   });
 
   // Download calculations handler

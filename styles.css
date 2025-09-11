@@ -147,6 +147,7 @@ table.section-heading-button {
   align-items: center;
   height: 30px;
   width: 50%;
+  position: relative;
 }
 
 .divWrapper .selectWrapper {
@@ -197,7 +198,8 @@ table.section-heading-button {
 .reset-button,
 .downloadBtn,
 .downloadCalculations,
-.yearMonthToggleBtn {
+.yearMonthToggleBtn,
+.json-button {
   font-family: "Outfit", sans-serif;
   color: #676767;
   font-size: 16px;
@@ -218,6 +220,7 @@ table.section-heading-button {
 
 .calculate-button:hover,
 .reset-button:hover,
+.json-button:hover,
 .downloadBtn:hover,
 .downloadCalculations:hover,
 .yearMonthToggleBtn:hover {
@@ -303,12 +306,16 @@ table.section-heading-button {
     font-size: 10px;
   }
 
-  .divWrapperInner {
-    width: 40%;
+  .divWrapper {
+    flex-direction: column;
+    height: auto; /* allow wrapping */
+    min-height: 30px;
+    align-items: stretch; /* full width children */
   }
 
+  .divWrapperInner,
   .divWrapper .selectWrapper {
-    width: 60%;
+    width: 100%; /* take full width */
   }
 
   .downloadCalculations {
@@ -963,121 +970,70 @@ select {
   border-style: solid;
   border-color: #333 transparent transparent transparent;
 }
-
-/* Layout container: left = 90%, right = 10% */
-.button-container.calc-button {
+.button-container {
   display: flex;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-  box-sizing: border-box;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap; /* helps in smaller widths */
 }
 
-/* Left group (Calculate + Reset) takes 90% */
-.button-container.calc-button > .main-actions {
-  flex: 0 0 80%;
+/* Left & right sections */
+.left-button {
+  flex: 60%;
   display: flex;
-  align-items: center;
-  gap: 10px;
+  gap: 0.5rem;
 }
 
-/* Make Calculate fill remaining space inside left group */
-.button-container.calc-button .main-actions .left-button,
-.button-container.calc-button .main-actions .reset-wrapper {
-  flex: 1 1 auto;
-}
-
-/* Right column 10% - stacked vertically */
-.button-container.calc-button > .json-column {
-  flex: 0 0 20%;
+.right-button {
+  flex: 30%;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between; /* spread top and bottom */
-  align-items: stretch;
-  height: 50px; /* match Calculate/Reset row height */
-  gap: 0;
+  gap: 0.5rem;
 }
 
-/* Each JSON button splits the column height equally */
-.button-container.calc-button .json-button {
-  flex: 1 1 50%;
-  width: 100%;
-  padding: 0; /* remove extra padding */
-  font-size: 13px;
-  border-radius: 0; /* remove double-rounded look */
-  border: none;
-  background: var(--hightlight-background);
-  color: #fff;
-  cursor: pointer;
-  margin: 1px;
+/* Child button distribution */
+.left-button .calculate-button {
+  flex: 0 0 60%;
 }
 
-/* Top button rounded only at top */
-.button-container.calc-button .json-button:first-child,
-.button-container.calc-button .json-button:last-child {
-  border-radius: 8px;
+.left-button .reset-button {
+  flex: 0 0 40%;
 }
 
-/* Keep the Calculate button style consistent */
-.calculate-button {
-  width: 100%;
-  height: 50px;
-  box-sizing: border-box;
+.right-button .json-button {
+  flex: 0 0 50%;
 }
 
-/* Reset styling (match your existing reset-button visuals) */
-.reset-button {
-  height: 50px;
-  padding: 10px 12px;
-}
-
-/* Small screens: stack into two rows so nothing squashes */
-@media (max-width: 880px) {
-  .button-container.calc-button {
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .button-container.calc-button > .main-actions,
-  .button-container.calc-button > .json-column {
-    flex: none;
-    width: 100%;
-  }
-
-  .button-container.calc-button > .json-column {
+/* Responsive: mobile view */
+@media (max-width: 768px) {
+  .button-container {
     flex-direction: row;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 8px;
+    gap: 0.5rem;
   }
 
-  .button-container.calc-button .json-button {
-    width: 120px;
+  .left-button,
+  .right-button {
+    flex: 0 0 100%;
+  }
+
+  /* all buttons inside left & right become 50/50 */
+  .left-button .calculate-button,
+  .left-button .reset-button,
+  .right-button .json-button {
+    flex: 0 0 50%;
+  }
+
+  .left-container,
+  .right-container {
+    width: 45%;
+  }
+  .add-goal-btn {
+    font-size: 10px;
+  }
+
+  .resultTable {
+    font-size: 10px;
   }
 }
-/* 
-.toast {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: #333;
-  color: #fff;
-  padding: 10px 16px;
-  border-radius: 6px;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.3s ease;
-  z-index: 1000;
-  font-size: 14px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-.toast.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-.toast.error {
-  background: #e74c3c;
-} */
 
 /* Toast container to hold multiple stacked toasts */
 .toast-container {
