@@ -12,55 +12,32 @@ function validateNumericInputWithComma(input) {
   input.value = value;
 }
 
-function toggleSIP() {
-  var yesRadio = document.getElementById("sipYes");
-  var table = document.querySelector(".sipTable");
+function toggleSIP(suffix) {
+  var table = document.querySelector(".sip" + suffix + "Table");
 
-  if (yesRadio.checked) {
+  if (isChecked("toggleSIP" + suffix)) {
     table.classList.remove("hidden");
   } else {
     table.classList.add("hidden");
   }
 }
 
-function toggleSIPOne() {
-  var yesRadio = document.getElementById("sipOneYes");
-  var table = document.querySelector(".sipOneTable");
-
-  if (yesRadio.checked) {
-    table.classList.remove("hidden");
-  } else {
-    table.classList.add("hidden");
-  }
-}
-
-function toggleSIPTwo() {
-  var yesRadio = document.getElementById("sipTwoYes");
-  var table = document.querySelector(".sipTwoTable");
-
-  if (yesRadio.checked) {
-    table.classList.remove("hidden");
-  } else {
-    table.classList.add("hidden");
-  }
-}
-
-function toggleSWP() {
-  var yesRadio = document.getElementById("swpYes");
+function toggleSWP(suffix) {
   var table = document.querySelector(".swpTable");
 
-  if (yesRadio.checked) {
+  if (isChecked("swp" + suffix)) {
     table.classList.remove("hidden");
+    // document.querySelector(".withdrawalAmount").value = 50000;
+    // document.querySelector(".withdrawalAfterYears").value = 10;
   } else {
     table.classList.add("hidden");
   }
 }
 
-function toggleLumpsumWithdrawal() {
-  var yesRadio = document.getElementById("lumpsumWithdrawalYes");
-  var table = document.querySelector(".lumpsumWithdrawalTable");
+function toggleLumpsumWithdrawal(suffix) {
+  var table = document.querySelector(".lumpsumWithdrawalTable" + suffix);
 
-  if (yesRadio.checked) {
+  if (isChecked("lumpsumWithdrawal" + suffix)) {
     table.classList.remove("hidden");
     if (document.querySelectorAll("#goalWithdrawalRows tr").length === 0) {
       addGoalRow(); // Add default goal row on enable
@@ -72,10 +49,13 @@ function toggleLumpsumWithdrawal() {
 
 function showHideCombinedPortfolioDetails() {
   const parallelInvestment =
-    isChecked("parallelInvestmentOneYes") ||
-    isChecked("parallelInvestmentTwoYes");
-  if (parallelInvestment) showCombinedPortfolio();
-  else hideCombinedPortfolio();
+    isChecked("parallelInvestmentOneToggle") ||
+    isChecked("parallelInvestmentTwoToggle");
+  if (parallelInvestment) {
+    showCombinedPortfolio();
+  } else {
+    hideCombinedPortfolio();
+  }
 }
 
 function showCombinedPortfolio() {
@@ -96,186 +76,98 @@ function hideCombinedPortfolio() {
   });
 }
 
-function toggleBonusSIP() {
-  var yesRadio = document.getElementById("bonusSipYes");
-  var table = document.querySelector(".bonusSipTable");
+function toggleBonusSIP(suffix) {
+  var table = document.querySelector(".bonusSip" + suffix + "Table");
 
-  if (yesRadio.checked) {
+  if (isChecked("bonusSIP" + suffix)) {
     table.classList.remove("hidden");
   } else {
     table.classList.add("hidden");
   }
 }
 
-function toggleStepUpSIP() {
-  var yesRadio = document.getElementById("sipStepUpYes");
-  var rows = document.querySelectorAll(".sipStepUpRows");
+function toggleStepUpSIP(suffix) {
+  var rows = document.querySelectorAll(".sipStepUp" + suffix + "Rows");
 
-  rows.forEach(function (row) {
-    if (yesRadio.checked) {
+  if (isChecked("stepUpSIP" + suffix)) {
+    rows.forEach(function (row) {
       row.classList.remove("hidden");
-    } else {
+    });
+  } else {
+    rows.forEach(function (row) {
       row.classList.add("hidden");
-    }
-  });
+    });
+  }
 }
 
-function toggleStepUpOneSIP() {
-  var yesRadio = document.getElementById("sipStepUpOneYes");
-  var rows = document.querySelectorAll(".sipStepUpOneRows");
+function decreaseStepUp(suffix) {
+  var rows = document.querySelectorAll(".decreaseStepUp" + suffix + "Rows");
 
-  rows.forEach(function (row) {
-    if (yesRadio.checked) {
+  if (isChecked("decreaseStepUp" + suffix)) {
+    rows.forEach(function (row) {
       row.classList.remove("hidden");
-    } else {
+    });
+  } else {
+    rows.forEach(function (row) {
       row.classList.add("hidden");
-    }
-  });
+    });
+  }
 }
 
-function hideStepUpOneSIP() {
-  document.getElementById("sipStepUpOneNo").checked = true;
-  var rows = document.querySelectorAll(".sipStepUpOneRows");
-  rows.forEach(function (row) {
-    row.classList.add("hidden");
-  });
-}
+function toggleDecreaseInterestRate(suffix) {
+  var rows = document.querySelectorAll(".decreaseInterestRateRows" + suffix);
 
-function hideStepUpTwoSIP() {
-  document.getElementById("sipStepUpTwoNo").checked = true;
-  var rows = document.querySelectorAll(".sipStepUpTwoRows");
-  rows.forEach(function (row) {
-    row.classList.add("hidden");
-  });
-}
-
-function toggleStepUpTwoSIP() {
-  var yesRadio = document.getElementById("sipStepUpTwoYes");
-  var rows = document.querySelectorAll(".sipStepUpTwoRows");
-
-  rows.forEach(function (row) {
-    if (yesRadio.checked) {
+  if (isChecked("decreaseInterestRateToggle" + suffix)) {
+    rows.forEach(function (row) {
       row.classList.remove("hidden");
-    } else {
+    });
+  } else {
+    rows.forEach(function (row) {
       row.classList.add("hidden");
-    }
-  });
-}
-function toggleDecreaseStepUp() {
-  var yesRadio = document.getElementById("decreaseStepUpYes");
-  var rows = document.querySelectorAll(".decreaseStepUpRows");
-
-  rows.forEach(function (row) {
-    if (yesRadio.checked) {
-      row.classList.remove("hidden");
-    } else {
-      row.classList.add("hidden");
-    }
-  });
+    });
+  }
 }
 
-function toggleDecreaseInterestRate() {
-  var yesRadio = document.getElementById("decreaseInterestRateYes");
-  var rows = document.querySelectorAll(".decreaseInterestRateRows");
+function toggleStopSip(suffix) {
+  var rows = document.querySelectorAll(".stopSip" + suffix + "Rows");
 
-  rows.forEach(function (row) {
-    if (yesRadio.checked) {
+  if (isChecked("stopSIP" + suffix)) {
+    rows.forEach(function (row) {
       row.classList.remove("hidden");
-    } else {
+    });
+  } else {
+    rows.forEach(function (row) {
       row.classList.add("hidden");
-    }
-  });
+    });
+  }
 }
 
-function toggleDecreaseInterestRateOne() {
-  var yesRadio = document.getElementById("decreaseInterestRateYesOne");
-  var rows = document.querySelectorAll(".decreaseInterestRateRowsOne");
+function toggleStepUpBonusSIP(suffix) {
+  var rows = document.querySelectorAll(".bonusSipStepUp" + suffix + "Rows");
 
-  rows.forEach(function (row) {
-    if (yesRadio.checked) {
+  if (isChecked("stepUpBonusSIP" + suffix)) {
+    rows.forEach(function (row) {
       row.classList.remove("hidden");
-    } else {
+    });
+  } else {
+    rows.forEach(function (row) {
       row.classList.add("hidden");
-    }
-  });
+    });
+  }
 }
 
-function toggleDecreaseInterestRateTwo() {
-  var yesRadio = document.getElementById("decreaseInterestRateYesTwo");
-  var rows = document.querySelectorAll(".decreaseInterestRateRowsTwo");
+function toggleSWPStepUp(suffix) {
+  var rows = document.querySelectorAll(".withdrawalStepUp" + suffix + "Rows");
 
-  rows.forEach(function (row) {
-    if (yesRadio.checked) {
+  if (isChecked("stepUpSWP" + suffix)) {
+    rows.forEach(function (row) {
       row.classList.remove("hidden");
-    } else {
+    });
+  } else {
+    rows.forEach(function (row) {
       row.classList.add("hidden");
-    }
-  });
-}
-
-function toggleStopSip() {
-  var yesRadio = document.getElementById("stopSipYes");
-  var rows = document.querySelectorAll(".stopSipRows");
-
-  rows.forEach(function (row) {
-    if (yesRadio.checked) {
-      row.classList.remove("hidden");
-    } else {
-      row.classList.add("hidden");
-    }
-  });
-}
-
-function toggleStopSipOne() {
-  var yesRadio = document.getElementById("stopSipOneYes");
-  var rows = document.querySelectorAll(".stopSipOneRows");
-
-  rows.forEach(function (row) {
-    if (yesRadio.checked) {
-      row.classList.remove("hidden");
-    } else {
-      row.classList.add("hidden");
-    }
-  });
-}
-
-function toggleStopSipTwo() {
-  var yesRadio = document.getElementById("stopSipTwoYes");
-  var rows = document.querySelectorAll(".stopSipTwoRows");
-
-  rows.forEach(function (row) {
-    if (yesRadio.checked) {
-      row.classList.remove("hidden");
-    } else {
-      row.classList.add("hidden");
-    }
-  });
-}
-
-function toggleBonusSipStepUp() {
-  var yesRadio = document.getElementById("bonusSipStepUpYes");
-  var rows = document.querySelectorAll(".bonusSipStepUpRows");
-
-  rows.forEach(function (row) {
-    if (yesRadio.checked) {
-      row.classList.remove("hidden");
-    } else {
-      row.classList.add("hidden");
-    }
-  });
-}
-
-function toggleWithdrawalStepUp() {
-  var yesRadio = document.getElementById("stepUpWithdrawalYes");
-  var rows = document.querySelectorAll(".withdrawalStepUpRows");
-
-  rows.forEach(function (row) {
-    if (yesRadio.checked) {
-      row.classList.remove("hidden");
-    } else {
-      row.classList.add("hidden");
-    }
-  });
+    });
+  }
 }
 
 function getNumericValue(selector) {
@@ -289,9 +181,20 @@ function getSelectedValue(id) {
 }
 
 function isChecked(id) {
-  var yesRadio = document.getElementById(id);
-  return yesRadio.checked;
+  return document.getElementById(id).checked;
 }
+
+function setState(id, state) {
+  const cb = document.getElementById(id);
+
+  // force state
+  cb.checked = !!state;
+
+  // fire both input + change with bubbling so inline handler runs
+  cb.dispatchEvent(new Event("input", { bubbles: true }));
+  cb.dispatchEvent(new Event("change", { bubbles: true }));
+}
+
 function getYearsArray() {
   var inputElement = document.querySelector(".lumpsumwithdrawalYears");
   var inputValue = inputElement.value.trim();
@@ -336,11 +239,13 @@ async function downloadGoalTemplate() {
   });
   const link = document.createElement("a");
   link.href = URL.createObjectURL(blob);
-  link.download = "GoalsTemplate.xlsx";
+  link.download = "goals_template.xlsx";
   link.click();
+  showToast("Goal Template downloaded!", "success");
 }
 
-function calculate() {
+function calculate(showConfirmation = true) {
+  console.clear();
   inflationRate = document.querySelector(".inflationRate").value;
   console.log("Inflation Rate: " + inflationRate + "%");
   const startingYear = getNumericValue(".investmentYear");
@@ -351,7 +256,7 @@ function calculate() {
   console.log("Interest Rate: " + annualInterestRate + "%");
   const compoundingFrequency = getSelectedValue("compoundingFrequency");
   console.log("Compounding Frequency: " + compoundingFrequency);
-  const decreaseInterestRate = isChecked("decreaseInterestRateYes");
+  const decreaseInterestRate = isChecked("decreaseInterestRateToggle");
   console.log(
     "Decrease Interest Rate After a period of time? " + decreaseInterestRate
   );
@@ -365,15 +270,13 @@ function calculate() {
   console.log("Decrease InterestRate to: " + decreaseInterestRateTo + "%");
   const years = getNumericValue(".years");
   console.log("Years: " + years);
-  const months = getNumericValue(".months");
-  console.log("Months: " + months);
   const investmentFrequency = getSelectedValue("investmentFrequency");
   console.log("Investment Frequency: " + investmentFrequency);
-  const sip = isChecked("sipYes");
+  const sip = isChecked("toggleSIP");
   console.log("SIP? " + sip);
   const sipAmount = getNumericValue(".sipAmount");
   console.log("SIP Amount: " + sipAmount);
-  const stepUpSip = isChecked("sipStepUpYes");
+  const stepUpSip = isChecked("stepUpSIP");
   console.log("StepUp SIP? " + stepUpSip);
   const stepUp = getSelectedValue("stepUpFrequency");
   console.log("StepUp Frequency: " + stepUp);
@@ -381,7 +284,7 @@ function calculate() {
   console.log("StepUp Increment By: " + stepUpIncrease + "%");
   const sipThreshold = getNumericValue(".sipThreshold");
   console.log("Miximum SIP Amount Allowed: " + sipThreshold);
-  const decreaseStepUpPercent = isChecked("decreaseStepUpYes");
+  const decreaseStepUpPercent = isChecked("decreaseStepUp");
   console.log(
     "Decrease StepUp After a period of time? " + decreaseStepUpPercent
   );
@@ -393,11 +296,11 @@ function calculate() {
   );
   const decreaseStepUpPercentTo = getNumericValue(".updatedStepUpPercentage");
   console.log("Decrease StepUp Percent to: " + decreaseStepUpPercentTo + "%");
-  const stopSipAfterAPeriod = isChecked("stopSipYes");
+  const stopSipAfterAPeriod = isChecked("stopSIP");
   console.log("Stop SIP After a period of time? " + stopSipAfterAPeriod);
   const stopSipAfterYears = getNumericValue(".stopSipAfterYears");
   console.log("Stop SIP After Years: " + stopSipAfterYears);
-  const systematicWithdrawalAfterAPeriod = isChecked("swpYes");
+  const systematicWithdrawalAfterAPeriod = isChecked("swp");
   console.log(
     "SWP after a period of time? " + systematicWithdrawalAfterAPeriod
   );
@@ -409,7 +312,7 @@ function calculate() {
   console.log("Withdrawal Per Month: " + withdrawalPerMonth);
   const withdrawalFrequency = getSelectedValue("withdrawalFrequency");
   console.log("Withdrawal Frequency: " + withdrawalFrequency);
-  const stepUpWithdrawal = isChecked("stepUpWithdrawalYes");
+  const stepUpWithdrawal = isChecked("stepUpSWP");
   console.log("StepUp for Withdrawal? " + stepUpWithdrawal);
   const stepUpWithdrawalFrequency = getSelectedValue(
     "withdrawalStepUpFrequency"
@@ -421,24 +324,24 @@ function calculate() {
   console.log(
     "Increase Withdrawal Precent by: " + stepUpWithdrawalIncrease + "%"
   );
-  const bonusSip = isChecked("bonusSipYes");
+  const bonusSip = isChecked("bonusSIP");
   console.log("Bonus SIP? " + bonusSip);
   const bonusSipAmount = getNumericValue(".bonusSipAmount");
   console.log("Bonus SIP Amount: " + bonusSipAmount);
   const bonusSipFrequency = getSelectedValue("bonusSipFrequency");
   console.log("Bonus SIP Frequency: " + bonusSipFrequency);
-  const lumpSumWithdrawals = isChecked("lumpsumWithdrawalYes");
+  const lumpSumWithdrawals = isChecked("lumpsumWithdrawal");
   console.log("LumpSum Withdrawals? " + lumpSumWithdrawals);
   const goalWithdrawals = getGoalWithdrawals(startingYear);
   console.log("Goal Withdrawals:", goalWithdrawals);
-  const stepUpBonusSip = isChecked("bonusSipStepUpYes");
+  const stepUpBonusSip = isChecked("stepUpBonusSIP");
   console.log("Bonus SIP StepUp: " + stepUpBonusSip);
   const stepUpBonusSipPercent = getNumericValue(".bonusSipStepUpPercentage");
   console.log("Increase Bonus SIP by: " + stepUpBonusSipPercent + "%");
   const stepUpBonusSipFrequency = getSelectedValue("bonusSipStepUpFrequency");
   console.log("Bonus SIP StepUp Frequency: " + stepUpBonusSipFrequency);
 
-  const parallelInvestmentOne = isChecked("parallelInvestmentOneYes");
+  const parallelInvestmentOne = isChecked("parallelInvestmentOneToggle");
   console.log("Parallel Investment?: " + parallelInvestmentOne);
   const startingYearOne = getNumericValue(".investmentYearOne");
   console.log("Investment Starting Year: " + startingYearOne);
@@ -448,7 +351,7 @@ function calculate() {
   console.log("Interest Rate: " + annualInterestRateOne + "%");
   const compoundingFrequencyOne = getSelectedValue("compoundingFrequencyOne");
   console.log("Compounding Frequency: " + compoundingFrequencyOne);
-  const decreaseInterestRateOne = isChecked("decreaseInterestRateYesOne");
+  const decreaseInterestRateOne = isChecked("decreaseInterestRateToggleOne");
   console.log(
     "Decrease Interest Rate After a period of time? " + decreaseInterestRateOne
   );
@@ -462,22 +365,22 @@ function calculate() {
   console.log("Decrease InterestRate to: " + decreaseInterestRateToOne + "%");
   const investmentOneFrequency = getSelectedValue("investmentOneFrequency");
   console.log("Investment Frequency: " + investmentOneFrequency);
-  const sipOne = isChecked("sipOneYes");
+  const sipOne = isChecked("toggleSIPOne");
   console.log("SIP? " + sipOne);
   const sipOneAmount = getNumericValue(".sipOneAmount");
   console.log("SIP Amount: " + sipOneAmount);
-  const stepUpSipOne = isChecked("sipStepUpOneYes");
+  const stepUpSipOne = isChecked("stepUpSIPOne");
   console.log("StepUp SIP? " + stepUpSipOne);
   const stepUpOne = getSelectedValue("stepUpOneFrequency");
   console.log("StepUp Frequency: " + stepUpOne);
   const stepUpIncreaseOne = getNumericValue(".stepUpOneIncreasePercentage");
   console.log("StepUp Increment By: " + stepUpIncreaseOne + "%");
-  const stopSipOneAfterAPeriod = isChecked("stopSipOneYes");
+  const stopSipOneAfterAPeriod = isChecked("stopSIPOne");
   console.log("Stop SIP After a period of time? " + stopSipOneAfterAPeriod);
   const stopSipOneAfterYears = getNumericValue(".stopSipOneAfterYears");
   console.log("Stop SIP After Years: " + stopSipOneAfterYears);
 
-  const parallelInvestmentTwo = isChecked("parallelInvestmentTwoYes");
+  const parallelInvestmentTwo = isChecked("parallelInvestmentTwoToggle");
   console.log("Parallel Investment?: " + parallelInvestmentTwo);
   const startingYearTwo = getNumericValue(".investmentYearTwo");
   console.log("Investment Starting Year: " + startingYearTwo);
@@ -487,7 +390,7 @@ function calculate() {
   console.log("Interest Rate: " + annualInterestRateTwo + "%");
   const compoundingFrequencyTwo = getSelectedValue("compoundingFrequencyTwo");
   console.log("Compounding Frequency: " + compoundingFrequencyTwo);
-  const decreaseInterestRateTwo = isChecked("decreaseInterestRateYesTwo");
+  const decreaseInterestRateTwo = isChecked("decreaseInterestRateToggleTwo");
   console.log(
     "Decrease Interest Rate After a period of time? " + decreaseInterestRateTwo
   );
@@ -501,17 +404,17 @@ function calculate() {
   console.log("Decrease InterestRate to: " + decreaseInterestRateToTwo + "%");
   const investmentTwoFrequency = getSelectedValue("investmentTwoFrequency");
   console.log("Investment Frequency: " + investmentTwoFrequency);
-  const sipTwo = isChecked("sipTwoYes");
+  const sipTwo = isChecked("toggleSIPTwo");
   console.log("SIP? " + sipTwo);
   const sipTwoAmount = getNumericValue(".sipTwoAmount");
   console.log("SIP Amount: " + sipTwoAmount);
-  const stepUpSipTwo = isChecked("sipStepUpTwoYes");
+  const stepUpSipTwo = isChecked("stepUpSIPTwo");
   console.log("StepUp SIP? " + stepUpSipTwo);
   const stepUpTwo = getSelectedValue("stepUpTwoFrequency");
   console.log("StepUp Frequency: " + stepUpTwo);
   const stepUpIncreaseTwo = getNumericValue(".stepUpTwoIncreasePercentage");
   console.log("StepUp Increment By: " + stepUpIncreaseTwo + "%");
-  const stopSipTwoAfterAPeriod = isChecked("stopSipTwoYes");
+  const stopSipTwoAfterAPeriod = isChecked("stopSIPTwo");
   console.log("Stop SIP After a period of time? " + stopSipTwoAfterAPeriod);
   const stopSipTwoAfterYears = getNumericValue(".stopSipTwoAfterYears");
   console.log("Stop SIP After Years: " + stopSipTwoAfterYears);
@@ -529,7 +432,6 @@ function calculate() {
     decreaseInterestRateAfterYears,
     decreaseInterestRateTo,
     years,
-    months,
     sip,
     investmentFrequency,
     sipAmount,
@@ -591,6 +493,10 @@ function calculate() {
   );
 
   formatInputFieldValues();
+
+  if (showConfirmation) showToast("Calculations Done. Enjoy!", "success");
+  // scrollToTop();
+  window.scrollTo(0, 0);
 }
 
 class InvestmentHistory {
@@ -645,7 +551,6 @@ function calculateCompoundInterest(
   decreaseInterestRateAfterYears,
   decreaseInterestRateTo,
   years,
-  months,
   sip,
   investmentFrequency,
   sipAmount,
@@ -705,22 +610,10 @@ function calculateCompoundInterest(
   stopSipTwoAfterAPeriod,
   stopSipTwoAfterYears
 ) {
-  if (initialInvestment == 0 && !sip) {
-    alert("An initial Investment or an SIP is needed...");
-    console.log(
-      "************************************************************************************"
-    );
-    console.log("An initial Investment or an SIP is needed...");
-    console.log(
-      "************************************************************************************"
-    );
-    window.scrollTo(top);
-    return;
-  }
   console.log(
     "************************************************************************************"
   );
-  const totalMonths = years * 12 + months;
+  const totalMonths = years * 12;
   stopSipAfterYears = years >= stopSipAfterYears ? stopSipAfterYears : years;
   stopSipOneAfterYears =
     years >= stopSipOneAfterYears ? stopSipOneAfterYears : years;
@@ -728,12 +621,12 @@ function calculateCompoundInterest(
     years >= stopSipTwoAfterYears ? stopSipTwoAfterYears : years;
 
   let periodicRate = getPeriodicRate(annualInterestRate, compoundingPerYear);
-  let monthlyInterestRate = annualInterestRate / 12;
   let totalDeposits = initialInvestment;
   let totalAmount = initialInvestment;
   let totalInterest = 0;
   let totalWithdrawals = 0;
   let totalSWP = 0;
+  let totalSWPYears = 0;
   let netDeposit = 0;
   let currentYear = startingYear;
   let currentYearOne = startingYearOne;
@@ -746,6 +639,11 @@ function calculateCompoundInterest(
   let withdrawalFrequencyCounter = 0;
   const withdrawalFrequency = getStepUpFrequency(stepUpWithdrawalFrequency);
   const monthlyInvestmentHistory = [];
+  const goalsCount = goalWithdrawals.length;
+  let totalGoalBasedWithdrawalAmount = 0;
+  let shortfallMessages = [];
+  let swpCompromised = false;
+  let swpCompromisedMsg = "";
 
   let decreasedStepUp = false;
 
@@ -757,7 +655,6 @@ function calculateCompoundInterest(
     annualInterestRateOne,
     compoundingPerYearOne
   );
-  let monthlyInterestRateOne = annualInterestRateOne / 12;
   let monthCounterOne = 0;
   let frequencyCounterOne = 0;
   const sipFrequencyOne = parallelInvestmentOne
@@ -774,7 +671,6 @@ function calculateCompoundInterest(
     annualInterestRateTwo,
     compoundingPerYearTwo
   );
-  let monthlyInterestRateTwo = annualInterestRateTwo / 12;
   let monthCounterTwo = 0;
   let frequencyCounterTwo = 0;
   const sipFrequencyTwo = parallelInvestmentTwo
@@ -830,19 +726,24 @@ function calculateCompoundInterest(
   }
 
   let compoundingCounter = 0;
+
   for (let i = 1; i <= totalMonths; i++) {
     compoundingCounter++;
+
+    // Decrease interest rate after certain years
     if (
       decreaseInterestRate &&
       currentYear >= startingYear + decreaseInterestRateAfterYears
     ) {
-      // Switch to the reduced interest rate
-      monthlyInterestRate = decreaseInterestRateTo / 12;
+      periodicRate = getPeriodicRate(
+        decreaseInterestRateTo,
+        compoundingPerYear
+      );
     }
 
+    // --- SIP contribution ---
     let sipForThisMonth = 0;
     if (
-      i <= totalMonths &&
       sip &&
       frequencyCounter === 0 &&
       (!stopSipAfterAPeriod || i <= stopSipAfterMonths)
@@ -850,6 +751,7 @@ function calculateCompoundInterest(
       sipForThisMonth = sipAmount;
     }
 
+    // --- Bonus SIP contribution ---
     if (
       sip &&
       bonusSip &&
@@ -859,35 +761,52 @@ function calculateCompoundInterest(
       sipForThisMonth += bonusSipAmount;
     }
 
+    // --- Systematic Withdrawal (SWP) ---
+
     let withdrawalForThisMonth = 0;
+    let swpThisMonth = 0;
+    let goalWithdrawalThisMonth = 0;
+
     if (systematicWithdrawalAfterAPeriod && i > startWithdrawalAfterMonths) {
       const allowedWithdrawal = Math.min(withdrawalPerMonth, totalAmount);
 
       withdrawalForThisMonth -= allowedWithdrawal;
-      totalWithdrawals += allowedWithdrawal;
-      totalSWP += allowedWithdrawal;
+      swpThisMonth = allowedWithdrawal;
 
       if (allowedWithdrawal < withdrawalPerMonth) {
         console.warn(
-          `Month ${
-            i + 1
-          }: Systematic Withdrawal of ₹${withdrawalPerMonth} capped to available ₹${totalAmount}`
+          `Year ${currentYear} - Month ${
+            i % 12
+          }: Systematic Withdrawal of ₹${withdrawalPerMonth.toLocaleString()} ` +
+            `capped to available ₹${totalAmount.toLocaleString()}`
         );
+
+        if (!swpCompromised) {
+          swpCompromised = true;
+          swpCompromisedMsg =
+            `SWP is compromised from Year ${currentYear} - Month ${
+              i % 12
+            } onwards.<br>` +
+            `Systematic Withdrawal of ₹${withdrawalPerMonth.toLocaleString()} ` +
+            `capped to available ₹${totalAmount.toLocaleString()}<br>` +
+            `Please increase the investments or reduce the SWPs to meet the SWP goal.`;
+        }
       }
     }
 
+    // --- Goal-based withdrawals ---
     let monthlyGoals = goalWithdrawals.filter((goal) => goal.monthIndex === i);
     let lumpSumWithdrawal = monthlyGoals.reduce(
       (sum, goal) => sum + goal.inflatedAmount,
       0
     );
 
-    if (lumpSumWithdrawal > 0) {
+    if (lumpSumWithdrawals && lumpSumWithdrawal > 0) {
       const allowedWithdrawal = Math.min(lumpSumWithdrawal, totalAmount);
       const shortfall = Math.abs(allowedWithdrawal - lumpSumWithdrawal);
 
       withdrawalForThisMonth -= allowedWithdrawal;
-      totalWithdrawals += allowedWithdrawal;
+      goalWithdrawalThisMonth = allowedWithdrawal;
 
       if (allowedWithdrawal < lumpSumWithdrawal) {
         console.warn(
@@ -898,7 +817,11 @@ function calculateCompoundInterest(
             `Goal: "${goal.name}", Requested: ₹${goal.inflatedAmount}, Shortfall: ₹${shortfall}`
           );
 
-          // Highlight the goal row in the table
+          shortfallMessages.push(
+            `Year ${currentYear}: Withdrawals capped to available ₹${totalAmount}.`,
+            `Goal: "${goal.name}", Requested: ₹${goal.inflatedAmount}, Shortfall: ₹${shortfall}<br/>`
+          );
+
           const row = document.querySelector(
             `#goalWithdrawalRows tr:nth-child(${goal.index + 1})`
           );
@@ -907,25 +830,28 @@ function calculateCompoundInterest(
       }
     }
 
-    sipForThisMonth = Math.round(Math.min(sipThreshold, sipForThisMonth));
+    // --- Update totals ONCE here ---
+    totalSWP += swpThisMonth;
+    totalWithdrawals += swpThisMonth + goalWithdrawalThisMonth;
 
-    // Apply SIP & withdrawals first
+    // --- Apply deposits/withdrawals ---
+    sipForThisMonth = Math.round(Math.min(sipThreshold, sipForThisMonth));
     totalDeposits += sipForThisMonth;
     totalAmount += sipForThisMonth + withdrawalForThisMonth;
 
+    // --- Interest calculation ---
     let interestThisStep = 0;
-
-    // Interest only when compounding period is reached
     if (compoundingCounter === 12 / compoundingPerYear) {
       const interestForThePeriod = Math.round(
         (totalAmount * periodicRate) / 100
       );
       totalInterest += interestForThePeriod;
       totalAmount += interestForThePeriod;
-      interestThisStep = interestForThePeriod; // record interest applied this month
+      interestThisStep = interestForThePeriod;
       compoundingCounter = 0;
     }
 
+    // --- Record history ---
     monthlyInvestmentHistory.push(
       new InvestmentHistory(
         currentYear,
@@ -938,6 +864,7 @@ function calculateCompoundInterest(
       )
     );
 
+    // --- Counters ---
     monthCounter++;
     frequencyCounter = (frequencyCounter + 1) % sipFrequency;
     withdrawalFrequencyCounter =
@@ -947,7 +874,7 @@ function calculateCompoundInterest(
       currentYear++;
     }
 
-    // SIP step-up logic for primary investment
+    // --- Step-up SIP ---
     if (sip && stepUpSip && stepUp !== STEP_UP_TYPE.NONE) {
       const stepUpFrequency = getStepUpFrequency(stepUp);
       if (monthCounter === stepUpFrequency) {
@@ -965,7 +892,7 @@ function calculateCompoundInterest(
       }
     }
 
-    // Apply step-up to SWP amount if conditions are met
+    // --- Step-up SWP ---
     if (
       stepUpWithdrawal &&
       systematicWithdrawalAfterAPeriod &&
@@ -977,7 +904,7 @@ function calculateCompoundInterest(
       withdrawalPerMonth = Math.round(withdrawalPerMonth);
     }
 
-    // Apply step-up to bonus SIP amount if conditions are met
+    // --- Step-up Bonus SIP ---
     if (
       sip &&
       bonusSip &&
@@ -989,6 +916,20 @@ function calculateCompoundInterest(
       bonusSipAmount = Math.round(bonusSipAmount);
     }
   }
+  let details = "";
+  if (shortfallMessages.length > 0) {
+    details =
+      "<strong>Goals Compromised</strong><br/><br/>" +
+      shortfallMessages.join("<br/>");
+  }
+
+  if (swpCompromised) {
+    details +=
+      `<br/>⚠️ <strong>SWP Compromised</strong><br/><br>` + swpCompromisedMsg;
+  }
+
+  if (shortfallMessages.length > 0 || swpCompromised)
+    showCustomDialog(details, "warning");
 
   // Parallel investment 1 calculations (SIP, Step-up, Stop SIP logic)
   if (parallelInvestmentOne) {
@@ -1126,55 +1067,28 @@ function calculateCompoundInterest(
       frequencyCounterTwo = (frequencyCounterTwo + 1) % sipFrequencyTwo;
     }
   }
-
-  for (const investmentDetails of monthlyInvestmentHistory) {
-    console.log(
-      `${investmentDetails.month}\t${investmentDetails.sipAmount}\t${investmentDetails.principalForTheMonth}\t${investmentDetails.interestForTheMonth}\t${investmentDetails.totalInterest}\t${investmentDetails.totalAmount}`
-    );
-  }
+  logGrowthTable(monthlyInvestmentHistory);
 
   console.log();
 
   const yearlyInvestmentHistory = aggregateYearlyInvestmentHistory(
     monthlyInvestmentHistory
   );
-  for (const investmentDetails of yearlyInvestmentHistory) {
-    console.log(
-      `${investmentDetails.year}\t${investmentDetails.sipAmount}\t${investmentDetails.principalForTheMonth}\t${investmentDetails.interestForTheMonth}\t${investmentDetails.totalInterest}\t${investmentDetails.totalAmount}`
-    );
-  }
+  logGrowthTable(yearlyInvestmentHistory);
   let yearlyInvestmentOneHistory = [];
   if (parallelInvestmentOne) {
-    for (const investmentDetails of monthlyInvestmentHistoryOne) {
-      console.log(
-        `${investmentDetails.month}\t${investmentDetails.sipAmount}\t${investmentDetails.principalForTheMonth}\t${investmentDetails.interestForTheMonth}\t${investmentDetails.totalInterest}\t${investmentDetails.totalAmount}`
-      );
-    }
     yearlyInvestmentOneHistory = aggregateYearlyInvestmentHistory(
       monthlyInvestmentHistoryOne
     );
-    for (const investmentDetails of yearlyInvestmentOneHistory) {
-      console.log(
-        `${investmentDetails.year}\t${investmentDetails.sipAmount}\t${investmentDetails.principalForTheMonth}\t${investmentDetails.interestForTheMonth}\t${investmentDetails.totalInterest}\t${investmentDetails.totalAmount}`
-      );
-    }
+    logGrowthTable(yearlyInvestmentOneHistory);
   }
 
   let yearlyInvestmentTwoHistory = [];
   if (parallelInvestmentTwo) {
-    for (const investmentDetails of monthlyInvestmentHistoryTwo) {
-      console.log(
-        `${investmentDetails.month}\t${investmentDetails.sipAmount}\t${investmentDetails.principalForTheMonth}\t${investmentDetails.interestForTheMonth}\t${investmentDetails.totalInterest}\t${investmentDetails.totalAmount}`
-      );
-    }
     yearlyInvestmentTwoHistory = aggregateYearlyInvestmentHistory(
       monthlyInvestmentHistoryTwo
     );
-    for (const investmentDetails of yearlyInvestmentTwoHistory) {
-      console.log(
-        `${investmentDetails.year}\t${investmentDetails.sipAmount}\t${investmentDetails.principalForTheMonth}\t${investmentDetails.interestForTheMonth}\t${investmentDetails.totalInterest}\t${investmentDetails.totalAmount}`
-      );
-    }
+    logGrowthTable(yearlyInvestmentTwoHistory);
   }
 
   let activeSipYears = 0;
@@ -1256,43 +1170,69 @@ function calculateCompoundInterest(
         : 0)
   );
   console.log("Total Systematic Withdrawal: ₹" + totalSWP);
-  console.log("Total No Lumpsum Withdrawals: " + goalWithdrawals.length);
+  console.log("Total No Lumpsum Withdrawals: " + goalsCount);
   console.log(
     "************************************************************************************"
   );
 
-  document.querySelector(".totalDeposit").value = totalDeposits;
-  document.querySelector(".totalWithdrawal").value = totalWithdrawals;
-  document.querySelector(".totalInterest").value = totalInterest;
-  document.querySelector(".futureInvestmentValue").value = totalAmount;
-  document.querySelector(".presentValueOfFutureMoney").value =
-    presentValueOfFutureMoney;
+  // currency formatter (reuse your own if you already have one)
+  const formatCurrency = (num) =>
+    "₹ " + Number(num || 0).toLocaleString("en-IN");
+
+  // future value
+  document.querySelector(".futureInvestmentValue").textContent =
+    formatCurrency(totalAmount);
+
+  // inflation-adjusted FV
+  document.querySelector(".presentValueOfFutureMoney").textContent =
+    formatCurrency(presentValueOfFutureMoney);
+
+  // deposits / withdrawals / interest
+  document.querySelector(".totalDeposit").textContent =
+    formatCurrency(totalDeposits);
+  document.querySelector(".totalWithdrawal").textContent =
+    formatCurrency(totalWithdrawals);
+  document.querySelector(".totalInterest").textContent =
+    formatCurrency(totalInterest);
+
+  // effective annual rates
   document.querySelector(".combinedEar").textContent =
     earCombined.toFixed(2) + " %";
   document.querySelector(".ear").textContent = earPrimary.toFixed(2) + " %";
-  document.querySelector(".earOne").textContent =
-    earSecondary.toFixed(2) + " %";
-  document.querySelector(".earTwo").textContent = earTertiary.toFixed(2) + " %";
+
+  // inflation labels
   document.querySelectorAll(".inflation").forEach((el) => {
     el.textContent = inflationRate;
   });
-  document.querySelector(".noOfYears").value = years;
-  document.querySelector(".noOfYearsSip").value = activeSipYears;
-  document.querySelector(".noOfYearsSwp").value =
-    systematicWithdrawalAfterAPeriod
-      ? years - systematicWithdrawalAfterYears
-      : 0;
 
-  document.querySelector(".totalSWPAmount").value = totalSWP;
+  // years
+  document.querySelector(".noOfYears").textContent = years;
+  document.querySelector(".noOfYearsSip").textContent = activeSipYears;
 
+  // SWP
+  totalSWPYears = systematicWithdrawalAfterAPeriod
+    ? years - systematicWithdrawalAfterYears
+    : 0;
+  document.querySelector(".totalSWPAmount").textContent =
+    formatCurrency(totalSWP);
+  document.querySelector(".noOfYearsSwp").textContent = totalSWPYears;
+
+  // Goal withdrawals
   document.querySelectorAll(".noOfLumpsumWithdrawals").forEach((el) => {
-    el.value = goalWithdrawals.length;
+    el.textContent = goalsCount;
   });
 
+  totalGoalBasedWithdrawalAmount = goalWithdrawals.reduce(
+    (sum, g) => sum + g.inflatedAmount,
+    0
+  );
   document.querySelectorAll(".totalLumpsumWithdrawalAmount").forEach((el) => {
-    el.value = goalWithdrawals.reduce((sum, g) => sum + g.inflatedAmount, 0);
+    el.textContent = formatCurrency(totalGoalBasedWithdrawalAmount);
   });
 
+  document.querySelector(".earOne").textContent =
+    earSecondary.toFixed(2) + " %";
+  document.querySelector(".earTwo").textContent = earTertiary.toFixed(2) + " %";
   createMonthlyResultTable(
     monthlyInvestmentHistory,
     "monthlyResultTable",
@@ -1304,12 +1244,22 @@ function calculateCompoundInterest(
     "Primary Investment"
   );
 
+  const parallelInvestment = parallelInvestmentOne || parallelInvestmentTwo;
+
   hideExtraInfoForPrimaryInvestment(
     sip,
-    systematicWithdrawalAfterAPeriod,
-    lumpSumWithdrawals,
-    parallelInvestmentOne || parallelInvestmentTwo
+    systematicWithdrawalAfterAPeriod && totalSWPYears > 0,
+    lumpSumWithdrawals && totalGoalBasedWithdrawalAmount > 0,
+    parallelInvestment
   );
+
+  function logGrowthTable(investMentHistory) {
+    for (const investmentDetails of investMentHistory) {
+      console.debug(
+        `${investmentDetails.year}\t${investmentDetails.sipAmount}\t${investmentDetails.principalForTheMonth}\t${investmentDetails.interestForTheMonth}\t${investmentDetails.totalInterest}\t${investmentDetails.totalAmount}`
+      );
+    }
+  }
 
   updateInvestmentResults(
     parallelInvestmentOne,
@@ -1365,7 +1315,7 @@ function calculateCompoundInterest(
   }
   const combinedYearly = aggregateYearlyInvestmentHistory(combinedMonthly);
 
-  if (parallelInvestmentOne || parallelInvestmentTwo) {
+  if (parallelInvestment) {
     createMonthlyResultTable(
       combinedMonthly,
       "monthlyResultTableForCombinedView",
@@ -1379,10 +1329,13 @@ function calculateCompoundInterest(
   }
 
   updateCombinedPortfolioResults(
+    parallelInvestment,
     parallelInvestmentOne,
     parallelInvestmentTwo,
     totalDeposits,
     totalWithdrawals,
+    totalSWP,
+    totalSWPYears,
     totalDepositsOne,
     totalDepositsTwo,
     totalInterest,
@@ -1402,6 +1355,14 @@ function calculateCompoundInterest(
   document.getElementById("monthly-data").classList.remove("active");
   showYearlyData();
   showHideCombinedPortfolioDetails();
+  hideExtraInfoForCombinedInvestment(
+    sip ||
+      (parallelInvestmentOne && sipOne) ||
+      (parallelInvestmentTwo && sipTwo),
+    systematicWithdrawalAfterAPeriod,
+    lumpSumWithdrawals,
+    parallelInvestment
+  );
 }
 
 function createMonthlyResultTable(
@@ -1644,15 +1605,35 @@ function updateInvestmentResults(
       "************************************************************************************"
     );
 
-    document.querySelector(".totalDeposit" + suffix).value = totalDeposits;
-    document.querySelector(".totalInterest" + suffix).value = totalInterest;
-    document.querySelector(".futureInvestment" + suffix + "Value").value =
-      totalAmount;
+    // currency formatter (if not already defined globally)
+    const formatCurrency = (num) =>
+      "₹ " + Number(num || 0).toLocaleString("en-IN");
+
+    // Update deposits / interest
+    document.querySelector(".totalDeposit" + suffix).textContent =
+      formatCurrency(totalDeposits);
+    document.querySelector(".totalInterest" + suffix).textContent =
+      formatCurrency(totalInterest);
+
+    // Update future value
+    document.querySelector(".futureInvestment" + suffix + "Value").textContent =
+      formatCurrency(totalAmount);
+
+    // Inflation-adjusted future value
     document.querySelector(
       ".presentValueOfFutureMoneyParallelInvestment" + suffix + "Value"
-    ).value = presentValueOfFutureMoney;
-    document.querySelector(".noOfYears" + suffix).value = years;
-    document.querySelector(".noOfYearsSip" + suffix).value = activeSipYears;
+    ).textContent = formatCurrency(presentValueOfFutureMoney);
+
+    // Years
+    document.querySelector(".noOfYears" + suffix).textContent = years;
+    document.querySelector(".noOfYearsSip" + suffix).textContent =
+      activeSipYears;
+
+    if (activeSipYears <= 0) {
+      document.querySelector(".showSIP" + suffix).classList.add("hidden");
+    } else {
+      document.querySelector(".showSIP" + suffix).classList.remove("hidden");
+    }
 
     showParallelInvestmentResult(suffix);
   } else {
@@ -1662,10 +1643,13 @@ function updateInvestmentResults(
 
 // Function to update combined portfolio results
 function updateCombinedPortfolioResults(
+  parallelInvestment,
   parallelInvestmentOne,
   parallelInvestmentTwo,
   totalDeposits,
   totalWithdrawals,
+  totalSWP,
+  totalSWPYears,
   totalDepositsOne,
   totalDepositsTwo,
   totalInterest,
@@ -1679,7 +1663,7 @@ function updateCombinedPortfolioResults(
   activeSipYearsOne,
   activeSipYearsTwo
 ) {
-  if (parallelInvestmentOne || parallelInvestmentTwo) {
+  if (parallelInvestment) {
     const combinedDeposit = totalDeposits + totalDepositsOne + totalDepositsTwo;
     const totalCombinedInterestEarned =
       totalInterest +
@@ -1722,16 +1706,27 @@ function updateCombinedPortfolioResults(
       "************************************************************************************"
     );
 
-    document.querySelector(".combinedTotalDeposit").value = combinedDeposit;
-    document.querySelector(".combinedTotalWithdrawal").value = totalWithdrawals;
-    document.querySelector(".combinedTotalInterest").value =
-      totalCombinedInterestEarned;
-    document.querySelector(".combinedFutureInvestmentValue").value =
-      totalFutureInvestmentValue;
-    document.querySelector(".combinedPresentValueOfFutureMoney").value =
-      presentValueOfFutureMoney;
-    document.querySelector(".combinedNoOfYears").value = years;
-    document.querySelector(".combinedNoOfYearsSip").value = combinedSipYears;
+    // currency formatter
+    const formatCurrency = (num) =>
+      "₹ " + Number(num || 0).toLocaleString("en-IN");
+
+    document.querySelector(".combinedTotalDeposit").textContent =
+      formatCurrency(combinedDeposit);
+    document.querySelector(".combinedTotalWithdrawal").textContent =
+      formatCurrency(totalWithdrawals);
+    document.querySelector(".combinedTotalSWPAmount").textContent =
+      formatCurrency(totalSWP);
+    document.querySelector(".combinedNoOfYearsSwp").textContent = totalSWPYears;
+    document.querySelector(".combinedTotalInterest").textContent =
+      formatCurrency(totalCombinedInterestEarned);
+    document.querySelector(".combinedFutureInvestmentValue").textContent =
+      formatCurrency(totalFutureInvestmentValue);
+    document.querySelector(".combinedPresentValueOfFutureMoney").textContent =
+      formatCurrency(presentValueOfFutureMoney);
+
+    document.querySelector(".combinedNoOfYears").textContent = years;
+    document.querySelector(".combinedNoOfYearsSip").textContent =
+      combinedSipYears;
 
     document.querySelectorAll(".individualYears").forEach((el) => {
       el.classList.add("hidden");
@@ -1764,13 +1759,19 @@ function hideParallelInvestmentResult(suffix) {
 }
 
 function toggleParallelInvestment(suffix) {
-  var yesRadio = document.getElementById("parallelInvestment" + suffix + "Yes");
-  var table = document.querySelector(".parallelInvestment" + suffix + "Table");
+  const toggle = document.getElementById(
+    "parallelInvestment" + suffix + "Toggle"
+  );
+  const table = document.querySelector(
+    ".parallelInvestment" + suffix + "Table"
+  );
 
-  if (yesRadio.checked) {
-    table.classList.remove("hidden");
-  } else {
-    table.classList.add("hidden");
+  if (toggle && table) {
+    if (toggle.checked) {
+      table.classList.remove("hidden");
+    } else {
+      table.classList.add("hidden");
+    }
   }
 }
 
@@ -1787,27 +1788,88 @@ function hideExtraInfoForPrimaryInvestment(
   }
 
   if (systematicWithdrawalAfterAPeriod) {
-    document.getElementById("showSWP").classList.remove("hidden");
-    //document.getElementById("showNoOfYearsSwp").classList.remove("hidden");
+    document.querySelector(".showNoOfYearsSwp").classList.remove("hidden");
+    document.querySelector(".showIndividualSWP").classList.remove("hidden");
   } else {
-    document.getElementById("showSWP").classList.add("hidden");
+    document.querySelector(".showNoOfYearsSwp").classList.add("hidden");
+    document.querySelector(".showIndividualSWP").classList.add("hidden");
   }
-  document.getElementById("showNoOfYearsSwp").classList.add("hidden");
-
-  document.querySelectorAll(".lumpsumOverview").forEach((el) => {
-    el.classList.add("hidden");
-  });
 
   if (lumpSumWithdrawals) {
-    if (parallelInvestment) {
-      document
-        .querySelector(".lumpsum-count-combined")
-        .classList.remove("hidden");
-    } else {
-      document
-        .querySelector(".lumpsum-count-primary")
-        .classList.remove("hidden");
-    }
+    document.querySelectorAll(".lumpsumOverview").forEach((el) => {
+      el.classList.remove("hidden");
+    });
+  } else {
+    document.querySelectorAll(".lumpsumOverview").forEach((el) => {
+      el.classList.add("hidden");
+    });
+  }
+
+  if (lumpSumWithdrawals && systematicWithdrawalAfterAPeriod) {
+    document
+      .querySelector(".showIndividualWithdrawal")
+      .classList.remove("hidden");
+  } else {
+    document.querySelector(".showIndividualWithdrawal").classList.add("hidden");
+  }
+
+  if (parallelInvestment) {
+    document.querySelector(".showIndividualWithdrawal").classList.add("hidden");
+    document.querySelector(".showNoOfYearsSwp").classList.add("hidden");
+    document.querySelector(".showIndividualSWP").classList.add("hidden");
+    document.querySelectorAll(".lumpsumOverview").forEach((el) => {
+      el.classList.add("hidden");
+    });
+  }
+}
+
+function hideExtraInfoForCombinedInvestment(
+  sip,
+  systematicWithdrawalAfterAPeriod,
+  lumpSumWithdrawals,
+  parallelInvestment
+) {
+  if (sip) {
+    document.querySelector(".showCombinedSIPYears").classList.remove("hidden");
+  } else {
+    document.querySelector(".showCombinedSIPYears").classList.add("hidden");
+  }
+
+  if (systematicWithdrawalAfterAPeriod) {
+    document
+      .querySelector(".showCombinedNoOfYearsSwp")
+      .classList.remove("hidden");
+    document.querySelector(".showCombinedSWP").classList.remove("hidden");
+  } else {
+    document.querySelector(".showCombinedNoOfYearsSwp").classList.add("hidden");
+    document.querySelector(".showCombinedSWP").classList.add("hidden");
+  }
+
+  if (lumpSumWithdrawals) {
+    document.querySelectorAll(".combinedLumpsumOverview ").forEach((el) => {
+      el.classList.remove("hidden");
+    });
+  } else {
+    document.querySelectorAll(".combinedLumpsumOverview ").forEach((el) => {
+      el.classList.add("hidden");
+    });
+  }
+
+  if (lumpSumWithdrawals && systematicWithdrawalAfterAPeriod) {
+    document
+      .querySelector(".showCombinedWithdrawal")
+      .classList.remove("hidden");
+  } else {
+    document.querySelector(".showCombinedWithdrawal").classList.add("hidden");
+  }
+
+  if (parallelInvestment) {
+    document.querySelector(".showIndividualWithdrawal").classList.add("hidden");
+    document.querySelector(".showIndividualSWP").classList.add("hidden");
+    document.querySelector(".showNoOfYearsSwp").classList.add("hidden");
+    document.querySelectorAll(".lumpsumOverview").forEach((el) => {
+      el.classList.add("hidden");
+    });
   }
 }
 
@@ -1831,16 +1893,27 @@ function getCurrentYear() {
   return new Date().getFullYear();
 }
 
+function resetForm() {
+  localStorage.removeItem("compoundInterestInputs");
+  localStorage.setItem("justReset", "true");
+  location.reload();
+}
 function saveUserInputsToLocalStorage() {
   const fieldsToSave = document.querySelectorAll(
-    "input[type='text'], input[type='number'], select"
+    "input[type='text'], input[type='number'], select, input[type='checkbox']"
   );
   const data = {};
 
-  // Save static fields by class name
+  // Save static fields
   fieldsToSave.forEach((field) => {
     if (!field.closest("#goalWithdrawalRows")) {
-      data[field.className] = field.value;
+      if (field.type === "checkbox") {
+        data[field.id] = field.checked; // ✅ use id for checkboxes
+      } else if (field.id) {
+        data[field.id] = field.value; // ✅ use id if available
+      } else if (field.className) {
+        data[field.className] = field.value; // fallback
+      }
     }
   });
 
@@ -1854,7 +1927,6 @@ function saveUserInputsToLocalStorage() {
       amount: row.querySelector(".goalAmount")?.value ?? "",
     });
   });
-
   data.goalWithdrawals = goals;
 
   // Save selected radio buttons
@@ -1879,67 +1951,198 @@ function loadUserInputsFromLocalStorage() {
 
   // Load static fields
   Object.entries(data).forEach(([key, value]) => {
-    if (key === "goalWithdrawals") return; // handled separately
-    const input = document.querySelector(`.${key}`);
-    if (input) {
-      input.value = value;
-    } else {
-      const radio = document.querySelector(
-        `input[name='${key}'][value='${value}']`
-      );
-      if (radio) radio.checked = true;
+    if (key === "goalWithdrawals" || key === "goalCounter") return;
+
+    // ✅ Handle checkboxes/switches
+    const checkbox = document.getElementById(key);
+    if (checkbox && checkbox.type === "checkbox") {
+      checkbox.checked = value;
+      // Trigger onchange logic so UI updates
+      checkbox.dispatchEvent(new Event("change", { bubbles: true }));
+      return;
     }
+
+    // ✅ Handle normal inputs by id
+    const byId = document.getElementById(key);
+    if (byId && byId.type !== "checkbox" && byId.type !== "radio") {
+      byId.value = value;
+      return;
+    }
+
+    // ✅ Handle inputs by class (fallback)
+    const byClass = document.querySelector(`.${key}`);
+    if (byClass) {
+      byClass.value = value;
+      return;
+    }
+
+    // ✅ Restore radios
+    const radio = document.querySelector(
+      `input[name='${key}'][value='${value}']`
+    );
+    if (radio) radio.checked = true;
   });
 
   // Load goal rows
   if (Array.isArray(data.goalWithdrawals)) {
     const tbody = document.getElementById("goalWithdrawalRows");
     tbody.innerHTML = ""; // clear existing rows
+    goalCounter = 1; // reset counter
 
     data.goalWithdrawals.forEach((goal) => {
-      const row = document.createElement("tr");
-      row.innerHTML = `
-        <td><div class="divWrapper"><input type="text" class="goalName" value="${
-          goal.name
-        }"></div></td>
-        <td>
-          <select class="goalYear">
-            ${generateGoalYearOptions(goal.year)}
-          </select>
-        </td>
-        <td>
-          <div class="divWrapper">
-            <div class="container">
-              <div class="pWrapper"><p>₹</p></div>
-            </div>
-            <input
-              type="text"
-              class="goalAmount numericOnly"
-              value="${goal.amount}"
-              pattern="[0-9]*"
-              oninput="validateNumericInput(this);"
-              autocomplete="off"
-            />
-          </div>
-        </td>
-        <td class="goalActions desktop-only">
-          <button type="button" onclick="moveGoalRowUp(this)" title="Move Up">
-            <i class="fas fa-chevron-up"></i>
-          </button>
-          <button type="button" onclick="moveGoalRowDown(this)" title="Move Down">
-            <i class="fas fa-chevron-down"></i>
-          </button>
-          <button type="button" onclick="removeGoalRow(this)" title="Remove">
-            <i class="fas fa-minus-circle"></i>
-          </button>
-        </td>
-      `;
-      tbody.appendChild(row);
+      addGoalRow(goal.name, goal.year, goal.amount);
     });
   }
+
   if (typeof data.goalCounter !== "undefined") {
     goalCounter = data.goalCounter;
   }
+}
+
+function scrollToTop(duration = 400) {
+  const start = window.scrollY;
+  const startTime = performance.now();
+
+  function animateScroll(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / 0, 1); // clamp 0 → 1
+
+    window.scrollTo(0, start * (1 - progress));
+
+    if (progress < 1) {
+      requestAnimationFrame(animateScroll);
+    }
+  }
+
+  requestAnimationFrame(animateScroll);
+}
+
+const ICONS = {
+  success: "✅",
+  error: "❌",
+  warning: "⚠️",
+  info: "ℹ️",
+};
+
+// === Toast utility ===
+function getToastContainer() {
+  let container = document.querySelector(".toast-container");
+  if (!container) {
+    container = document.createElement("div");
+    container.className = "toast-container";
+    document.body.appendChild(container);
+  }
+  return container;
+}
+
+function showToast(message, type = "info") {
+  const container = getToastContainer();
+
+  const toast = document.createElement("div");
+  toast.className = `toast ${type}`;
+
+  const icon = ICONS[type] || "";
+  toast.innerText = `${icon} ${message}`;
+
+  container.appendChild(toast);
+
+  // Animate in
+  setTimeout(() => toast.classList.add("show"), 10);
+
+  // Remove after 3s
+  setTimeout(() => {
+    toast.classList.remove("show");
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+
+function showCustomDialog(message, type = "info") {
+  return new Promise((resolve) => {
+    // Create overlay + box
+    const overlay = document.createElement("div");
+    overlay.className = "custom-dialog-overlay";
+
+    const box = document.createElement("div");
+    box.className = "custom-dialog-box";
+
+    // Content (scrollable)
+    const content = document.createElement("div");
+    content.className = "custom-dialog-content";
+
+    // Use a container for message. We allow HTML (so <br/> works).
+    // If message may contain untrusted input, sanitize it first.
+    const msg = document.createElement("div");
+    msg.className = "dialog-message";
+    msg.innerHTML = `${ICONS[type] || ""} ${message}`; // message can contain <br/> or HTML
+
+    content.appendChild(msg);
+
+    // Actions (fixed at bottom of dialog)
+    const actions = document.createElement("div");
+    actions.className = "custom-dialog-actions";
+    const okBtn = document.createElement("button");
+    okBtn.type = "button";
+    okBtn.innerText = "OK";
+    okBtn.addEventListener("click", () => {
+      document.body.removeChild(overlay);
+      resolve(true);
+    });
+    actions.appendChild(okBtn);
+
+    // assemble
+    box.appendChild(content);
+    box.appendChild(actions);
+    overlay.appendChild(box);
+    document.body.appendChild(overlay);
+
+    // OPTIONAL: focus the button so keyboard users can press Enter
+    okBtn.focus();
+  });
+}
+
+// === Import JSON ===
+function importJSON() {
+  const input = document.getElementById("jsonFileInput");
+  input.value = ""; // reset so re-selecting works
+  input.click();
+
+  input.onchange = (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const json = JSON.parse(e.target.result);
+
+        // Save to localStorage
+        localStorage.setItem("compoundInterestInputs", JSON.stringify(json));
+
+        // Reload form with imported values
+        loadUserInputsFromLocalStorage();
+
+        document.querySelector(".calculate-button").click();
+
+        showToast("Data imported successfully!", "success");
+      } catch (err) {
+        console.error("Invalid JSON file:", err);
+        showToast("Invalid JSON file!", "error");
+      }
+    };
+    reader.readAsText(file);
+  };
+}
+
+// === EXPORT TO JSON FILE ===
+function exportJSON() {
+  const data = localStorage.getItem("compoundInterestInputs") || "{}";
+  const blob = new Blob([data], { type: "application/json" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "investment_data.json";
+  link.click();
+  URL.revokeObjectURL(link.href);
+  showToast("Inputs exported successfully!", "success");
 }
 
 function removeGoalRow(button) {
@@ -1949,12 +2152,13 @@ function removeGoalRow(button) {
   if (tbody.rows.length <= 1) {
     row.remove();
     document.querySelector(".lumpsumWithdrawalTable").classList.add("hidden");
-    document.getElementById("lumpsumWithdrawalNo").click();
+    setState("lumpsumWithdrawal", false);
     goalCounter = 1;
     return;
   }
 
   row.remove();
+  showToast("Goal removed successfully!", "success");
 }
 
 function generateGoalYearOptions(selectedYear) {
@@ -1971,23 +2175,20 @@ function generateGoalYearOptions(selectedYear) {
 async function downloadExcelReport() {
   const workbook = new ExcelJS.Workbook();
 
-  // === 1. Portfolio Overview Tables (Merged into One Sheet) ===
+  // === 1. Portfolio Overview (Merged into One Sheet) ===
   const overviewTables = [
     {
       selector: ".combinedInvestmentOverview",
       label: "Combined Investment Overview",
     },
-    {
-      selector: ".investmentOverview",
-      label: "Investment Overview",
-    },
+    { selector: ".investmentOverview", label: "Investment Overview" },
     {
       selector: ".parallelInvestmentOneOverview",
       label: "Secondary Investment Overview",
     },
     {
       selector: ".parallelInvestmentTwoOverview",
-      label: "Terniary Investment Overview",
+      label: "Tertiary Investment Overview",
     },
   ];
 
@@ -1996,10 +2197,14 @@ async function downloadExcelReport() {
   overviewTables.forEach(({ selector, label }) => {
     const el = document.querySelector(selector);
     if (el && !el.classList.contains("hidden")) {
+      console.log("Table Not Hidden: " + label);
       const tableRows = extractOverviewTableData(el);
 
-      let startRowIndex = overviewSheet.rowCount + 1; // Save the index before adding new rows
+      // Insert section header first (bold)
+      const headerRow = overviewSheet.addRow([label]);
+      headerRow.font = { bold: true };
 
+      // Then add all rows
       tableRows.forEach((row) => {
         const added = overviewSheet.addRow(row);
         if (row.length > 1) {
@@ -2007,70 +2212,117 @@ async function downloadExcelReport() {
         }
       });
 
-      // Make the first row of this section bold
-      const firstRowOfSection = overviewSheet.getRow(startRowIndex);
-      firstRowOfSection.font = { bold: true };
-
-      overviewSheet.addRow([]); // spacer between sections
+      overviewSheet.addRow([]); // spacer
+    } else {
+      console.log("Table Hidden: " + label);
     }
   });
 
   autoFitSheetColumns(overviewSheet);
 
   // === 2. Investment Result Tables (One Sheet Each) ===
-  const tablePairs = [
+  const groupedTables = [
     {
-      table: "yearlyResultTableForCombinedView",
-      name: "Combined Investment - Yearly",
+      name: "Combined Investment",
+      yearly: "yearlyResultTableForCombinedView",
+      monthly: "monthlyResultTableForCombinedView",
     },
     {
-      table: "monthlyResultTableForCombinedView",
-      name: "Combined Investment - Monthly",
+      name: "Primary Investment",
+      yearly: "yearlyResultTable",
+      monthly: "monthlyResultTable",
     },
-    { table: "yearlyResultTable", name: "Investment 1 - Yearly" },
-    { table: "monthlyResultTable", name: "Investment 1 - Monthly" },
     {
-      table: "yearlyResultTableForParallelInvestmentOne",
-      name: "Investment 2 - Yearly",
+      name: "Secondary Investment",
+      yearly: "yearlyResultTableForParallelInvestmentOne",
+      monthly: "monthlyResultTableForParallelInvestmentOne",
       check: ".parallelInvestmentOneOverview",
     },
     {
-      table: "monthlyResultTableForParallelInvestmentOne",
-      name: "Investment 2 - Monthly",
-      check: ".parallelInvestmentOneOverview",
-    },
-    {
-      table: "yearlyResultTableForParallelInvestmentTwo",
-      name: "Investment 3 - Yearly",
-      check: ".parallelInvestmentTwoOverview",
-    },
-    {
-      table: "monthlyResultTableForParallelInvestmentTwo",
-      name: "Investment 3 - Monthly",
+      name: "Tertiary Investment",
+      yearly: "yearlyResultTableForParallelInvestmentTwo",
+      monthly: "monthlyResultTableForParallelInvestmentTwo",
       check: ".parallelInvestmentTwoOverview",
     },
   ];
 
-  tablePairs.forEach(({ table, name, check }) => {
-    const el = document.getElementById(table);
+  groupedTables.forEach(({ name, yearly, monthly, check }) => {
     const checkEl = check ? document.querySelector(check) : null;
+    if (checkEl && checkEl.classList.contains("hidden")) return;
 
-    if (el && (!checkEl || !checkEl.classList.contains("hidden"))) {
-      const data = extractResultTableData(el);
-      const sheet = workbook.addWorksheet(name);
+    const yearlyEl = document.getElementById(yearly);
+    const monthlyEl = document.getElementById(monthly);
 
-      data.forEach((row) => {
-        const added = sheet.addRow(row);
-        row.forEach((_, index) => {
-          // Align all columns except the first (index 0)
-          if (index > 0) {
-            added.getCell(index + 1).alignment = { horizontal: "right" };
+    if (
+      (!yearlyEl || yearlyEl.classList.contains("hidden")) &&
+      (!monthlyEl || monthlyEl.classList.contains("hidden"))
+    ) {
+      return; // skip if both hidden
+    }
+
+    const sheet = workbook.addWorksheet(name);
+
+    // --- Yearly first ---
+    if (yearlyEl && !yearlyEl.classList.contains("hidden")) {
+      const yearlyData = extractResultTableData(yearlyEl);
+
+      // Section header
+      const secHeader = sheet.addRow([name + " - Yearly"]);
+      secHeader.font = { bold: true };
+      sheet.addRow([]); // spacer row before table headers
+
+      // Table headers
+      const headers = yearlyData[0].map((c) => c.value);
+      const headerRow = sheet.addRow(headers);
+      headerRow.font = { bold: true };
+      headerRow.alignment = { horizontal: "right" }; // ✅ align all header cells right
+
+      // Data rows
+      yearlyData.slice(1).forEach((row) => {
+        const added = sheet.addRow(row.map((c) => c.value));
+        row.forEach((cellData, index) => {
+          const cell = added.getCell(index + 1);
+          if (typeof cellData.value === "number") {
+            cell.numFmt = "#,##0";
+            if (cellData.isNegative) {
+              cell.font = { color: { argb: "FFFF0000" } };
+            }
           }
+          cell.alignment = { horizontal: "right" }; // ✅ data also right aligned
         });
       });
-      sheet.getRow(1).font = { bold: true };
-      autoFitSheetColumns(sheet);
+      sheet.addRow([]);
     }
+
+    // --- Monthly next ---
+    if (monthlyEl && !monthlyEl.classList.contains("hidden")) {
+      const monthlyData = extractResultTableData(monthlyEl);
+
+      const secHeader = sheet.addRow([name + " - Monthly"]);
+      secHeader.font = { bold: true };
+      sheet.addRow([]);
+
+      const headers = monthlyData[0].map((c) => c.value);
+      const headerRow = sheet.addRow(headers);
+      headerRow.font = { bold: true };
+      headerRow.alignment = { horizontal: "right" }; // ✅ align headers right
+
+      monthlyData.slice(1).forEach((row) => {
+        const added = sheet.addRow(row.map((c) => c.value));
+        row.forEach((cellData, index) => {
+          const cell = added.getCell(index + 1);
+          if (typeof cellData.value === "number") {
+            cell.numFmt = "#,##0";
+            if (cellData.isNegative) {
+              cell.font = { color: { argb: "FFFF0000" } };
+            }
+          }
+          cell.alignment = { horizontal: "right" }; // ✅ align data right
+        });
+      });
+    }
+
+    autoFitSheetColumns(sheet);
   });
 
   // === 3. Export Workbook ===
@@ -2079,76 +2331,144 @@ async function downloadExcelReport() {
     type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
   });
   saveAs(blob, "Investment_Calculations.xlsx");
+  showToast("Investment Results exported successfully!", "success");
 }
 
-// For Overview Tables (include ₹ symbol)
-function extractOverviewTableData(tableEl) {
+function extractOverviewTableData(container) {
   const rows = [];
-  const trs = tableEl.querySelectorAll("tr");
 
-  trs.forEach((tr) => {
-    const row = [];
-    tr.querySelectorAll("th, td").forEach((cell) => {
-      const input = cell.querySelector("input");
-      if (input) {
-        const value = input.value?.trim() || input.placeholder || "";
-
-        // ✅ Only prefix ₹ if ₹ symbol exists in the cell
-        const hasSymbol = !!cell.querySelector("p")?.textContent?.includes("₹");
-        row.push(hasSymbol ? "₹ " + value : value);
-      } else {
-        const text = cell.innerText.replace(/₹/g, "").trim();
-        row.push(text);
-      }
+  const trs = container.querySelectorAll("tr");
+  if (trs.length > 0) {
+    // Table-style extraction
+    trs.forEach((tr) => {
+      const row = [];
+      tr.querySelectorAll("th, td").forEach((cell) => {
+        const input = cell.querySelector("input");
+        if (input) {
+          const value = input.value?.trim() || input.placeholder || "";
+          const hasSymbol = !!cell
+            .querySelector("p")
+            ?.textContent?.includes("₹");
+          row.push(hasSymbol ? "₹ " + value : value);
+        } else {
+          const text = cell.innerText.replace(/₹/g, "").trim();
+          row.push(text);
+        }
+      });
+      if (row.length > 0) rows.push(row);
     });
-    rows.push(row);
-  });
+  } else {
+    // Grid-style extraction (.statCard inside .investmentOverviewGrid)
+    const cards = container.querySelectorAll(
+      ".investmentOverviewGrid .statCard"
+    );
+    cards.forEach((card) => {
+      const label = card.querySelector(".label")?.innerText.trim() || "";
+      const value = card.querySelector(".value")?.innerText.trim() || "";
+      if (label || value) rows.push([label, value]);
+    });
+  }
 
   return rows;
 }
 
-// For Result Tables (no ₹ symbol)
 function extractResultTableData(tableEl) {
   const rows = [];
-  const trs = tableEl.querySelectorAll("tr");
-
-  trs.forEach((tr) => {
+  tableEl.querySelectorAll("tr").forEach((tr) => {
     const row = [];
     tr.querySelectorAll("th, td").forEach((cell) => {
-      // Case 1: cell contains a div.resultNumber (your scenario)
-      const resultDiv = cell.querySelector(".resultNumber");
-      if (resultDiv) {
-        const value = resultDiv.textContent.trim();
-        row.push("₹ " + value); // ✅ Only number, no ₹ symbol
-      } else {
-        // Case 2: fallback to text content (e.g., headers)
-        const text = cell.innerText.replace(/₹/g, "").trim();
-        row.push(text);
-      }
-    });
-    rows.push(row);
-  });
+      let value = null;
+      let isNegative = false;
 
+      const numberWrapper = cell.querySelector(".resultNumberWrapper");
+      if (numberWrapper) {
+        const numText =
+          numberWrapper.querySelector(".resultNumber")?.innerText || "";
+        let clean = numText.replace(/,/g, "").trim();
+
+        if (clean && !isNaN(clean)) {
+          isNegative = numberWrapper.classList.contains("red");
+          value = isNegative ? -parseFloat(clean) : parseFloat(clean);
+        }
+      }
+
+      if (value === null) {
+        let text = cell.innerText.replace(/₹/g, "").replace(/\s+/g, " ").trim();
+        const num = parseFloat(text.replace(/,/g, ""));
+        if (!isNaN(num) && text !== "") {
+          value = num;
+          if (/^\(.*\)$/.test(text)) isNegative = true; // accounting style
+        } else {
+          value = text; // header/label
+        }
+      }
+
+      row.push({ value, isNegative });
+    });
+    if (row.length > 0) rows.push(row);
+  });
   return rows;
 }
 
 function autoFitSheetColumns(sheet) {
-  sheet.columns.forEach((col) => {
-    let maxLength = 0;
-    col.eachCell({ includeEmpty: true }, (cell) => {
-      const val = cell.value || "";
-      const len = val.toString().length;
-      if (len > maxLength) maxLength = len;
+  if (!sheet || !sheet.columns) return;
+
+  sheet.columns.forEach((column) => {
+    if (!column) return;
+    let maxLength = 10;
+
+    column.eachCell({ includeEmpty: true }, (cell) => {
+      if (cell.value != null) {
+        const value = cell.value.toString();
+        const columnLength = value.length;
+        if (columnLength > maxLength) maxLength = columnLength;
+
+        // ✅ If numeric, apply Excel number formatting with commas
+        if (typeof cell.value === "number") {
+          cell.numFmt = "#,##0"; // adds commas, no decimals
+        }
+      }
     });
-    col.width = maxLength + 2;
+
+    column.width = maxLength + 2;
   });
+}
+
+async function removeAllGoals() {
+  // Show custom dialog instead of confirm
+  const userConfirmed = await showCustomDialog(
+    "Are you sure you want to remove all goals?",
+    "warning" // optional type for icon
+  );
+
+  if (userConfirmed) {
+    const tbody = document.getElementById("goalWithdrawalRows");
+    tbody.innerHTML = "";
+    goalCounter = 1; // reset goal counter
+
+    // Hide lumpsum withdrawal table
+    const lumpsumTable = document.querySelector(".lumpsumWithdrawalTable");
+    if (lumpsumTable) {
+      lumpsumTable.classList.add("hidden");
+    }
+
+    // Reset toggle to "No"
+    setState("lumpsumWithdrawal", false);
+
+    // Show success toast
+    showToast("Goals removed successfully!", "success");
+
+    // Also clear from localStorage
+    saveUserInputsToLocalStorage();
+  }
 }
 
 function addGoalRow(
   name = `Goal ${goalCounter}`,
-  year = getNumericValue(".investmentYear"),
-  amount = 0,
-  startingYear = getNumericValue(".investmentYear")
+  year = getNumericValue(".investmentYear") + 2,
+  amount = 50000,
+  startingYear = getNumericValue(".investmentYear"),
+  toast = false
 ) {
   const table = document.getElementById("goalWithdrawalRows");
   const row = document.createElement("tr");
@@ -2199,6 +2519,9 @@ function addGoalRow(
 
   table.appendChild(row);
   goalCounter++;
+  if (toast) {
+    showToast("Goal added successfully!", "success");
+  }
 }
 
 function moveGoalRowUp(button) {
@@ -2280,6 +2603,14 @@ function sortGoals() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  //In case of reset, show toast
+  if (localStorage.getItem("justReset") === "true") {
+    localStorage.removeItem("justReset");
+    setTimeout(() => {
+      showToast("Reset Success!", "success");
+    }, 100);
+  }
+
   // Disable autocomplete
   document.querySelectorAll("input").forEach(function (input) {
     input.autocomplete = "off";
@@ -2343,7 +2674,10 @@ document.addEventListener("DOMContentLoaded", () => {
         headers[1] !== "Year" ||
         headers[2] !== "Amount Today"
       ) {
-        alert("Invalid file format. Please use the provided template.");
+        showToast(
+          "Invalid file format. Please use the provided template.",
+          "error"
+        );
         return;
       }
 
@@ -2360,9 +2694,14 @@ document.addEventListener("DOMContentLoaded", () => {
           addGoalRow(name, year, amount);
         }
       });
+
+      showToast("Goals imported successfully!", "success");
     } catch (err) {
       console.error(err);
-      alert("Failed to read file. Please try again with the correct template.");
+      showToast(
+        "Invalid file format. Please use the provided template.",
+        "error"
+      );
     } finally {
       event.target.value = ""; // reset file input
     }
@@ -2377,26 +2716,41 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Run toggle and setup functions
-  toggleDecreaseInterestRate();
-  toggleDecreaseInterestRateOne();
-  toggleDecreaseInterestRateTwo();
-  toggleSIP();
-  toggleSWP();
-  toggleLumpsumWithdrawal();
+  toggleDecreaseInterestRate("");
+  toggleDecreaseInterestRate("One");
+  toggleDecreaseInterestRate("Two");
+  toggleSIP("");
+  toggleSIP("One");
+  toggleSIP("Two");
+  toggleSWP("");
+  toggleLumpsumWithdrawal("");
   toggleParallelInvestment("One");
   toggleParallelInvestment("Two");
-  toggleBonusSIP();
-  toggleStepUpSIP();
-  toggleDecreaseStepUp();
-  toggleStopSip();
-  toggleStopSipOne();
-  toggleStopSipTwo();
-  toggleBonusSipStepUp();
-  toggleWithdrawalStepUp();
-  calculate();
-
+  toggleBonusSIP("");
+  toggleStepUpSIP("");
+  toggleStepUpSIP("One");
+  toggleStepUpSIP("Two");
+  decreaseStepUp("");
+  toggleStopSip("");
+  toggleStopSip("One");
+  toggleStopSip("Two");
+  toggleStepUpBonusSIP("");
+  toggleSWPStepUp("");
+  calculate(false);
   // Calculate button click handler
   document.querySelector(".calculate-button").addEventListener("click", () => {
+    const initialInvestment = Number(
+      document.querySelector(".initialInvestment").value
+    );
+    const sip = isChecked("toggleSIP");
+
+    if (initialInvestment === 0 && !sip) {
+      showCustomDialog(
+        "Initial investment is 0 or SIP is not enabled. Please update values.",
+        "warning"
+      );
+      return; // stop calculation
+    }
     saveUserInputsToLocalStorage();
     calculate();
     document
@@ -2408,6 +2762,5 @@ document.addEventListener("DOMContentLoaded", () => {
   document
     .getElementById("downloadCalculations")
     .addEventListener("click", downloadExcelReport);
-
-  calculate();
+  document.activeElement.blur();
 });

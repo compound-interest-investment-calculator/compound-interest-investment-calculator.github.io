@@ -38,12 +38,22 @@ body {
   box-sizing: border-box;
 }
 
+.div-left {
+  flex: 0.45; /* 35% of width */
+}
+
+.div-right {
+  flex: 0.55; /* 65% of width */
+}
+
 .child {
   margin: 10px;
   padding: 5px 15px 5px 15px;
   vertical-align: top;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  background: #ffffff;
+  border: 1px solid #f4f4f4;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
   box-sizing: border-box;
 }
 
@@ -69,6 +79,7 @@ body {
   box-sizing: border-box;
   text-align: center;
   display: block;
+  font-size: 15px;
   background-color: var(--hightlight-background);
   color: var(--primary-light);
   display: flex;
@@ -82,10 +93,6 @@ body {
 
 .button {
   box-shadow: none;
-}
-
-.hidden {
-  display: none;
 }
 
 div.section-heading {
@@ -113,6 +120,20 @@ table.section-heading-button {
   height: 30px;
   display: flex;
   align-items: center;
+  position: relative;
+}
+
+.divWrapper .container {
+  position: absolute;
+  left: 8px; /* padding from the left edge */
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none; /* don’t block input clicks */
+}
+
+.divWrapper input.goalAmount {
+  padding-left: 15px;
+  text-align: left;
 }
 
 .divWrapper:has(.divWrapperInner) {
@@ -157,7 +178,7 @@ table.section-heading-button {
 }
 
 .right-button {
-  flex-basis: 30%;
+  flex-basis: 20%;
 }
 
 .left-button button,
@@ -203,8 +224,9 @@ table.section-heading-button {
   background-color: #07709d;
 }
 
-.downloadButton {
-  margin-bottom: 10px;
+.downloadButtons {
+  padding-top: 15px;
+  padding-bottom: 10px;
 }
 
 .resultTable th,
@@ -325,13 +347,20 @@ div.resultTable {
 }
 
 .resultHeader {
-  background-color: rgb(228, 228, 228);
+  background: linear-gradient(to right, #f9fafb, #f3f4f6); /* soft gradient */
   font-weight: 600;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 5px;
-  border: 1px solid var(--primary-border);
+  font-size: 14px;
+  color: #374151; /* dark gray instead of black */
+  padding: 10px 6px;
+  border: 1px solid #e5e7eb;
   text-align: center;
+  letter-spacing: 0.3px;
+  text-transform: capitalize;
+}
+
+.resultTable tr:first-child {
+  background: linear-gradient(to right, #f9fafb, #f3f4f6); /* soft gradient */
+  font-weight: 600;
 }
 
 table.heading tr {
@@ -344,44 +373,44 @@ table.total th {
   text-align: left;
 }
 
-table.dataTable th:first-child,
-table.dataTable td:first-child {
-  width: 60%;
-}
-
 table.sub-table th:first-child,
 table.sub-table td:first-child {
   width: auto;
-}
-
-table.hidden-table th:first-child,
-table.hidden-table td:first-child {
-  width: 60%;
 }
 
 table.goalWithdrawalTable th {
   font-weight: 500;
 }
 
-table.goalWithdrawalTable th,
-table.goalWithdrawalTable td {
-  padding: 10px;
+table.goalWithdrawalTable th:not(:first-child),
+table.goalWithdrawalTable td:not(:first-child) {
+  padding: 8px;
 }
 
 table.goalWithdrawalTable th:first-child,
 table.goalWithdrawalTable td:first-child {
-  width: 35%;
+  padding-right: 8px;
+}
+
+table.goalWithdrawalTable th:first-child,
+table.goalWithdrawalTable td:first-child {
+  width: 30%;
+}
+
+table.goalWithdrawalTable th:first-child input,
+table.goalWithdrawalTable td:first-child input {
+  text-align: left;
 }
 
 table.goalWithdrawalTable th:nth-child(2),
 table.goalWithdrawalTable td:nth-child(2) {
   text-align: center;
-  width: 20%;
+  width: 15%;
 }
 
 table.goalWithdrawalTable th:nth-child(3),
 table.goalWithdrawalTable td:nth-child(3) {
-  width: 35%;
+  width: 20%;
 }
 
 table.goalWithdrawalTable th:nth-child(4),
@@ -422,6 +451,15 @@ table.goalWithdrawalTable td:nth-child(4) {
   border-radius: 6px;
 }
 
+.danger-btn {
+  background-color: #dc2626; /* red */
+  color: #fff;
+}
+
+.danger-btn:hover {
+  background-color: #b91c1c;
+}
+
 .goalActions {
   white-space: nowrap;
 }
@@ -430,12 +468,12 @@ table.goalWithdrawalTable td:nth-child(4) {
   background: none;
   border: none;
   cursor: pointer;
-  margin: 0 2px;
-  font-size: 14px;
+  font-size: 15px;
   color: #4b5563; /* Gray-600 */
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  padding: 0px 4px;
 }
 
 .goalActions button:hover {
@@ -448,23 +486,17 @@ table.parallelInvYear td:first-child {
 }
 
 table.dataTable th:not(.no-border) {
-  border-bottom: 1px solid rgb(179, 179, 179);
+  border-bottom: 1px solid rgb(229 229 229);
 }
 
 .subtable-wrapper:not(.no-border) {
-  border-bottom: 2px solid rgb(179, 179, 179);
+  border-bottom: 2px solid rgb(229 229 229);
 }
 
 table.dataTable th,
 table.total th {
   text-align: left;
   align-content: center;
-}
-
-table.dataTable th,
-table.total th {
-  padding-top: 10px;
-  padding-bottom: 10px;
 }
 
 table.firstTable {
@@ -483,6 +515,12 @@ th,
 td {
   padding-top: 5px;
   padding-bottom: 5px;
+  height: 30px;
+}
+
+h.no-height,
+td.no-height {
+  height: 0px;
 }
 
 th {
@@ -495,10 +533,6 @@ th {
 
 .totalWrapper {
   border-bottom: none;
-}
-
-.resultTable tr:first-child {
-  background-color: rgb(228, 228, 228);
 }
 
 .resultTable th:first-child,
@@ -565,7 +599,7 @@ input {
   height: 100%;
   width: 100%;
   flex: 1;
-  text-align: left;
+  text-align: center;
   box-sizing: border-box;
   background: none;
   border: none;
@@ -599,15 +633,11 @@ p {
   color: #555;
   max-height: 30px;
   font-weight: normal;
+  text-wrap: auto;
 }
 
 a {
   text-decoration: none;
-}
-
-.calc-button {
-  padding-top: 10px;
-  margin-bottom: 10px;
 }
 
 .radio-wrapper {
@@ -640,7 +670,6 @@ a {
 .investmentOverview,
 .parallelInvestmentOneOverview,
 .parallelInvestmentTwoOverview {
-  margin-top: 10px;
   margin-bottom: 10px;
 }
 
@@ -668,13 +697,33 @@ a {
   font-weight: 500;
 }
 
+.resultTable {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 13px;
+}
+
+.resultTable th,
+.resultTable td {
+  padding: 8px 10px;
+  border: 1px solid #e5e7eb;
+}
+
+.resultTable tr:nth-child(odd) {
+  background: #fafafa; /* zebra striping */
+}
+
+.resultTable tr:hover {
+  background: #f1f5f9; /* subtle hover highlight */
+}
+
 .highlight {
   background-color: #efefef;
   font-weight: 500;
 }
 
 .investmentDetails {
-  margin-bottom: 0px;
+  margin-bottom: 8px;
 }
 
 .div-left .child.sticky-buttons {
@@ -682,8 +731,447 @@ a {
   bottom: 0;
   background: #fff;
   z-index: 10;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
 .goal-compromised {
   background-color: #f8d7da; /* light red */
+}
+
+.overviewHeader {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgb(229 229 229);
+  line-height: 30px;
+}
+
+.investmentOverviewGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 18px;
+  align-items: stretch;
+}
+
+.statCard {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 10px 12px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.statCard:hover {
+  background: #f9fafb; /* just a subtle hover tint */
+}
+
+.statCard .label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #6b7280;
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+
+.statCard .value {
+  font-size: 16px;
+  font-weight: 600;
+  color: #3e4145;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+/* Tablet */
+@media (max-width: 992px) {
+  .investmentOverviewGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .investmentOverviewGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+table.dataTable > thead > tr > th:first-child,
+table.dataTable > tbody > tr > td:first-child,
+table.sub-table > thead > tr > th:first-child,
+table.sub-table > tbody > tr > td:first-child {
+  width: 60%;
+}
+
+.parallel-options {
+  column-gap: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  background-color: #f5f7fa;
+  margin: 10px;
+  padding: 15px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+  font-weight: 600;
+}
+
+.parallel-options > div:first-child {
+  width: 60%;
+}
+
+.parallel-options > div:last-child {
+  margin: auto;
+}
+
+.flexRow {
+  display: flex;
+  gap: 20px; /* spacing between Years and Months */
+  align-items: center; /* align labels + inputs vertically */
+}
+
+.flexRow > div {
+  display: flex;
+  align-items: center;
+  gap: 6px; /* space between label and input */
+}
+
+.flexRow span {
+  font-size: 14px;
+  font-weight: 500;
+  color: #444;
+  white-space: nowrap;
+}
+
+.flexRow .divWrapper {
+  flex: 0 0 80px; /* fixed input width */
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 42px;
+  height: 22px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.3s;
+  border-radius: 22px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.3s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #4caf50;
+  background-color: var(--hightlight-background);
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+.toggle-label {
+  margin-left: 10px;
+  font-size: 14px;
+  color: #333;
+}
+
+.dataTable td,
+.dataTable th,
+.overviewHeader,
+input,
+select {
+  font-size: 15px;
+  font-weight: 400;
+  color: #444;
+}
+
+.dataTable th,
+.overviewHeader {
+  font-weight: 600;
+}
+
+.info-icon {
+  position: relative;
+  display: inline-block;
+  margin-left: 5px;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--hightlight-background);
+}
+
+.info-icon:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.tooltip {
+  visibility: hidden;
+  opacity: 0;
+  width: 220px;
+  background-color: #333;
+  color: #fff;
+  text-align: left;
+  border-radius: 6px;
+  padding: 8px;
+  position: absolute;
+  z-index: 100;
+  bottom: 125%; /* show above the icon */
+  left: 50%;
+  transform: translateX(-50%);
+  transition: opacity 0.2s ease-in-out;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%; /* arrow points down */
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
+}
+
+/* Layout container: left = 90%, right = 10% */
+.button-container.calc-button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Left group (Calculate + Reset) takes 90% */
+.button-container.calc-button > .main-actions {
+  flex: 0 0 80%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Make Calculate fill remaining space inside left group */
+.button-container.calc-button .main-actions .left-button,
+.button-container.calc-button .main-actions .reset-wrapper {
+  flex: 1 1 auto;
+}
+
+/* Right column 10% - stacked vertically */
+.button-container.calc-button > .json-column {
+  flex: 0 0 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* spread top and bottom */
+  align-items: stretch;
+  height: 50px; /* match Calculate/Reset row height */
+  gap: 0;
+}
+
+/* Each JSON button splits the column height equally */
+.button-container.calc-button .json-button {
+  flex: 1 1 50%;
+  width: 100%;
+  padding: 0; /* remove extra padding */
+  font-size: 13px;
+  border-radius: 0; /* remove double-rounded look */
+  border: none;
+  background: var(--hightlight-background);
+  color: #fff;
+  cursor: pointer;
+  margin: 1px;
+}
+
+/* Top button rounded only at top */
+.button-container.calc-button .json-button:first-child,
+.button-container.calc-button .json-button:last-child {
+  border-radius: 8px;
+}
+
+/* Keep the Calculate button style consistent */
+.calculate-button {
+  width: 100%;
+  height: 50px;
+  box-sizing: border-box;
+}
+
+/* Reset styling (match your existing reset-button visuals) */
+.reset-button {
+  height: 50px;
+  padding: 10px 12px;
+}
+
+/* Small screens: stack into two rows so nothing squashes */
+@media (max-width: 880px) {
+  .button-container.calc-button {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .button-container.calc-button > .main-actions,
+  .button-container.calc-button > .json-column {
+    flex: none;
+    width: 100%;
+  }
+
+  .button-container.calc-button > .json-column {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+
+  .button-container.calc-button .json-button {
+    width: 120px;
+  }
+}
+/* 
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #333;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 6px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+  z-index: 1000;
+  font-size: 14px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.toast.error {
+  background: #e74c3c;
+} */
+
+/* Toast container to hold multiple stacked toasts */
+.toast-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* space between toasts */
+  z-index: 1000;
+}
+
+.toast {
+  background: #333;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 6px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+  font-size: 14px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  min-width: 200px;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.toast.error {
+  background: #e74c3c;
+}
+
+/* overlay */
+.custom-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+/* dialog: grid with content (scrollable) + actions (fixed) */
+.custom-dialog-box {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+  width: min(600px, 90vw);
+  max-height: 80vh;
+  display: grid;
+  grid-template-rows: 1fr auto; /* content gets remaining space, actions stay auto-height */
+  overflow: hidden; /* keep actions visible, content will scroll */
+  padding: 18px;
+  font-size: 14px;
+  line-height: 1.45;
+  text-align: center;
+}
+
+/* scrollable message area */
+.custom-dialog-content {
+  overflow-y: auto;
+  padding-right: 6px; /* avoid content touching scrollbar */
+}
+
+/* allow multiline text to wrap and keep spacing */
+.custom-dialog-content .dialog-message {
+  margin: 0 0 8px 0;
+  white-space: pre-wrap; /* preserve \n if you pass text */
+}
+
+/* actions row stays below content */
+.custom-dialog-actions {
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  padding-top: 12px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* button styling */
+.custom-dialog-actions button {
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  background: #3498db;
+  color: #fff;
+}
+.custom-dialog-actions button:hover {
+  background: #2d86c7;
+}
+
+.hidden {
+  display: none;
 }
