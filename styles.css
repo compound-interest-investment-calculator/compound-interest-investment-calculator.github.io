@@ -57,6 +57,30 @@ body {
   box-sizing: border-box;
 }
 
+.parallel-options {
+  column-gap: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  background-color: #f5f7fa;
+  margin: 10px;
+  padding: 15px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+  font-weight: 600;
+}
+
+.parallel-options > div:first-child {
+  width: 60%;
+}
+
+.parallel-options > div:last-child {
+  margin: auto;
+}
+
 .last-child {
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
@@ -262,6 +286,9 @@ table.section-heading-button {
 
   .overview {
     height: fit-content;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 10px;
   }
 
   .resultTable {
@@ -320,6 +347,13 @@ table.section-heading-button {
 
   .downloadCalculations {
     width: 20%;
+  }
+
+  .child,
+  .overview,
+  .parallel-options {
+    margin: 0px;
+    border-radius: 0px;
   }
 }
 
@@ -813,30 +847,6 @@ table.sub-table > tbody > tr > td:first-child {
   width: 60%;
 }
 
-.parallel-options {
-  column-gap: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  background-color: #f5f7fa;
-  margin: 10px;
-  padding: 15px;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  box-sizing: border-box;
-  font-weight: 600;
-}
-
-.parallel-options > div:first-child {
-  width: 60%;
-}
-
-.parallel-options > div:last-child {
-  margin: auto;
-}
-
 .flexRow {
   display: flex;
   gap: 20px; /* spacing between Years and Months */
@@ -1008,6 +1018,9 @@ select {
   .button-container {
     flex-direction: row;
     gap: 0.5rem;
+    width: 98%;
+    margin: auto;
+    font-size: 14px;
   }
 
   .left-button,
