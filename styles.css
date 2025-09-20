@@ -111,6 +111,18 @@ body {
   justify-content: center;
 }
 
+.div-left .child,
+.div-left .overview,
+.div-left .parallel-options {
+  margin-right: 5px;
+}
+
+.div-right .child,
+.div-right .overview,
+.div-right .parallel-options {
+  margin-left: 5px;
+}
+
 .yearMonthToggleBtn.active {
   border-bottom: 3px solid #535353;
 }
@@ -214,6 +226,10 @@ table.section-heading-button {
   box-sizing: border-box;
 }
 
+button.json-button {
+  font-size: 13px;
+}
+
 .hide-reset-button {
   display: none;
 }
@@ -299,6 +315,18 @@ table.section-heading-button {
   .resultTable td {
     padding-left: 5px;
   }
+
+  .div-left .child,
+  .div-left .overview,
+  .div-left .parallel-options {
+    margin-right: 10px;
+  }
+
+  .div-right .child,
+  .div-right .overview,
+  .div-right .parallel-options {
+    margin-left: 10px;
+  }
 }
 
 @media (min-width: 750px) {
@@ -325,6 +353,17 @@ table.section-heading-button {
   .goalWithdrawalTable td input,
   .goalWithdrawalTable td select {
     font-size: 14px;
+  }
+  .div-left .child,
+  .div-left .overview,
+  .div-left .parallel-options {
+    margin-right: 10px;
+  }
+
+  .div-right .child,
+  .div-right .overview,
+  .div-right .parallel-options {
+    margin-left: 10px;
   }
 }
 
@@ -354,6 +393,18 @@ table.section-heading-button {
   .parallel-options {
     margin: 0px;
     border-radius: 0px;
+  }
+
+  .div-left .child,
+  .div-left .overview,
+  .div-left .parallel-options {
+    margin-right: 0px;
+  }
+
+  .div-right .child,
+  .div-right .overview,
+  .div-right .parallel-options {
+    margin-left: 0px;
   }
 }
 
@@ -1002,37 +1053,55 @@ select {
 
 /* Child button distribution */
 .left-button .calculate-button {
-  flex: 0 0 60%;
+  flex: 1.5;
 }
 
 .left-button .reset-button {
-  flex: 0 0 40%;
+  flex: 1;
 }
 
 .right-button .json-button {
-  flex: 0 0 50%;
+  flex: 1;
 }
 
 /* Responsive: mobile view */
 @media (max-width: 768px) {
-  .button-container {
-    flex-direction: row;
-    gap: 0.5rem;
-    width: 98%;
-    margin: auto;
+  /* Make the container wrap but keep the two logical groups as full-width rows */
+  .button-container.calc-button {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: stretch;
+  }
+
+  /* Each group takes a full row */
+  .button-container.calc-button .left-button,
+  .button-container.calc-button .right-button {
+    flex: 0 0 100%;
+    display: flex;
+    gap: 8px; /* horizontal spacing between the two buttons in the row */
+    box-sizing: border-box;
+  }
+
+  /* Buttons inside each group split the row 50/50 */
+  .button-container.calc-button .left-button .calculate-button,
+  .button-container.calc-button .left-button .reset-button,
+  .button-container.calc-button .right-button .json-button {
+    flex: 1 1 50%;
+    max-width: 50%;
+  }
+
+  /* Make heights consistent and readable on mobile */
+  .button-container.calc-button .calculate-button,
+  .button-container.calc-button .reset-button,
+  .button-container.calc-button .json-button {
+    height: 48px;
     font-size: 14px;
   }
 
-  .left-button,
-  .right-button {
-    flex: 0 0 100%;
-  }
-
-  /* all buttons inside left & right become 50/50 */
-  .left-button .calculate-button,
-  .left-button .reset-button,
-  .right-button .json-button {
-    flex: 0 0 50%;
+  /* Ensure right group sits below left group (visual separation) */
+  .button-container.calc-button .right-button {
+    margin-top: 6px;
   }
 
   .left-container,

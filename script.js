@@ -767,6 +767,16 @@ function calculateCompoundInterest(
     let swpThisMonth = 0;
     let goalWithdrawalThisMonth = 0;
 
+    // 1. Inflate SWP amount each year until SWP actually starts
+    if (systematicWithdrawalAfterAPeriod && i <= startWithdrawalAfterMonths) {
+      if (i % 12 === 0) {
+        withdrawalPerMonth = Math.round(
+          withdrawalPerMonth * (1 + inflationRate / 100)
+        );
+      }
+    }
+
+    // 2. Once SWP starts, begin withdrawals
     if (systematicWithdrawalAfterAPeriod && i > startWithdrawalAfterMonths) {
       const allowedWithdrawal = Math.min(withdrawalPerMonth, totalAmount);
 
@@ -775,9 +785,8 @@ function calculateCompoundInterest(
 
       if (allowedWithdrawal < withdrawalPerMonth) {
         console.warn(
-          `Year ${currentYear} - Month ${
-            i % 12
-          }: Systematic Withdrawal of ₹${withdrawalPerMonth.toLocaleString()} ` +
+          `Year ${currentYear} - Month ${i % 12 || 12}: ` +
+            `Systematic Withdrawal of ₹${withdrawalPerMonth.toLocaleString()} ` +
             `capped to available ₹${totalAmount.toLocaleString()}`
         );
 
@@ -785,7 +794,7 @@ function calculateCompoundInterest(
           swpCompromised = true;
           swpCompromisedMsg =
             `SWP is compromised from Year ${currentYear} - Month ${
-              i % 12
+              i % 12 || 12
             } onwards.<br>` +
             `Systematic Withdrawal of ₹${withdrawalPerMonth.toLocaleString()} ` +
             `capped to available ₹${totalAmount.toLocaleString()}<br>` +
