@@ -10,18 +10,19 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <title>Compound Interest Investment Calculator by Pabitra</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Investment Calculator by Pabitra</title>
   </head>
 
   <body>
     <div class="main_container">
       <div class="div-left">
-        <div class="overview">
-          Compound interest Investment Calculator that helps you look at a long
-          term investment plan including SIP, SWP, Stop SIP after few Years,
-          lumpsum Withdrawals, etc...
+        <div class="child"><div class="overview">
+          <h1>All-in-One Investment Calculator</h1>
         </div>
-        <div class="child">
           <table class="dataTable firstTable investmentDetails">
             <tbody>
               <tr>
@@ -136,6 +137,7 @@
               <tr>
                 <td>Compounding Frequency</td>
                 <td>
+                  <div class="selectWrapper">
                   <select
                     name="compoundingFrequency"
                     id="compoundingFrequency"
@@ -145,7 +147,7 @@
                     <option value="4">Quarterly</option>
                     <option value="2">Half-Yearly</option>
                     <option value="1">Yearly</option>
-                  </select>
+                  </select></div>
                 </td>
               </tr>
               <tr>
@@ -749,7 +751,7 @@
               <tr>
                 <td
                   colspan="2"
-                  style="border-top: 1px solid rgb(229 229 229)"
+                  style="border-top: 1px solid var(--border)"
                   class="lumpsumWithdrawalTable"
                 >
                   <table class="sub-table">
@@ -1019,7 +1021,7 @@
                     </tr>
                     <tr>
                       <td
-                        style="border-top: 1px solid rgb(229 229 229)"
+                        style="border-top: 1px solid var(--border)"
                         class="no-height sipOneTable"
                         colspan="2"
                       >
@@ -1356,7 +1358,7 @@
                     </tr>
                     <tr>
                       <td
-                        style="border-top: 1px solid rgb(229 229 229)"
+                        style="border-top: 1px solid var(--border)"
                         class="no-height sipTwoTable"
                         colspan="2"
                       >
@@ -1539,10 +1541,10 @@
       </div>
       <div class="div-right">
         <div class="right-div-container hidden">
-          <div class="overview overview-right">
-            Here is a detailed view of how your investment grows over years...
-          </div>
           <div class="child">
+            <!-- <div class="overview overview-right">
+            Here is a detailed view of how your investment grows over years...
+          </div> -->
             <div class="combinedInvestmentOverview">
               <div class="overviewHeader">
                 Future Value of your Investment(s)

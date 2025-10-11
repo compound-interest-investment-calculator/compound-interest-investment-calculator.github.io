@@ -2062,7 +2062,7 @@ function showToast(message, type = "info") {
   setTimeout(() => {
     toast.classList.remove("show");
     setTimeout(() => toast.remove(), 300);
-  }, 3000);
+  }, 1000);
 }
 
 function showCustomDialog(message, type = "info") {

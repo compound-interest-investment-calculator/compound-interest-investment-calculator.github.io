@@ -1,13 +1,16 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800&family=Roboto:wght@100;300;400&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800&display=swap");
 :root {
-  --primary-color: #f9532d;
-  --primary-dark: #1f252e;
-  --primary-black: #000000;
+  --primary-color: #101010;
+  --primary-dark: #222222;
+  --primary-black: #1a1a1a;
   --primary-light: #ffffff;
-  --hightlight-background: #339fcd;
-  --primary-border: rgb(188 188 188);
+  --hightlight-background: #101010;
+  --primary-border: #e2e8f0;
+  --text-dark: #1a1a1a;
+  --text-medium: #4a5568;
+  --text-light: #6b7280;
+  --bg: #f5f7fa;
+      --border: #e2e8f0;
 }
 
 * {
@@ -17,10 +20,11 @@
 }
 
 body {
-  font-family: "Outfit", sans-serif;
-  background: var(--primary-light);
+   font-family: "Inter", sans-serif;
+  background: white;
   height: 100vh;
-  color: var(--primary-black);
+  color: var(--text-dark);
+  line-height: 1.6;
 }
 
 .main_container {
@@ -51,9 +55,9 @@ body {
   padding: 5px 15px 5px 15px;
   vertical-align: top;
   background: #ffffff;
-  border: 1px solid #f4f4f4;
+  border: 1px solid var(--primary-border);
   border-radius: 8px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   box-sizing: border-box;
 }
 
@@ -63,12 +67,12 @@ body {
   justify-content: space-between;
   align-items: center;
   gap: 10px;
-  background-color: #f5f7fa;
+  background-color: var(--bg);
   margin: 10px;
   padding: 15px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--primary-border);
   border-radius: 8px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   box-sizing: border-box;
   font-weight: 600;
 }
@@ -96,35 +100,29 @@ body {
 }
 
 .overview {
-  margin: 10px;
-  padding: 15px 15px 15px 15px;
-  border-radius: 10px 10px 0px 0px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  box-sizing: border-box;
-  text-align: center;
-  display: block;
-  font-size: 15px;
-  background-color: var(--hightlight-background);
-  color: var(--primary-light);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 10px 0px 10px 0px;
+  border-bottom: 1px solid var(--border);
+  line-height: 30px;
+}
+
+.overview h1 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--primary-black);
 }
 
 .div-left .child,
-.div-left .overview,
 .div-left .parallel-options {
   margin-right: 5px;
 }
 
 .div-right .child,
-.div-right .overview,
 .div-right .parallel-options {
   margin-left: 5px;
 }
 
 .yearMonthToggleBtn.active {
-  border-bottom: 3px solid #535353;
+  border-bottom: 3px solid #979797;
 }
 
 .button {
@@ -164,7 +162,7 @@ table.section-heading-button {
   left: 8px; /* padding from the left edge */
   top: 50%;
   transform: translateY(-50%);
-  pointer-events: none; /* don’t block input clicks */
+  pointer-events: none; /* don't block input clicks */
 }
 
 .divWrapper input.goalAmount {
@@ -240,18 +238,19 @@ button.json-button {
 .downloadCalculations,
 .yearMonthToggleBtn,
 .json-button {
-  font-family: "Outfit", sans-serif;
-  color: #676767;
+  font-family: "Inter", sans-serif;
+  color: white;
   font-size: 16px;
   background-color: var(--hightlight-background);
-  color: white;
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
   padding: 10px 10px;
   cursor: pointer;
   width: 100%;
   height: 50px;
   align-items: center;
+  font-weight: 600;
+  transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
 .downloadCalculations {
@@ -264,12 +263,12 @@ button.json-button {
 .downloadBtn:hover,
 .downloadCalculations:hover,
 .yearMonthToggleBtn:hover {
-  background-color: #07709d;
+  background-color: var(--primary-dark);
+  transform: translateY(-1px);
 }
 
 .downloadButtons {
-  padding-top: 15px;
-  padding-bottom: 10px;
+  padding-top: 10px;
 }
 
 .resultTable th,
@@ -280,10 +279,6 @@ button.json-button {
 }
 
 @media (min-width: 1270px) {
-  .overview {
-    height: 70px;
-  }
-
   .resultTable {
     font-size: 13px;
   }
@@ -298,13 +293,6 @@ button.json-button {
   .div-left,
   .div-right {
     flex: 100%;
-  }
-
-  .overview {
-    height: fit-content;
-    font-size: 14px;
-    font-weight: 400;
-    padding: 10px;
   }
 
   .resultTable {
@@ -520,14 +508,15 @@ table.goalWithdrawalTable td:nth-child(4) {
   border: none;
   padding: 8px 16px;
   font-size: 14px;
-  font-weight: 500;
-  border-radius: 6px;
+  font-weight: 600;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
 .add-goal-btn:hover {
-  background-color: #07709d;
+  background-color: var(--primary-dark);
+  transform: translateY(-1px);
 }
 
 .add-goal-btn i {
@@ -578,11 +567,11 @@ table.parallelInvYear td:first-child {
 }
 
 table.dataTable th:not(.no-border) {
-  border-bottom: 1px solid rgb(229 229 229);
+  border-bottom: 1px solid var(--border);
 }
 
 .subtable-wrapper:not(.no-border) {
-  border-bottom: 2px solid rgb(229 229 229);
+  border-bottom: 2px solid var(--border);
 }
 
 table.dataTable th,
@@ -646,7 +635,7 @@ th {
 .selectWrapper {
   padding: 0 2px;
   max-width: 100%;
-  height: 30px;
+  height: 35px;
   display: flex;
   align-items: center;
 }
@@ -655,8 +644,8 @@ select {
   appearance: none;
   outline: none;
   cursor: pointer;
-  border: 1px solid rgb(228, 228, 228);
-  border-radius: 5px;
+  border: 1px solid var(--primary-border);
+  border-radius: 8px;
   padding: 5px 10px;
   width: 100%;
   height: 100%;
@@ -664,7 +653,13 @@ select {
   font-size: 16px;
   font-weight: 400;
   text-align: center;
-  background: none;
+  background: white;
+  transition: all 0.2s;
+}
+
+select:focus {
+  border-color: var(--primary-black);
+  box-shadow: 0 0 0 3px rgba(16, 16, 16, 0.1);
 }
 
 .totalwrapper {
@@ -686,7 +681,7 @@ select {
 }
 
 input {
-  font-family: "Outfit", sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 16px;
   height: 100%;
   width: 100%;
@@ -698,6 +693,11 @@ input {
   outline: none;
   box-shadow: none;
   margin-left: 3px;
+  transition: all 0.2s;
+}
+
+input:focus {
+  outline: none;
 }
 
 input.inflationRate,
@@ -725,7 +725,6 @@ p {
   color: #555;
   max-height: 30px;
   font-weight: normal;
-  text-wrap: auto;
 }
 
 a {
@@ -753,7 +752,7 @@ a {
 .parallelInvestmentOverview td:last-child span,
 .combinedInvestmentOverview td:last-child span {
   font-weight: 600;
-  font-family: "Outfit", sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 16px;
   color: rgb(84, 84, 84);
 }
@@ -815,7 +814,7 @@ a {
 }
 
 .investmentDetails {
-  margin-bottom: 8px;
+  margin-bottom: 0px;
 }
 
 .div-left .child.sticky-buttons {
@@ -834,7 +833,7 @@ a {
 .overviewHeader {
   padding-top: 10px;
   padding-bottom: 10px;
-  border-bottom: 1px solid rgb(229 229 229);
+  border-bottom: 1px solid var(--border);
   line-height: 30px;
 }
 
@@ -848,23 +847,23 @@ a {
 
 .statCard {
   background: #ffffff;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--primary-border);
   border-radius: 8px;
   padding: 10px 12px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 
 .statCard:hover {
-  background: #f9fafb; /* just a subtle hover tint */
+  background: #f9fafb;
 }
 
 .statCard .label {
   font-size: 12px;
   font-weight: 500;
-  color: #6b7280;
+  color: var(--text-medium);
   margin-bottom: 4px;
   line-height: 1.3;
 }
@@ -872,7 +871,7 @@ a {
 .statCard .value {
   font-size: 16px;
   font-weight: 600;
-  color: #3e4145;
+  color: var(--primary-black);
   line-height: 1.4;
   word-break: break-word;
 }
@@ -959,7 +958,6 @@ table.sub-table > tbody > tr > td:first-child {
 }
 
 input:checked + .slider {
-  background-color: #4caf50;
   background-color: var(--hightlight-background);
 }
 
@@ -980,13 +978,20 @@ input,
 select {
   font-size: 15px;
   font-weight: 400;
-  color: #444;
+  color: var(--text-dark);
 }
 
-.dataTable th,
-.overviewHeader {
+.dataTable th {
   font-weight: 600;
+  height: 40px;
 }
+
+.overviewHeader{
+  font-size: 1rem;
+    font-weight: 600;
+    color: var(--primary-dark);
+}
+
 
 .info-icon {
   position: relative;
@@ -994,7 +999,7 @@ select {
   margin-left: 5px;
   cursor: pointer;
   font-size: 13px;
-  color: var(--hightlight-background);
+  color: var(--text-medium);
 }
 
 .info-icon:hover .tooltip {
@@ -1019,6 +1024,7 @@ select {
   transition: opacity 0.2s ease-in-out;
   font-size: 12px;
   line-height: 1.4;
+  text-align: center;
 }
 
 .tooltip::after {
@@ -1162,7 +1168,7 @@ select {
 /* dialog: grid with content (scrollable) + actions (fixed) */
 .custom-dialog-box {
   background: #fff;
-  border-radius: 10px;
+  border-radius: 8px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
   width: min(600px, 90vw);
   max-height: 80vh;
@@ -1199,15 +1205,18 @@ select {
 /* button styling */
 .custom-dialog-actions button {
   padding: 8px 14px;
-  border-radius: 6px;
+  border-radius: 8px;
   border: none;
   cursor: pointer;
   font-size: 14px;
-  background: #3498db;
-  color: #fff;
+  background: var(--hightlight-background);
+  color: white;
+  font-weight: 600;
+  transition: background-color 0.2s ease, transform 0.1s ease;
 }
 .custom-dialog-actions button:hover {
-  background: #2d86c7;
+  background: var(--primary-dark);
+  transform: translateY(-1px);
 }
 
 .hidden {
