@@ -11,7 +11,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
     <title>Investment Calculator by Pabitra</title>
@@ -20,9 +20,10 @@
   <body>
     <div class="main_container">
       <div class="div-left">
-        <div class="child"><div class="overview">
-          <h1>All-in-One Investment Calculator</h1>
-        </div>
+        <div class="child">
+          <div class="overview">
+            <h1>All-in-One Investment Calculator</h1>
+          </div>
           <table class="dataTable firstTable investmentDetails">
             <tbody>
               <tr>
@@ -138,16 +139,17 @@
                 <td>Compounding Frequency</td>
                 <td>
                   <div class="selectWrapper">
-                  <select
-                    name="compoundingFrequency"
-                    id="compoundingFrequency"
-                    class="compoundingFrequency"
-                  >
-                    <option value="12" selected>Monthly</option>
-                    <option value="4">Quarterly</option>
-                    <option value="2">Half-Yearly</option>
-                    <option value="1">Yearly</option>
-                  </select></div>
+                    <select
+                      name="compoundingFrequency"
+                      id="compoundingFrequency"
+                      class="compoundingFrequency"
+                    >
+                      <option value="12" selected>Monthly</option>
+                      <option value="4">Quarterly</option>
+                      <option value="2">Half-Yearly</option>
+                      <option value="1">Yearly</option>
+                    </select>
+                  </div>
                 </td>
               </tr>
               <tr>
@@ -927,16 +929,18 @@
                     <tr>
                       <td>Compounding Frequency</td>
                       <td>
-                        <select
-                          name="compoundingFrequencyOne"
-                          id="compoundingFrequencyOne"
-                          class="compoundingFrequencyOne"
-                        >
-                          <option value="12" selected>Monthly</option>
-                          <option value="4">Quarterly</option>
-                          <option value="2">Half-Yearly</option>
-                          <option value="1">Yearly</option>
-                        </select>
+                        <div class="selectWrapper">
+                          <select
+                            name="compoundingFrequencyOne"
+                            id="compoundingFrequencyOne"
+                            class="compoundingFrequencyOne"
+                          >
+                            <option value="12" selected>Monthly</option>
+                            <option value="4">Quarterly</option>
+                            <option value="2">Half-Yearly</option>
+                            <option value="1">Yearly</option>
+                          </select>
+                        </div>
                       </td>
                     </tr>
                     <tr>
@@ -1263,16 +1267,18 @@
                     <tr>
                       <td>Compounding Frequency</td>
                       <td>
-                        <select
-                          name="compoundingFrequencyTwo"
-                          id="compoundingFrequencyTwo"
-                          class="compoundingFrequencyTwo"
-                        >
-                          <option value="12">Monthly</option>
-                          <option value="4" selected>Quarterly</option>
-                          <option value="2">Half-Yearly</option>
-                          <option value="1">Yearly</option>
-                        </select>
+                        <div class="selectWrapper">
+                          <select
+                            name="compoundingFrequencyTwo"
+                            id="compoundingFrequencyTwo"
+                            class="compoundingFrequencyTwo"
+                          >
+                            <option value="12">Monthly</option>
+                            <option value="4" selected>Quarterly</option>
+                            <option value="2">Half-Yearly</option>
+                            <option value="1">Yearly</option>
+                          </select>
+                        </div>
                       </td>
                     </tr>
                     <tr>
