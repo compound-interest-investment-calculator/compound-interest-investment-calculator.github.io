@@ -10,7 +10,7 @@
   --text-medium: #4a5568;
   --text-light: #6b7280;
   --bg: #f5f7fa;
-      --border: #e2e8f0;
+  --border: #e2e8f0;
 }
 
 * {
@@ -20,7 +20,7 @@
 }
 
 body {
-   font-family: "Inter", sans-serif;
+  font-family: "Inter", sans-serif;
   background: white;
   height: 100vh;
   color: var(--text-dark);
@@ -75,6 +75,7 @@ body {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   box-sizing: border-box;
   font-weight: 600;
+  font-size: 15px;
 }
 
 .parallel-options > div:first-child {
@@ -106,9 +107,9 @@ body {
 }
 
 .overview h1 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--primary-black);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--primary-black);
 }
 
 .div-left .child,
@@ -278,14 +279,33 @@ button.json-button {
   height: 20px;
 }
 
+.resultTable table td:last-child {
+  font-weight: 500;
+}
+
+.resultTable {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 13px;
+}
+
+.resultTable th,
+.resultTable td {
+  padding: 8px 10px;
+  border: 1px solid #e5e7eb;
+}
+
+.resultTable tr:nth-child(odd) {
+  background: #fafafa; /* zebra striping */
+}
+
+.resultTable tr:hover {
+  background: #f1f5f9; /* subtle hover highlight */
+}
+
 @media (min-width: 1270px) {
   .resultTable {
     font-size: 13px;
-  }
-
-  .resultTable th,
-  .resultTable td {
-    padding-left: 10px;
   }
 }
 
@@ -301,7 +321,7 @@ button.json-button {
 
   .resultTable th,
   .resultTable td {
-    padding-left: 5px;
+    padding: 8px 8px 8px 8px;
   }
 
   .div-left .child,
@@ -356,6 +376,11 @@ button.json-button {
 }
 
 @media (max-width: 500px) {
+  .resultTable th,
+  .resultTable td {
+    padding: 8px 5px 8px 5px;
+  }
+
   .resultTable {
     font-size: 10px;
   }
@@ -784,30 +809,6 @@ a {
   color: #ff8c00;
 }
 
-.resultTable table td:last-child {
-  font-weight: 500;
-}
-
-.resultTable {
-  border-collapse: collapse;
-  width: 100%;
-  font-size: 13px;
-}
-
-.resultTable th,
-.resultTable td {
-  padding: 8px 10px;
-  border: 1px solid #e5e7eb;
-}
-
-.resultTable tr:nth-child(odd) {
-  background: #fafafa; /* zebra striping */
-}
-
-.resultTable tr:hover {
-  background: #f1f5f9; /* subtle hover highlight */
-}
-
 .highlight {
   background-color: #efefef;
   font-weight: 500;
@@ -983,15 +984,15 @@ select {
 
 .dataTable th {
   font-weight: 600;
+  font-size: 15px;
   height: 40px;
 }
 
-.overviewHeader{
+.overviewHeader {
   font-size: 1rem;
-    font-weight: 600;
-    color: var(--primary-dark);
+  font-weight: 600;
+  color: var(--primary-dark);
 }
-
 
 .info-icon {
   position: relative;

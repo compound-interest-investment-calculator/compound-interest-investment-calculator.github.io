@@ -27,8 +27,6 @@ function toggleSWP(suffix) {
 
   if (isChecked("swp" + suffix)) {
     table.classList.remove("hidden");
-    // document.querySelector(".withdrawalAmount").value = 50000;
-    // document.querySelector(".withdrawalAfterYears").value = 10;
   } else {
     table.classList.add("hidden");
   }
